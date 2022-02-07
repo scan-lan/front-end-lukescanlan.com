@@ -1,21 +1,27 @@
+import React from "react";
 import App from "next/app";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import { createContext } from "react";
+import { stringify } from "querystring";
 import { getStrapiMedia } from "../lib/getMedia";
-import { fetchAPI } from "../lib/api";
-import "../styles/global.css";
+import Global from "../types/Global";
+import { getFromAPI } from "../lib/api";
+import "../styles/globals.css";
 
 // Store Strapi Global object in context
 export const GlobalContext = createContext({});
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const { global } = pageProps;
+  const { global }: { global: Global } = pageProps;
 
   return (
     <>
       <Head>
-        <link rel="shortcut icon" href={getStrapiMedia(global.favicon)} />
+        <link
+          rel="shortcut icon"
+          href={getStrapiMedia(global.data.attributes.favicon)}
+        />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Staatliches"
@@ -40,13 +46,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 // Hopefully we can replace this with getStaticProps once this issue is fixed:
 // https://github.com/vercel/next.js/discussions/10949
 MyApp.getInitialProps = async (ctx: any) => {
-  console.log(ctx);
+  const globalQueryString = stringify({
+    populate: ["favicon", "defaultSEO", "defaultSEO.shareImage"],
+  });
 
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(ctx);
 
   // Fetch global site settings from Strapi
-  const global = await fetchAPI("/global");
+  const global: Global = await getFromAPI("/global", globalQueryString);
 
   // Pass the data to our page via props
   return { ...appProps, pageProps: { global } };
