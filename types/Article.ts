@@ -14,8 +14,8 @@ export default interface Article {
     description: string;
     authorsNote?: string;
     contentWarning?: string;
-    writer: null;
-    cover?: StrapiMedia;
+    writer: any;
+    cover: StrapiMedia;
     category: {
       data: Category;
     };
