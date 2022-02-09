@@ -10,7 +10,7 @@ const Nav = ({ categories }: { categories: Category[] }) => {
           <ul className="uk-navbar-nav">
             <li>
               <Link href="/">
-                <a>Strapi Blog</a>
+                <a>lukescanlan.com</a>
               </Link>
             </li>
           </ul>
