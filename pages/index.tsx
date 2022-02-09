@@ -1,4 +1,4 @@
-import { stringify } from "querystring";
+import { stringify } from "qs";
 import React from "react";
 import Articles from "../components/Articles";
 import Layout from "../components/Layout";

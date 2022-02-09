@@ -3,7 +3,7 @@ import App from "next/app";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import { createContext } from "react";
-import { stringify } from "querystring";
+import { stringify } from "qs";
 import { getStrapiMedia } from "../lib/getMedia";
 import Global from "../types/Global";
 import { getFromAPI } from "../lib/api";
@@ -32,7 +32,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.min.js" />
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit-icons.min.js" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.js" />
       </Head>
       <GlobalContext.Provider value={global}>
         <Component {...pageProps} />

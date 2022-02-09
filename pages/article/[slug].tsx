@@ -5,9 +5,10 @@ import Layout from "../../components/Layout";
 import Image from "../../components/Image";
 import SEO from "../../components/SEO";
 import { getStrapiMedia } from "../../lib/getMedia";
-import { stringify } from "querystring";
+import { stringify } from "qs";
 import Article from "../../types/Article";
 import Category from "../../types/Category";
+import StrapiMeta from "../../types/StrapiMeta";
 
 interface ArticleProps {
   article: Article;
@@ -42,9 +43,9 @@ const Article = ({ article, categories }: ArticleProps) => {
           <hr className="uk-divider-small" />
           <div className="uk-grid-small uk-flex-left" data-uk-grid="true">
             <div>
-              {article.attributes.writer.picture && (
+              {article.attributes.writer.data.attributes.picture && (
                 <Image
-                  image={article.attributes.writer.picture}
+                  image={article.attributes.writer.data.attributes.picture}
                   style={{
                     position: "static",
                     borderRadius: "50%",
@@ -55,11 +56,11 @@ const Article = ({ article, categories }: ArticleProps) => {
             </div>
             <div className="uk-width-expand">
               <p className="uk-margin-remove-bottom">
-                By {article.attributes.writer.name}
+                By {article.attributes.writer.data.attributes.name}
               </p>
               <p className="uk-text-meta uk-margin-remove-top">
-                <Moment format="MMM Do YYYY">
-                  {article.attributes.publishedAt}
+                <Moment format="Do MMM YYYY">
+                  {article.attributes.written}
                 </Moment>
               </p>
             </div>
@@ -71,12 +72,12 @@ const Article = ({ article, categories }: ArticleProps) => {
 };
 
 export async function getStaticPaths() {
-  const articles = await getFromAPI("/articles");
+  const articles: { data: Article[] } = await getFromAPI("/articles");
 
   return {
-    paths: articles.map((article) => ({
+    paths: articles.data.map((article) => ({
       params: {
-        slug: article.slug,
+        slug: article.attributes.slug,
       },
     })),
     fallback: false,
@@ -90,14 +91,18 @@ export async function getStaticProps({ params }) {
         $eq: params.slug,
       },
     },
-    encodeValuesOnly: true,
-  } as any);
+    populate: ["writer", "writer.picture", "cover", "category"],
+  });
 
-  const articles = await getFromAPI(`/articles?${articleQueryParams}`);
+  const articles: { data: Article[]; meta: StrapiMeta } = await getFromAPI(
+    "/articles",
+    articleQueryParams
+  );
+
   const categories = await getFromAPI("/categories");
 
   return {
-    props: { article: articles[0], categories },
+    props: { article: articles.data[0], categories: categories.data },
     revalidate: 1,
   };
 }

@@ -4,9 +4,14 @@ import { GlobalContext } from "../pages/_app";
 import { getStrapiMedia } from "../lib/getMedia";
 import SEO from "../types/SEO";
 import Global from "../types/Global";
+import StrapiMedia from "../types/StrapiMedia";
 
 interface SEOProps {
-  seo: SEO;
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    shareImage?: StrapiMedia;
+  };
 }
 
 const SEO = ({ seo }: SEOProps) => {

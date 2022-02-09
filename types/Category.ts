@@ -1,3 +1,5 @@
+import Article from "./Article";
+
 export default interface Category {
   id: number;
   attributes: {
@@ -6,5 +8,8 @@ export default interface Category {
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;
+    articles: {
+      data: Article[];
+    };
   };
 }

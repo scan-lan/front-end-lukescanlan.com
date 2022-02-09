@@ -1,5 +1,6 @@
 import Category from "./Category";
 import StrapiMedia from "./StrapiMedia";
+import Writer from "./Writer";
 
 export default interface Article {
   id: number;
@@ -14,7 +15,9 @@ export default interface Article {
     description: string;
     authorsNote?: string;
     contentWarning?: string;
-    writer: any;
+    writer: {
+      data: Writer;
+    };
     cover: StrapiMedia;
     category: {
       data: Category;
