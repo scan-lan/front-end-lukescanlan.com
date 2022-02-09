@@ -1,7 +1,5 @@
 const getStrapiURL = (path = "") => {
-  return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api"
-  }${path}`;
+  return `${process.env.API_URL || "http://localhost:1337/api"}${path}`;
 };
 
 // Helper to make GET requests to Strapi
