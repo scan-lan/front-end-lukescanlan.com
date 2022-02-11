@@ -28,17 +28,7 @@ interface HomeProps {
 }
 
 const Home = ({ articles, categories, homepage }: HomeProps) => {
-  return (
-    <Layout categories={categories.data}>
-      <Seo seo={homepage.data.attributes.seo} />
-      <div className="uk-section">
-        <div className="uk-container uk-container-large">
-          <h1>{homepage.data.attributes.hero.title}</h1>
-          <Articles articles={articles.data} />
-        </div>
-      </div>
-    </Layout>
-  );
+  return <h1 style={{ textAlign: "center" }}>lukescanlan.com W.I.P.</h1>;
 };
 
 export async function getStaticProps() {
