@@ -4,15 +4,31 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import { createContext } from "react";
 import { stringify } from "qs";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
 import { getStrapiMedia } from "../lib/getMedia";
 import Global from "../types/Global";
 import { getFromAPI } from "../lib/api";
 import "../styles/globals.css";
+import createEmotionCache from "../lib/createEmotionCache";
+import { lightThemeOptions } from "../styles/theme/lightThemeOptions";
+import "../styles/globals.css";
+
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
 
 // Store Strapi Global object in context
 export const GlobalContext = createContext({});
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const clientSideEmotionCache = createEmotionCache();
+const lightTheme = createTheme(lightThemeOptions);
+
+const MyApp = ({
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps,
+}: MyAppProps) => {
   const { global }: { global: Global } = pageProps;
 
   return (
@@ -23,9 +39,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           href={getStrapiMedia(global.data.attributes.favicon)}
         />
       </Head>
-      <GlobalContext.Provider value={global}>
-        <Component {...pageProps} />
-      </GlobalContext.Provider>
+      <CacheProvider value={emotionCache}>
+        <ThemeProvider theme={lightTheme}>
+          <GlobalContext.Provider value={global}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </GlobalContext.Provider>
+        </ThemeProvider>
+      </CacheProvider>
     </>
   );
 };
