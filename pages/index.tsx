@@ -7,6 +7,10 @@ import { getFromAPI } from "../lib/api";
 import Article from "../types/Article";
 import Category from "../types/Category";
 import SEO from "../types/SEO";
+import Container from "@mui/material/Container";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 interface HomeProps {
   articles: {
@@ -27,9 +31,19 @@ interface HomeProps {
   };
 }
 
-const Home = ({ articles, categories, homepage }: HomeProps) => {
-  return <h1 style={{ textAlign: "center" }}>lukescanlan.com W.I.P.</h1>;
-};
+const Home = ({ articles, categories, homepage }: HomeProps) => (
+  <div>
+    <Container maxWidth="lg" sx={{ backgroundColor: "#889" }}>
+      {["This text", "That text", "Other text"].map((title, i) => (
+        <Card key={i}>
+          <CardContent>
+            <Typography variant="h4">{title}</Typography>
+          </CardContent>
+        </Card>
+      ))}
+    </Container>
+  </div>
+);
 
 export async function getStaticProps() {
   const articlesQueryString = stringify({
