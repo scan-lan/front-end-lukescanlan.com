@@ -29,11 +29,9 @@ interface HomeProps {
 }
 
 const Home = ({ articles, categories, homepage }: HomeProps) => (
-  <div>
-    <Container maxWidth="md">
-      <Articles articles={articles.data} />
-    </Container>
-  </div>
+  <Container maxWidth="lg">
+    <Articles articles={articles.data} />
+  </Container>
 );
 
 export async function getStaticProps() {
