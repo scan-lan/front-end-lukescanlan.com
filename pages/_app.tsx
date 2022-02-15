@@ -6,7 +6,7 @@ import { createContext } from "react";
 import { stringify } from "qs";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
-import { getStrapiMedia } from "../lib/getMedia";
+import { getMedia, getMediaURL } from "../lib/getMedia";
 import Global from "../types/Global";
 import { getFromAPI } from "../lib/api";
 import "../styles/globals.css";
@@ -36,7 +36,7 @@ const MyApp = ({
       <Head>
         <link
           rel="shortcut icon"
-          href={getStrapiMedia(global.data.attributes.favicon.data)}
+          href={getMediaURL(global.data.attributes.favicon.data)}
         />
       </Head>
       <CacheProvider value={emotionCache}>

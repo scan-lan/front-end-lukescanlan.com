@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useContext } from "react";
 import { GlobalContext } from "../pages/_app";
-import { getStrapiMedia } from "../lib/getMedia";
+import { getMedia } from "../lib/getMedia";
 import SEO from "../types/SEO";
 import Global from "../types/Global";
 import StrapiMedia from "../types/StrapiMedia";
@@ -27,7 +27,7 @@ const SEO = ({ seo }: SEOProps) => {
     // Add title suffix
     metaTitle: `${seoWithDefaults.metaTitle} | ${global.attributes.siteName}`,
     // Get full image URL
-    shareImage: getStrapiMedia(seoWithDefaults.shareImage.data),
+    shareImage: getMedia(seoWithDefaults.shareImage.data, "m").url,
   };
 
   return (

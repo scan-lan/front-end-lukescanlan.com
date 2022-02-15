@@ -1,6 +1,6 @@
 import { number } from "prop-types";
 
-interface MediaFormat {
+export interface MediaFormat {
   ext: string;
   url: string;
   hash: string;

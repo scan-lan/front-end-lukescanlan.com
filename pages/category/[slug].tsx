@@ -73,9 +73,6 @@ export async function getStaticProps({ params }) {
     populate: "*",
   });
 
-  console.log("here:" + articlesQueryString);
-  console.log("reached");
-
   const articles: { data: Article[]; meta: StrapiMeta } = await getFromAPI(
     "/articles",
     articlesQueryString

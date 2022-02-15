@@ -6,7 +6,7 @@ import Image from "next/image";
 import { getFromAPI } from "../../lib/api";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
-import { getStrapiMedia } from "../../lib/getMedia";
+import { getMedia } from "../../lib/getMedia";
 import Article from "../../types/Article";
 import Category from "../../types/Category";
 import StrapiMeta from "../../types/StrapiMeta";
@@ -17,7 +17,8 @@ interface ArticleProps {
 }
 
 const Article = ({ article, categories }: ArticleProps) => {
-  const imageUrl = getStrapiMedia(article.attributes.cover.data);
+  const image = getMedia(article.attributes.cover.data, "xl");
+  console.log(image);
 
   const seo = {
     metaTitle: article.attributes.title,
@@ -29,13 +30,13 @@ const Article = ({ article, categories }: ArticleProps) => {
   return (
     <Layout categories={categories}>
       <SEO seo={seo} />
-      {/* <Image
-        src={article.attributes.cover.data.attributes.formats.large.url}
-        alt={article.attributes.cover.data.attributes.alternativeText}
-        width="50%"
-        height="50%"
-      /> */}
       <Typography variant="h1">{article.attributes.title}</Typography>
+      <Image
+        src={image.url}
+        alt={article.attributes.cover.data.attributes.alternativeText}
+        width={image.width}
+        height={image.height}
+      />
       <Container maxWidth="sm">
         <ReactMarkdown>{article.attributes.content}</ReactMarkdown>
       </Container>

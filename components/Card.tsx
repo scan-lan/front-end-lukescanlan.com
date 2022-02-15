@@ -2,14 +2,13 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import MUICard from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import StrapiMedia from "../types/StrapiMedia";
-import { getStrapiMedia } from "../lib/getMedia";
+import { getMedia } from "../lib/getMedia";
 import Moment from "react-moment";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
 
@@ -65,7 +64,7 @@ const Card = ({
                 }}
               >
                 <Image
-                  src={cardCover.url}
+                  src={getMedia(cover, "m").url}
                   alt={cover.attributes.alternativeText}
                   layout="fill"
                   objectFit="cover"
