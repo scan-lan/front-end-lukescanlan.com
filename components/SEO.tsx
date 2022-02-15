@@ -10,7 +10,7 @@ interface SEOProps {
   seo: {
     metaTitle: string;
     metaDescription: string;
-    shareImage?: StrapiMedia;
+    shareImage?: { data: StrapiMedia };
   };
 }
 
@@ -18,16 +18,16 @@ const SEO = ({ seo }: SEOProps) => {
   const global = useContext(GlobalContext) as Global;
 
   const seoWithDefaults = {
-    ...global.data.attributes.defaultSEO,
+    ...global.attributes.defaultSEO,
     ...seo,
   };
 
   const fullSeo: any = {
     ...seoWithDefaults,
     // Add title suffix
-    metaTitle: `${seoWithDefaults.metaTitle} | ${global.data.attributes.siteName}`,
+    metaTitle: `${seoWithDefaults.metaTitle} | ${global.attributes.siteName}`,
     // Get full image URL
-    shareImage: getStrapiMedia(seoWithDefaults.shareImage),
+    shareImage: getStrapiMedia(seoWithDefaults.shareImage.data),
   };
 
   return (

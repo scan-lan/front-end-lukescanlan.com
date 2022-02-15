@@ -29,19 +29,19 @@ const MyApp = ({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) => {
-  const { global }: { global: Global } = pageProps;
+  const { global }: { global: { data: Global } } = pageProps;
 
   return (
     <>
       <Head>
         <link
           rel="shortcut icon"
-          href={getStrapiMedia(global.data.attributes.favicon)}
+          href={getStrapiMedia(global.data.attributes.favicon.data)}
         />
       </Head>
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={lightTheme}>
-          <GlobalContext.Provider value={global}>
+          <GlobalContext.Provider value={global.data}>
             <CssBaseline />
             <Component {...pageProps} />
           </GlobalContext.Provider>

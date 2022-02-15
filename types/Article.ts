@@ -1,5 +1,6 @@
 import Category from "./Category";
 import StrapiMedia from "./StrapiMedia";
+import Topic from "./Topic";
 import Writer from "./Writer";
 
 export default interface Article {
@@ -7,10 +8,10 @@ export default interface Article {
   attributes: {
     title: string;
     content: string;
-    written: Date;
-    createdAt: Date;
-    updatedAt: Date;
-    publishedAt: Date;
+    written: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
     slug: string;
     description: string;
     authorsNote?: string;
@@ -18,10 +19,14 @@ export default interface Article {
     writer: {
       data: Writer;
     };
-    cover: StrapiMedia;
+    cover: {
+      data: StrapiMedia;
+    };
     category: {
       data: Category;
     };
-    topics: null[];
+    topics: {
+      data: Topic[];
+    };
   };
 }

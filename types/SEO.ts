@@ -4,5 +4,7 @@ export default interface SEO {
   id?: number;
   metaTitle: string;
   metaDescription: string;
-  shareImage: StrapiMedia;
+  shareImage: {
+    data: StrapiMedia;
+  };
 }

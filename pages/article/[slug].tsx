@@ -1,11 +1,12 @@
 import ReactMarkdown from "react-markdown";
-import Moment from "react-moment";
+import { stringify } from "qs";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import { getFromAPI } from "../../lib/api";
 import Layout from "../../components/Layout";
-import Image from "../../components/Image";
 import SEO from "../../components/SEO";
 import { getStrapiMedia } from "../../lib/getMedia";
-import { stringify } from "qs";
 import Article from "../../types/Article";
 import Category from "../../types/Category";
 import StrapiMeta from "../../types/StrapiMeta";
@@ -16,7 +17,7 @@ interface ArticleProps {
 }
 
 const Article = ({ article, categories }: ArticleProps) => {
-  const imageUrl = getStrapiMedia(article.attributes.cover);
+  const imageUrl = getStrapiMedia(article.attributes.cover.data);
 
   const seo = {
     metaTitle: article.attributes.title,
@@ -28,45 +29,16 @@ const Article = ({ article, categories }: ArticleProps) => {
   return (
     <Layout categories={categories}>
       <SEO seo={seo} />
-      <div
-        id="banner"
-        className="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light uk-padding uk-margin"
-        data-src={imageUrl}
-        data-srcset={imageUrl}
-        data-uk-img
-      >
-        <h1>{article.attributes.title}</h1>
-      </div>
-      <div className="uk-section">
-        <div className="uk-container uk-container-small">
-          <ReactMarkdown>{article.attributes.content}</ReactMarkdown>
-          <hr className="uk-divider-small" />
-          <div className="uk-grid-small uk-flex-left" data-uk-grid="true">
-            <div>
-              {article.attributes.writer.data.attributes.picture && (
-                <Image
-                  image={article.attributes.writer.data.attributes.picture}
-                  style={{
-                    position: "static",
-                    borderRadius: "50%",
-                    height: 30,
-                  }}
-                />
-              )}
-            </div>
-            <div className="uk-width-expand">
-              <p className="uk-margin-remove-bottom">
-                By {article.attributes.writer.data.attributes.name}
-              </p>
-              <p className="uk-text-meta uk-margin-remove-top">
-                <Moment format="Do MMM YYYY">
-                  {article.attributes.written}
-                </Moment>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* <Image
+        src={article.attributes.cover.data.attributes.formats.large.url}
+        alt={article.attributes.cover.data.attributes.alternativeText}
+        width="50%"
+        height="50%"
+      /> */}
+      <Typography variant="h1">{article.attributes.title}</Typography>
+      <Container maxWidth="sm">
+        <ReactMarkdown>{article.attributes.content}</ReactMarkdown>
+      </Container>
     </Layout>
   );
 };
