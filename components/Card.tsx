@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import MUICard from "@mui/material/Card";
@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import StrapiMedia from "../types/StrapiMedia";
 import { getStrapiMedia } from "../lib/getMedia";
 import Moment from "react-moment";
+import { useContainerDimensions } from "../lib/useContainerDimensions";
 
 interface CardProps {
   cover: StrapiMedia;
@@ -31,21 +32,30 @@ const Card = ({
   topics,
   slug,
 }: CardProps) => {
+  const ref = useRef(null);
   const cardCover = cover.attributes.formats.medium;
+
+  const cardDimensions = useContainerDimensions(ref);
+  const imageScale = cardDimensions.width / cardCover.width;
+
+  const imageHeight = cardDimensions.width * (5 / 7);
+  // const imageHeight = imageScale * cardCover.height;
+  // const imageHeight = 0.4 * cardDimensions.height;
+
   return (
     <>
       <Link as={`/article/${slug}`} href="/article/[slug]" passHref>
         <MUICard
           elevation={0}
           sx={{
-            // maxWidth: "20em",
             backgroundColor: "#fff",
             border: "1px dashed #000",
           }}
+          ref={ref}
         >
           <CardActionArea>
             <CardMedia
-              sx={{ borderBottom: "2px dashed #444444", height: "12em" }}
+              sx={{ borderBottom: "2px dashed #444444", height: imageHeight }}
             >
               <div
                 style={{
