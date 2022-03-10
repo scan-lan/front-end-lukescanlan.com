@@ -8,7 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import StrapiMedia from "../types/StrapiMedia";
-import { getMedia } from "../lib/getMedia";
+import { getMedia, mediaSize } from "../lib/getMedia";
 import Moment from "react-moment";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
 
@@ -20,6 +20,7 @@ interface CardProps {
   date: string;
   topics: string[];
   slug: string;
+  coverSize?: mediaSize;
 }
 
 const Card = ({
@@ -30,14 +31,16 @@ const Card = ({
   date,
   topics,
   slug,
+  coverSize,
 }: CardProps) => {
-  const ref = useRef(null);
-  const cardCover = cover.attributes.formats.medium;
+  const ref = useRef();
+  const cardCover = getMedia(cover, coverSize ? coverSize : "m");
 
   const cardDimensions = useContainerDimensions(ref);
-  const imageScale = cardDimensions.width / cardCover.width;
-
   const imageHeight = cardDimensions.width * (5 / 7);
+
+  // Other card media size options
+  // const imageScale = cardDimensions.width / cardCover.width;
   // const imageHeight = imageScale * cardCover.height;
   // const imageHeight = 0.4 * cardDimensions.height;
 
@@ -64,7 +67,7 @@ const Card = ({
                 }}
               >
                 <Image
-                  src={getMedia(cover, "m").url}
+                  src={cardCover.url}
                   alt={cover.attributes.alternativeText}
                   layout="fill"
                   objectFit="cover"

@@ -19,11 +19,18 @@ const getSizeFromKey = (media, key) => {
   }
 };
 
-type size = "xs" | "s" | "m" | "l" | "xl" | "original" | "thumbnail";
+export type mediaSize =
+  | "xs"
+  | "s"
+  | "m"
+  | "l"
+  | "xl"
+  | "original"
+  | "thumbnail";
 
 export const getMedia = (
   media: StrapiMedia,
-  size: size = "original"
+  size: mediaSize = "original"
 ): MediaFormat => {
   const sizeKeys = ["thumbnail", "xl", "l", "m", "s", "xs", "original"];
   let matched = false;
@@ -46,7 +53,7 @@ export const getMedia = (
   return mediaFormat;
 };
 
-export const getMediaURL = (media, size: size = "original") => {
+export const getMediaURL = (media, size: mediaSize = "original") => {
   const sizedMedia = getMedia(media, size);
   return sizedMedia.url;
 };

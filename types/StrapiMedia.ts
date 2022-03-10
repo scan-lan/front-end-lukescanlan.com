@@ -1,5 +1,3 @@
-import { number } from "prop-types";
-
 export interface MediaFormat {
   ext: string;
   url: string;

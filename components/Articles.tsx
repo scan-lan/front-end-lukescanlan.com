@@ -2,15 +2,12 @@ import React from "react";
 import Article from "../types/Article";
 import Card from "./Card";
 import { Masonry } from "@mui/lab";
-import { useTheme } from "@mui/material";
 
 interface ArticlesProps {
   articles: Article[];
 }
 
 const Articles = ({ articles }: ArticlesProps) => {
-  const theme = useTheme();
-
   const articleCards = articles.map((article) => (
     <Card
       key={article.attributes.slug}
