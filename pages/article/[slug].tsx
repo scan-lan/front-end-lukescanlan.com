@@ -30,13 +30,15 @@ const Article = ({ article, categories }: ArticleProps) => {
   return (
     <Layout categories={categories}>
       <SEO seo={seo} />
-      <Typography variant="h1">{article.attributes.title}</Typography>
       <Image
         src={image.url}
         alt={article.attributes.cover.data.attributes.alternativeText}
         width={image.width}
         height={image.height}
       />
+      <Container maxWidth="lg">
+        <Typography variant="h2">{article.attributes.title}</Typography>
+      </Container>
       <Container maxWidth="sm">
         <ReactMarkdown>{article.attributes.content}</ReactMarkdown>
       </Container>

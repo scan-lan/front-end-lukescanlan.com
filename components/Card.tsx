@@ -48,13 +48,13 @@ const Card = ({
           elevation={0}
           sx={{
             backgroundColor: "#fff",
-            border: "1px dashed #000",
+            border: "2px dashed #444",
           }}
           ref={ref}
         >
           <CardActionArea>
             <CardMedia
-              sx={{ borderBottom: "2px dashed #444444", height: imageHeight }}
+              sx={{ borderBottom: "1px dashed #555", height: imageHeight }}
             >
               <div
                 style={{

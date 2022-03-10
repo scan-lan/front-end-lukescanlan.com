@@ -5,16 +5,16 @@ import Layout from "../components/Layout";
 import Seo from "../components/SEO";
 import { getFromAPI } from "../lib/api";
 import Article from "../types/Article";
-import Category from "../types/Category";
 import SEO from "../types/SEO";
 import Container from "@mui/material/Container";
+import NavPage from "../types/NavPage";
 
 interface HomeProps {
   articles: {
     data: Article[];
   };
-  categories: {
-    data: Category[];
+  navPages: {
+    data: NavPage[];
   };
   homepage: {
     data: {
@@ -28,10 +28,12 @@ interface HomeProps {
   };
 }
 
-const Home = ({ articles, categories, homepage }: HomeProps) => (
-  <Container maxWidth="lg">
-    <Articles articles={articles.data} />
-  </Container>
+const Home = ({ articles, navPages, homepage }: HomeProps) => (
+  <Layout navPages={navPages.data}>
+    <Container maxWidth="lg">
+      <Articles articles={articles.data} />
+    </Container>
+  </Layout>
 );
 
 export async function getStaticProps() {
@@ -41,14 +43,14 @@ export async function getStaticProps() {
   });
 
   // Run API calls in parallel
-  const [articles, categories, homepage] = await Promise.all([
+  const [articles, navPages, homepage] = await Promise.all([
     getFromAPI("/articles", articlesQueryString),
-    getFromAPI("/categories"),
+    getFromAPI("/nav-pages"),
     getFromAPI("/homepage"),
   ]);
 
   return {
-    props: { articles, categories, homepage },
+    props: { articles, navPages, homepage },
     revalidate: 1,
   };
 }
