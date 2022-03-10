@@ -6,7 +6,7 @@ import { createContext } from "react";
 import { stringify } from "qs";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
-import { getStrapiMedia } from "../lib/getMedia";
+import { getMedia, getMediaURL } from "../lib/getMedia";
 import Global from "../types/Global";
 import { getFromAPI } from "../lib/api";
 import "../styles/globals.css";
@@ -29,19 +29,19 @@ const MyApp = ({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) => {
-  const { global }: { global: Global } = pageProps;
+  const { global }: { global: { data: Global } } = pageProps;
 
   return (
     <>
       <Head>
         <link
           rel="shortcut icon"
-          href={getStrapiMedia(global.data.attributes.favicon)}
+          href={getMediaURL(global.data.attributes.favicon.data)}
         />
       </Head>
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={lightTheme}>
-          <GlobalContext.Provider value={global}>
+          <GlobalContext.Provider value={global.data}>
             <CssBaseline />
             <Component {...pageProps} />
           </GlobalContext.Provider>

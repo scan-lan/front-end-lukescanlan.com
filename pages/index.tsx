@@ -5,19 +5,16 @@ import Layout from "../components/Layout";
 import Seo from "../components/SEO";
 import { getFromAPI } from "../lib/api";
 import Article from "../types/Article";
-import Category from "../types/Category";
 import SEO from "../types/SEO";
 import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import NavPage from "../types/NavPage";
 
 interface HomeProps {
   articles: {
     data: Article[];
   };
-  categories: {
-    data: Category[];
+  navPages: {
+    data: NavPage[];
   };
   homepage: {
     data: {
@@ -31,34 +28,29 @@ interface HomeProps {
   };
 }
 
-const Home = ({ articles, categories, homepage }: HomeProps) => (
-  <div>
-    <Container maxWidth="lg" sx={{ backgroundColor: "#889" }}>
-      {["This text", "That text", "Other text"].map((title, i) => (
-        <Card key={i}>
-          <CardContent>
-            <Typography variant="h4">{title}</Typography>
-          </CardContent>
-        </Card>
-      ))}
+const Home = ({ articles, navPages, homepage }: HomeProps) => (
+  <Layout navPages={navPages.data}>
+    <Container maxWidth="lg">
+      <Articles articles={articles.data} />
     </Container>
-  </div>
+  </Layout>
 );
 
 export async function getStaticProps() {
   const articlesQueryString = stringify({
     populate: ["category", "writer", "cover", "topics"],
+    sort: ["publishedAt:desc", "updatedAt:desc"],
   });
 
   // Run API calls in parallel
-  const [articles, categories, homepage] = await Promise.all([
-    getFromAPI("/articles"),
-    getFromAPI("/categories"),
+  const [articles, navPages, homepage] = await Promise.all([
+    getFromAPI("/articles", articlesQueryString),
+    getFromAPI("/nav-pages"),
     getFromAPI("/homepage"),
   ]);
 
   return {
-    props: { articles, categories, homepage },
+    props: { articles, navPages, homepage },
     revalidate: 1,
   };
 }
