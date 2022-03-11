@@ -8,15 +8,15 @@ import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import { getMedia } from "../../lib/getMedia";
 import Article from "../../types/Article";
-import Category from "../../types/Category";
 import StrapiMeta from "../../types/StrapiMeta";
+import NavPage from "../../types/NavPage";
 
 interface ArticleProps {
   article: Article;
-  categories: Category[];
+  navPages: NavPage[];
 }
 
-const Article = ({ article, categories }: ArticleProps) => {
+const Article = ({ article, navPages }: ArticleProps) => {
   const image = getMedia(article.attributes.cover.data, "xl");
   console.log(image);
 
@@ -28,7 +28,7 @@ const Article = ({ article, categories }: ArticleProps) => {
   };
 
   return (
-    <Layout categories={categories}>
+    <Layout navPages={navPages}>
       <SEO seo={seo} />
       <Image
         src={image.url}
@@ -74,10 +74,10 @@ export async function getStaticProps({ params }) {
     articleQueryParams
   );
 
-  const categories = await getFromAPI("/categories");
+  const navPages = await getFromAPI("/nav-pages");
 
   return {
-    props: { article: articles.data[0], categories: categories.data },
+    props: { article: articles.data[0], navPages: navPages.data },
     revalidate: 1,
   };
 }

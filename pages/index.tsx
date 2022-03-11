@@ -1,13 +1,13 @@
-import { stringify } from "qs";
 import React from "react";
+import { stringify } from "qs";
 import Articles from "../components/Articles";
 import Layout from "../components/Layout";
-import Seo from "../components/SEO";
 import { getFromAPI } from "../lib/api";
 import Article from "../types/Article";
-import SEO from "../types/SEO";
-import Container from "@mui/material/Container";
+import iSEO from "../types/SEO";
+import SEO from "../components/SEO";
 import NavPage from "../types/NavPage";
+import { styled } from "@mui/system";
 
 interface HomeProps {
   articles: {
@@ -19,7 +19,7 @@ interface HomeProps {
   homepage: {
     data: {
       attributes: {
-        seo: SEO;
+        seo: iSEO;
         hero: {
           title: string;
         };
@@ -28,18 +28,27 @@ interface HomeProps {
   };
 }
 
+const ArticleContainer = styled("main")(({ theme }) => ({
+  display: "grid",
+  width: "100%",
+  gridTemplateColumns: "repeat(12, 1fr)",
+  gridTemplateAreas: `". articles articles articles articles articles articles articles articles articles articles ."`,
+  // [theme.breakpoints.down("lg")]: {},
+}));
+
 const Home = ({ articles, navPages, homepage }: HomeProps) => (
   <Layout navPages={navPages.data}>
-    <Container maxWidth="lg">
-      <Articles articles={articles.data} />
-    </Container>
+    <SEO seo={homepage.data.attributes.seo} />
+    <ArticleContainer>
+      <Articles articles={articles.data} spacing={1} />
+    </ArticleContainer>
   </Layout>
 );
 
 export async function getStaticProps() {
   const articlesQueryString = stringify({
     populate: ["category", "writer", "cover", "topics"],
-    sort: ["publishedAt:desc", "updatedAt:desc"],
+    sort: ["written:desc", "publishedAt:desc"],
   });
 
   // Run API calls in parallel

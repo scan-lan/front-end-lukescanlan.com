@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { createRef } from "react";
 import { css } from "@emotion/react";
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import NavPage from "../types/NavPage";
 import NavButton from "./NavButton";
+import { useRef } from "react";
+import { useContainerDimensions } from "../lib/useContainerDimensions";
 
 const headerCss = css({
   display: "grid",
@@ -16,13 +17,15 @@ const headerCss = css({
   paddingBottom: 24,
 
   "& .sitename": {
-    border: "1px black dashed",
+    // border: "2px black dashed",
     gridArea: "sitename",
+    overflow: "hidden",
   },
 
   "& h1": {
     lineHeight: 0.9,
     paddingTop: "1.3rem",
+    fontWeight: 900,
   },
 
   "& nav": {
@@ -43,35 +46,43 @@ const headerCss = css({
 });
 
 const Nav = ({ navPages }: { navPages: NavPage[] }) => {
-  const siteName = createRef<HTMLDivElement>();
+  const headerRef = useRef();
+  const headerTextWidth = useContainerDimensions(headerRef).width;
   return (
-    <header css={headerCss}>
-      <div className="sitename" ref={siteName}>
+    <header css={headerCss} ref={headerRef}>
+      <div className="sitename">
         <Typography variant="h1">
-          <Link href="/" passHref>
-            <a>
-              <svg height={82} width={800}>
-                <text
-                  x="0"
-                  y="80"
-                  fill="none"
-                  stroke="black"
-                  strokeDasharray="5,5"
-                  fontSize="96px"
-                >
-                  lukescanlan.com
-                </text>
-              </svg>
-            </a>
-          </Link>
+          <svg
+            height={82}
+            width={headerTextWidth}
+            style={{ overflow: "hidden" }}
+          >
+            <text
+              x="4"
+              y="80"
+              fill="none"
+              stroke="black"
+              strokeDasharray="3,3"
+              textLength={headerTextWidth - 10}
+              lengthAdjust="spacingAndGlyphs"
+            >
+              <Link href="/" passHref>
+                <a>lukescanlan.com</a>
+              </Link>
+            </text>
+          </svg>
         </Typography>
       </div>
       <nav>
-        {navPages.map((navPage, i) => (
-          <Link href={navPage.attributes.slug} key={i} passHref>
-            <NavButton text={navPage.attributes.name} />
-          </Link>
-        ))}
+        {navPages.map((navPage, i) => {
+          const href =
+            navPage.attributes.slug === "about"
+              ? "/about"
+              : `/category/${navPage.attributes.slug}`;
+          return (
+            <NavButton text={navPage.attributes.name} href={href} key={i} />
+          );
+        })}
       </nav>
     </header>
   );
