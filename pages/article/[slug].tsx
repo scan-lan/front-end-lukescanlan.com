@@ -18,7 +18,6 @@ interface ArticleProps {
 
 const Article = ({ article, navPages }: ArticleProps) => {
   const image = getMedia(article.attributes.cover.data, "xl");
-  console.log(image);
 
   const seo = {
     metaTitle: article.attributes.title,

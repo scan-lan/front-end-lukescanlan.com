@@ -7,14 +7,14 @@ import NavButton from "./NavButton";
 import { useRef } from "react";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
 
-const headerCss = css({
+const navCss = css({
   display: "grid",
   gridTemplateColumns: "repeat(12, 1fr)",
   gridTemplateAreas: `
     "sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename"
     ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
   `,
-  paddingBottom: 24,
+  paddingBottom: 8,
 
   "& .sitename": {
     // border: "2px black dashed",
@@ -24,11 +24,18 @@ const headerCss = css({
 
   "& h1": {
     lineHeight: 0.9,
-    paddingTop: "1.3rem",
     fontWeight: 900,
   },
 
-  "& nav": {
+  "& .header-a": {
+    stroke: "black",
+    "&:hover, &:focus": {
+      stroke: "white",
+      backgroundColor: "black",
+    },
+  },
+
+  "& .buttons": {
     gridArea: "navbar",
     display: "grid",
     gridTemplateColumns: "repeat(4, 1fr)",
@@ -49,31 +56,32 @@ const Nav = ({ navPages }: { navPages: NavPage[] }) => {
   const headerRef = useRef();
   const headerTextWidth = useContainerDimensions(headerRef).width;
   return (
-    <header css={headerCss} ref={headerRef}>
+    <nav css={navCss} ref={headerRef}>
       <div className="sitename">
         <Typography variant="h1">
-          <svg
-            height={82}
-            width={headerTextWidth}
-            style={{ overflow: "hidden" }}
-          >
-            <text
-              x="4"
-              y="80"
-              fill="none"
-              stroke="black"
-              strokeDasharray="3,3"
-              textLength={headerTextWidth - 10}
-              lengthAdjust="spacingAndGlyphs"
-            >
-              <Link href="/" passHref>
-                <a>lukescanlan.com</a>
-              </Link>
-            </text>
-          </svg>
+          <Link href="/" passHref>
+            <a className="header-a">
+              <svg
+                height={82}
+                width={headerTextWidth}
+                style={{ overflow: "hidden" }}
+              >
+                <text
+                  x="4"
+                  y="80"
+                  fill="none"
+                  strokeDasharray="3,3"
+                  textLength={headerTextWidth - 10}
+                  lengthAdjust="spacingAndGlyphs"
+                >
+                  lukescanlan.com
+                </text>
+              </svg>
+            </a>
+          </Link>
         </Typography>
       </div>
-      <nav>
+      <div className="buttons">
         {navPages.map((navPage, i) => {
           const href =
             navPage.attributes.slug === "about"
@@ -83,8 +91,8 @@ const Nav = ({ navPages }: { navPages: NavPage[] }) => {
             <NavButton text={navPage.attributes.name} href={href} key={i} />
           );
         })}
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 };
 
