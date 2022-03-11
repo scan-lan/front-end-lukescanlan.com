@@ -33,7 +33,7 @@ const Card = ({
   slug,
   coverSize,
 }: CardProps) => {
-  const ref = useRef();
+  const ref = useRef(null);
   const cardCover = getMedia(cover, coverSize ? coverSize : "m");
 
   const cardDimensions = useContainerDimensions(ref);

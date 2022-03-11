@@ -45,7 +45,7 @@ const Home = ({ articles, navPages, homepage }: HomeProps) => (
   </Layout>
 );
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const articlesQueryString = stringify({
     populate: ["category", "writer", "cover", "topics"],
     sort: ["written:desc", "publishedAt:desc"],
@@ -62,6 +62,6 @@ export async function getStaticProps() {
     props: { articles, navPages, homepage },
     revalidate: 1,
   };
-}
+};
 
 export default Home;

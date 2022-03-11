@@ -6,21 +6,23 @@ import Category from "../../types/Category";
 import StrapiMeta from "../../types/StrapiMeta";
 import { stringify } from "qs";
 import Article from "../../types/Article";
+import { GetStaticPaths, GetStaticProps } from "next/types";
+import NavPage from "../../types/NavPage";
 
 interface CategoryProps {
   category: Category;
-  categories: Category[];
+  navPages: NavPage[];
   articles: Article[];
 }
 
-const Category = ({ category, categories, articles }: CategoryProps) => {
+const Category = ({ category, articles, navPages }: CategoryProps) => {
   const seo = {
     metaTitle: category.attributes.name,
     metaDescription: `All ${category.attributes.name} articles`,
   };
 
   return (
-    <Layout categories={categories}>
+    <Layout navPages={navPages}>
       <SEO seo={seo} />
       <div className="uk-section">
         <div className="uk-container uk-container-large">
@@ -32,7 +34,7 @@ const Category = ({ category, categories, articles }: CategoryProps) => {
   );
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const categories: { data: Category[] } = await getFromAPI("/categories");
 
   return {
@@ -43,13 +45,13 @@ export async function getStaticPaths() {
     })),
     fallback: false,
   };
-}
+};
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const categoryQueryString = stringify({
     filters: {
       slug: {
-        $eq: params.slug,
+        $eq: params?.slug,
       },
     },
   });
@@ -58,15 +60,15 @@ export async function getStaticProps({ params }) {
     "/categories",
     categoryQueryString
   );
-  const categories: { data: Category[]; meta: StrapiMeta } = await getFromAPI(
-    "/categories"
+  const navPages: { data: NavPage[]; meta: StrapiMeta } = await getFromAPI(
+    "/nav-pages"
   );
 
   const articlesQueryString = stringify({
     filters: {
       category: {
         slug: {
-          $eq: params.slug,
+          $eq: params?.slug,
         },
       },
     },
@@ -81,11 +83,11 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       category: category.data[0],
-      categories: categories.data,
+      categories: navPages.data,
       articles: articles.data,
     },
     revalidate: 1,
   };
-}
+};
 
 export default Category;

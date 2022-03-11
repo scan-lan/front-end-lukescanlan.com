@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, MutableRefObject } from "react";
 
-export const useContainerDimensions = (ref) => {
+export const useContainerDimensions = (ref: MutableRefObject<any>) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {

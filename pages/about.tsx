@@ -1,9 +1,14 @@
 /** @jsxImportSource @emotion/react */
+import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
 import { getFromAPI } from "../lib/api";
 import NavPage from "../types/NavPage";
 
-const About = ({ navPages }) => {
+interface AboutProps {
+  navPages: NavPage[];
+}
+
+const About = ({ navPages }: AboutProps) => {
   return (
     <Layout navPages={navPages}>
       <div
@@ -19,13 +24,13 @@ const About = ({ navPages }) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const navPages: { data: NavPage } = await getFromAPI("/nav-pages");
 
   return {
     props: { navPages: navPages.data },
     revalidate: 1,
   };
-}
+};
 
 export default About;

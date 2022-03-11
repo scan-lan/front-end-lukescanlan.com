@@ -4,7 +4,7 @@ export interface MediaFormat {
   hash: string;
   mime: string;
   name: string;
-  path: string | null;
+  path?: string | null;
   size: number;
   width: number;
   height: number;

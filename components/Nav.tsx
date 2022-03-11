@@ -53,7 +53,7 @@ const navCss = css({
 });
 
 const Nav = ({ navPages }: { navPages: NavPage[] }) => {
-  const headerRef = useRef();
+  const headerRef = useRef<HTMLElement>(null);
   const headerTextWidth = useContainerDimensions(headerRef).width;
   return (
     <nav css={navCss} ref={headerRef}>

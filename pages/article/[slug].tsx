@@ -10,6 +10,7 @@ import { getMedia } from "../../lib/getMedia";
 import Article from "../../types/Article";
 import StrapiMeta from "../../types/StrapiMeta";
 import NavPage from "../../types/NavPage";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 interface ArticleProps {
   article: Article;
@@ -45,7 +46,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
   );
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const articles: { data: Article[] } = await getFromAPI("/articles");
 
   return {
@@ -56,13 +57,13 @@ export async function getStaticPaths() {
     })),
     fallback: false,
   };
-}
+};
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const articleQueryParams = stringify({
     filters: {
       slug: {
-        $eq: params.slug,
+        $eq: params?.slug,
       },
     },
     populate: ["writer", "writer.picture", "cover", "category"],
@@ -79,6 +80,6 @@ export async function getStaticProps({ params }) {
     props: { article: articles.data[0], navPages: navPages.data },
     revalidate: 1,
   };
-}
+};
 
 export default Article;
