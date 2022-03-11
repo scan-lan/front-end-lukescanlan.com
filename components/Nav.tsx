@@ -1,31 +1,41 @@
 /** @jsxImportSource @emotion/react */
-import { createRef } from "react";
 import { css } from "@emotion/react";
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import NavPage from "../types/NavPage";
 import NavButton from "./NavButton";
+import { useRef } from "react";
+import { useContainerDimensions } from "../lib/useContainerDimensions";
 
-const headerCss = css({
+const navCss = css({
   display: "grid",
   gridTemplateColumns: "repeat(12, 1fr)",
   gridTemplateAreas: `
     "sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename"
     ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
   `,
-  paddingBottom: 24,
+  paddingBottom: 8,
 
   "& .sitename": {
-    border: "1px black dashed",
+    // border: "2px black dashed",
     gridArea: "sitename",
+    overflow: "hidden",
   },
 
   "& h1": {
     lineHeight: 0.9,
-    paddingTop: "1.3rem",
+    fontWeight: 900,
   },
 
-  "& nav": {
+  "& .header-a": {
+    stroke: "black",
+    "&:hover, &:focus": {
+      stroke: "white",
+      backgroundColor: "black",
+    },
+  },
+
+  "& .buttons": {
     gridArea: "navbar",
     display: "grid",
     gridTemplateColumns: "repeat(4, 1fr)",
@@ -43,21 +53,26 @@ const headerCss = css({
 });
 
 const Nav = ({ navPages }: { navPages: NavPage[] }) => {
-  const siteName = createRef<HTMLDivElement>();
+  const headerRef = useRef();
+  const headerTextWidth = useContainerDimensions(headerRef).width;
   return (
-    <header css={headerCss}>
-      <div className="sitename" ref={siteName}>
+    <nav css={navCss} ref={headerRef}>
+      <div className="sitename">
         <Typography variant="h1">
           <Link href="/" passHref>
-            <a>
-              <svg height={82} width={800}>
+            <a className="header-a">
+              <svg
+                height={82}
+                width={headerTextWidth}
+                style={{ overflow: "hidden" }}
+              >
                 <text
-                  x="0"
+                  x="4"
                   y="80"
                   fill="none"
-                  stroke="black"
-                  strokeDasharray="5,5"
-                  fontSize="96px"
+                  strokeDasharray="3,3"
+                  textLength={headerTextWidth - 10}
+                  lengthAdjust="spacingAndGlyphs"
                 >
                   lukescanlan.com
                 </text>
@@ -66,14 +81,18 @@ const Nav = ({ navPages }: { navPages: NavPage[] }) => {
           </Link>
         </Typography>
       </div>
-      <nav>
-        {navPages.map((navPage, i) => (
-          <Link href={navPage.attributes.slug} key={i} passHref>
-            <NavButton text={navPage.attributes.name} />
-          </Link>
-        ))}
-      </nav>
-    </header>
+      <div className="buttons">
+        {navPages.map((navPage, i) => {
+          const href =
+            navPage.attributes.slug === "about"
+              ? "/about"
+              : `/category/${navPage.attributes.slug}`;
+          return (
+            <NavButton text={navPage.attributes.name} href={href} key={i} />
+          );
+        })}
+      </div>
+    </nav>
   );
 };
 

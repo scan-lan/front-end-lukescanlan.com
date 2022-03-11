@@ -1,13 +1,20 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import Article from "../types/Article";
 import Card from "./Card";
 import { Masonry } from "@mui/lab";
 
 interface ArticlesProps {
   articles: Article[];
+  spacing?: number;
 }
 
-const Articles = ({ articles }: ArticlesProps) => {
+const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
+  const articlesCss = css({
+    gridArea: "articles",
+    width: `calc(100% + ${spacing * 8}px)`,
+  });
+
   const articleCards = articles.map((article) => (
     <Card
       key={article.attributes.slug}
@@ -24,7 +31,11 @@ const Articles = ({ articles }: ArticlesProps) => {
   ));
 
   return (
-    <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={3}>
+    <Masonry
+      columns={{ xl: 4, lg: 3, sm: 2, xs: 1 }}
+      spacing={spacing}
+      css={articlesCss}
+    >
       {articleCards}
     </Masonry>
   );

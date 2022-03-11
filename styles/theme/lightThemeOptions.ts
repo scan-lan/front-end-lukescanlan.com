@@ -49,6 +49,10 @@ export const lightThemeOptions: ThemeOptions = {
         sx: {
           border: "2px white dashed",
           borderRadius: 0,
+          boxShadow: "none",
+          "&:hover, &:focus": {
+            boxShadow: "none",
+          },
         },
       },
     },
