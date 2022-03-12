@@ -20,7 +20,6 @@ export const lightThemeOptions: ThemeOptions = {
       fontFamily: "Roboto Slab, serif",
       fontWeight: 700,
       fontVariant: "small-caps",
-      // fontSize: "48px",
       lineHeight: 0.9,
     },
     body1: {
