@@ -1,18 +1,19 @@
-import Articles from "../../components/Articles";
-import { getFromAPI } from "../../lib/api";
-import Layout from "../../components/Layout";
-import SEO from "../../components/SEO";
-import Category from "../../types/Category";
-import StrapiMeta from "../../types/StrapiMeta";
-import { stringify } from "qs";
-import Article from "../../types/Article";
 import { GetStaticPaths, GetStaticProps } from "next/types";
+
+import ApiArticle from "../../types/Article";
+import Articles from "../../components/Articles";
+import Layout from "../../components/Layout";
 import NavPage from "../../types/NavPage";
+import SEO from "../../components/SEO";
+import type StrapiMeta from "../../types/StrapiMeta";
+import { getFromAPI } from "../../lib/api";
+import type iCategory from "../../types/Category";
+import { stringify } from "qs";
 
 interface CategoryProps {
-  category: Category;
+  category: iCategory;
   navPages: NavPage[];
-  articles: Article[];
+  articles: ApiArticle[];
 }
 
 const Category = ({ category, articles, navPages }: CategoryProps) => {
@@ -35,7 +36,7 @@ const Category = ({ category, articles, navPages }: CategoryProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categories: { data: Category[] } = await getFromAPI("/categories");
+  const categories: { data: iCategory[] } = await getFromAPI("/categories");
 
   return {
     paths: categories.data.map((category) => ({
@@ -56,7 +57,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   });
 
-  const category: { data: Category[]; meta: StrapiMeta } = await getFromAPI(
+  const category: { data: iCategory[]; meta: StrapiMeta } = await getFromAPI(
     "/categories",
     categoryQueryString
   );
@@ -75,7 +76,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     populate: "*",
   });
 
-  const articles: { data: Article[]; meta: StrapiMeta } = await getFromAPI(
+  const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
     "/articles",
     articlesQueryString
   );

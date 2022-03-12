@@ -1,17 +1,17 @@
-import React from "react";
-import { stringify } from "qs";
+import ApiArticle from "../types/Article";
 import Articles from "../components/Articles";
 import Layout from "../components/Layout";
-import { getFromAPI } from "../lib/api";
-import Article from "../types/Article";
-import iSEO from "../types/SEO";
-import SEO from "../components/SEO";
 import NavPage from "../types/NavPage";
+import React from "react";
+import SEO from "../components/SEO";
+import { getFromAPI } from "../lib/api";
+import iSEO from "../types/SEO";
+import { stringify } from "qs";
 import { styled } from "@mui/system";
 
 interface HomeProps {
   articles: {
-    data: Article[];
+    data: ApiArticle[];
   };
   navPages: {
     data: NavPage[];

@@ -1,18 +1,20 @@
-import React from "react";
-import App from "next/app";
-import Head from "next/head";
-import type { AppProps } from "next/app";
-import { createContext } from "react";
-import { stringify } from "qs";
+import "../styles/globals.css";
+import "../styles/globals.css";
+
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
-import { getMedia, getMediaURL } from "../lib/getMedia";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+
+import App from "next/app";
+import type { AppProps } from "next/app";
 import Global from "../types/Global";
-import { getFromAPI } from "../lib/api";
-import "../styles/globals.css";
+import Head from "next/head";
+import React from "react";
+import { createContext } from "react";
 import createEmotionCache from "../lib/createEmotionCache";
+import { getFromAPI } from "../lib/api";
+import { getMediaURL } from "../lib/getMedia";
 import { lightThemeOptions } from "../styles/theme/lightThemeOptions";
-import "../styles/globals.css";
+import { stringify } from "qs";
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;

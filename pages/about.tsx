@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
+
 import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
-import { getFromAPI } from "../lib/api";
 import NavPage from "../types/NavPage";
+import { getFromAPI } from "../lib/api";
 
 interface AboutProps {
   navPages: NavPage[];

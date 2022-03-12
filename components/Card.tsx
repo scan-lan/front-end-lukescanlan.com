@@ -1,15 +1,16 @@
 import React, { useRef } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import MUICard from "@mui/material/Card";
+import { getMedia, mediaSize } from "../lib/getMedia";
+
 import CardActionArea from "@mui/material/CardActionArea";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
+import Image from "next/image";
+import Link from "next/link";
+import MUICard from "@mui/material/Card";
+import Moment from "react-moment";
 import Stack from "@mui/material/Stack";
 import StrapiMedia from "../types/StrapiMedia";
-import { getMedia, mediaSize } from "../lib/getMedia";
-import Moment from "react-moment";
+import Typography from "@mui/material/Typography";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
 
 interface CardProps {
