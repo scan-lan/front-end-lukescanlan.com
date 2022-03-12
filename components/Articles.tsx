@@ -2,7 +2,7 @@
 
 import ApiArticle from "../types/Article";
 import Card from "./Card";
-import { Masonry } from "@mui/lab";
+import Masonry from "@mui/lab/Masonry";
 import { css } from "@emotion/react";
 
 interface ArticlesProps {
