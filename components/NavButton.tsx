@@ -10,7 +10,6 @@ interface NavButtonProps {
 }
 
 const navButtonCss = css({
-  textTransform: "none",
   "&:focus": {
     backgroundColor: "white",
     borderColor: "black",
@@ -20,6 +19,10 @@ const navButtonCss = css({
     backgroundColor: "white",
     borderColor: "black",
     color: "black",
+  },
+
+  ".MuiTouchRipple-child": {
+    backgroundColor: "#666",
   },
 });
 

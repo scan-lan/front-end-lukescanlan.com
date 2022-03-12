@@ -1,11 +1,11 @@
 import ApiArticle from "../types/Article";
+import ApiSEO from "../types/SEO";
 import Articles from "../components/Articles";
 import Layout from "../components/Layout";
 import NavPage from "../types/NavPage";
 import React from "react";
 import SEO from "../components/SEO";
 import { getFromAPI } from "../lib/api";
-import iSEO from "../types/SEO";
 import { stringify } from "qs";
 import { styled } from "@mui/system";
 
@@ -19,7 +19,7 @@ interface HomeProps {
   homepage: {
     data: {
       attributes: {
-        seo: iSEO;
+        seo: ApiSEO;
         hero: {
           title: string;
         };

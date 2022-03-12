@@ -2,6 +2,6 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "@next/next/no-sync-scripts": "off",
-    "sort-imports": 2
+    "sort-imports": 1
   }
 }

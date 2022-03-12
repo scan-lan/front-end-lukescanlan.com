@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import Link from "next/link";
 import NavButton from "./NavButton";
 import NavPage from "../types/NavPage";
-import Typography from "@mui/material/Typography";
+import Sitename from "./Sitename";
 import { css } from "@emotion/react";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
 import { useRef } from "react";
@@ -16,25 +15,6 @@ const navCss = css({
     ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
   `,
   paddingBottom: 8,
-
-  "& .sitename": {
-    // border: "2px black dashed",
-    gridArea: "sitename",
-    overflow: "hidden",
-  },
-
-  "& h1": {
-    lineHeight: 0.9,
-    fontWeight: 900,
-  },
-
-  "& .header-a": {
-    stroke: "black",
-    "&:hover, &:focus": {
-      stroke: "white",
-      backgroundColor: "black",
-    },
-  },
 
   "& .buttons": {
     gridArea: "navbar",
@@ -58,30 +38,7 @@ const Nav = ({ navPages }: { navPages: NavPage[] }) => {
   const headerTextWidth = useContainerDimensions(headerRef).width;
   return (
     <nav css={navCss} ref={headerRef}>
-      <div className="sitename">
-        <Typography variant="h1">
-          <Link href="/" passHref>
-            <a className="header-a">
-              <svg
-                height={82}
-                width={headerTextWidth}
-                style={{ overflow: "hidden" }}
-              >
-                <text
-                  x="4"
-                  y="80"
-                  fill="none"
-                  strokeDasharray="3,3"
-                  textLength={headerTextWidth - 10}
-                  lengthAdjust="spacingAndGlyphs"
-                >
-                  lukescanlan.com
-                </text>
-              </svg>
-            </a>
-          </Link>
-        </Typography>
-      </div>
+      <Sitename textWidth={headerTextWidth} />
       <div className="buttons">
         {navPages.map((navPage, i) => {
           const href =

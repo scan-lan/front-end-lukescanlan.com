@@ -48,6 +48,7 @@ export const lightThemeOptions: ThemeOptions = {
       defaultProps: {
         sx: {
           border: "2px white dashed",
+          textTransform: "none",
           borderRadius: 0,
           boxShadow: "none",
           "&:hover, &:focus": {
