@@ -13,7 +13,6 @@ const Sitename = ({ textWidth }: SitenameProps) => {
   const sitenameCss = css({
     // border: "2px black dashed",
     gridArea: "sitename",
-    overflow: "hidden",
 
     "& h1": {
       lineHeight: 0.9,
@@ -23,6 +22,10 @@ const Sitename = ({ textWidth }: SitenameProps) => {
     "& .header-a": {
       borderColor: "black",
       stroke: "black",
+      padding: 0,
+      overflow: "hidden",
+      width: "100%",
+
       "&:hover, &:focus": {
         borderColor: "white",
         stroke: "white",
@@ -37,15 +40,18 @@ const Sitename = ({ textWidth }: SitenameProps) => {
   return (
     <div className="sitename" css={sitenameCss}>
       <Link href="/" passHref>
-        {/* <a className="header-a"> */}
         <Button className="header-a">
           <Typography variant="h1">
-            <svg height={82} width={textWidth} style={{ overflow: "hidden" }}>
+            <svg
+              height={90}
+              width={textWidth - 10}
+              style={{ overflow: "hidden" }}
+            >
               <text
-                x="4"
-                y="80"
+                x="0"
+                y="87"
                 fill="none"
-                strokeDasharray="3,3"
+                strokeDasharray="3,4"
                 textLength={textWidth - 10}
                 lengthAdjust="spacingAndGlyphs"
               >
@@ -54,7 +60,6 @@ const Sitename = ({ textWidth }: SitenameProps) => {
             </svg>
           </Typography>
         </Button>
-        {/* </a> */}
       </Link>
     </div>
   );
