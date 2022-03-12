@@ -21,6 +21,7 @@ export const lightThemeOptions: ThemeOptions = {
       fontWeight: 700,
       fontVariant: "small-caps",
       lineHeight: 0.9,
+      fontSize: "2.5rem",
     },
     body1: {
       fontSize: "20px",
