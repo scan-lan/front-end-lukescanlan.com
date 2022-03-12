@@ -1,26 +1,29 @@
+import { GetStaticPaths, GetStaticProps } from "next/types";
+
+import ApiArticle from "../../types/Article";
 import Articles from "../../components/Articles";
-import { getFromAPI } from "../../lib/api";
 import Layout from "../../components/Layout";
+import NavPage from "../../types/NavPage";
 import SEO from "../../components/SEO";
-import Category from "../../types/Category";
-import StrapiMeta from "../../types/StrapiMeta";
+import type StrapiMeta from "../../types/StrapiMeta";
+import { getFromAPI } from "../../lib/api";
+import type iCategory from "../../types/Category";
 import { stringify } from "qs";
-import Article from "../../types/Article";
 
 interface CategoryProps {
-  category: Category;
-  categories: Category[];
-  articles: Article[];
+  category: iCategory;
+  navPages: NavPage[];
+  articles: ApiArticle[];
 }
 
-const Category = ({ category, categories, articles }: CategoryProps) => {
+const Category = ({ category, articles, navPages }: CategoryProps) => {
   const seo = {
     metaTitle: category.attributes.name,
     metaDescription: `All ${category.attributes.name} articles`,
   };
 
   return (
-    <Layout categories={categories}>
+    <Layout navPages={navPages}>
       <SEO seo={seo} />
       <div className="uk-section">
         <div className="uk-container uk-container-large">
@@ -32,8 +35,8 @@ const Category = ({ category, categories, articles }: CategoryProps) => {
   );
 };
 
-export async function getStaticPaths() {
-  const categories: { data: Category[] } = await getFromAPI("/categories");
+export const getStaticPaths: GetStaticPaths = async () => {
+  const categories: { data: iCategory[] } = await getFromAPI("/categories");
 
   return {
     paths: categories.data.map((category) => ({
@@ -43,37 +46,37 @@ export async function getStaticPaths() {
     })),
     fallback: false,
   };
-}
+};
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const categoryQueryString = stringify({
     filters: {
       slug: {
-        $eq: params.slug,
+        $eq: params?.slug,
       },
     },
   });
 
-  const category: { data: Category[]; meta: StrapiMeta } = await getFromAPI(
+  const category: { data: iCategory[]; meta: StrapiMeta } = await getFromAPI(
     "/categories",
     categoryQueryString
   );
-  const categories: { data: Category[]; meta: StrapiMeta } = await getFromAPI(
-    "/categories"
+  const navPages: { data: NavPage[]; meta: StrapiMeta } = await getFromAPI(
+    "/nav-pages"
   );
 
   const articlesQueryString = stringify({
     filters: {
       category: {
         slug: {
-          $eq: params.slug,
+          $eq: params?.slug,
         },
       },
     },
     populate: "*",
   });
 
-  const articles: { data: Article[]; meta: StrapiMeta } = await getFromAPI(
+  const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
     "/articles",
     articlesQueryString
   );
@@ -81,11 +84,11 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       category: category.data[0],
-      categories: categories.data,
+      categories: navPages.data,
       articles: articles.data,
     },
     revalidate: 1,
   };
-}
+};
 
 export default Category;

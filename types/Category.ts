@@ -1,6 +1,6 @@
-import Article from "./Article";
+import ApiArticle from "./Article";
 
-export default interface Category {
+export default interface ApiCategory {
   id: number;
   attributes: {
     name: string;
@@ -9,7 +9,7 @@ export default interface Category {
     updatedAt: Date;
     publishedAt: Date;
     articles: {
-      data: Article[];
+      data: ApiArticle[];
     };
   };
 }

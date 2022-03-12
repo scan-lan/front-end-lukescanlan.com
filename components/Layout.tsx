@@ -1,12 +1,12 @@
-import { ReactNode } from "react";
-import NavPage from "../types/NavPage";
-import SEO from "../types/SEO";
+import ApiSEO from "../types/SEO";
 import Nav from "./Nav";
+import NavPage from "../types/NavPage";
+import { ReactNode } from "react";
 
 interface LayoutProps {
   children: ReactNode;
   navPages: NavPage[];
-  seo?: SEO;
+  seo?: ApiSEO;
 }
 
 const Layout = ({ children, navPages, seo }: LayoutProps) => (

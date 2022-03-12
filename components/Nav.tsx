@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+
 import Link from "next/link";
-import Typography from "@mui/material/Typography";
-import NavPage from "../types/NavPage";
 import NavButton from "./NavButton";
-import { useRef } from "react";
+import NavPage from "../types/NavPage";
+import Typography from "@mui/material/Typography";
+import { css } from "@emotion/react";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
+import { useRef } from "react";
 
 const navCss = css({
   display: "grid",
@@ -53,7 +54,7 @@ const navCss = css({
 });
 
 const Nav = ({ navPages }: { navPages: NavPage[] }) => {
-  const headerRef = useRef();
+  const headerRef = useRef<HTMLElement>(null);
   const headerTextWidth = useContainerDimensions(headerRef).width;
   return (
     <nav css={navCss} ref={headerRef}>

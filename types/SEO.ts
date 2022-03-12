@@ -1,6 +1,6 @@
 import StrapiMedia from "./StrapiMedia";
 
-export default interface SEO {
+export default interface ApiSEO {
   id?: number;
   metaTitle: string;
   metaDescription: string;

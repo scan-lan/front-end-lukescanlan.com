@@ -1,9 +1,9 @@
-import Category from "./Category";
+import ApiCategory from "./Category";
+import ApiTopic from "./Topic";
+import ApiWriter from "./Writer";
 import StrapiMedia from "./StrapiMedia";
-import Topic from "./Topic";
-import Writer from "./Writer";
 
-export default interface Article {
+export default interface ApiArticle {
   id: number;
   attributes: {
     title: string;
@@ -17,16 +17,16 @@ export default interface Article {
     authorsNote?: string;
     contentWarning?: string;
     writer: {
-      data: Writer;
+      data: ApiWriter;
     };
     cover: {
       data: StrapiMedia;
     };
     category: {
-      data: Category;
+      data: ApiCategory;
     };
     topics: {
-      data: Topic[];
+      data: ApiTopic[];
     };
   };
 }

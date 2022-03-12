@@ -1,6 +1,6 @@
 import StrapiMedia from "./StrapiMedia";
 
-export default interface Writer {
+export default interface ApiWriter {
   id: number;
   attributes: {
     name: string;

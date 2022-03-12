@@ -1,10 +1,9 @@
-import Head from "next/head";
-import { useContext } from "react";
-import { GlobalContext } from "../pages/_app";
-import { getMedia } from "../lib/getMedia";
-import SEO from "../types/SEO";
 import Global from "../types/Global";
+import { GlobalContext } from "../pages/_app";
+import Head from "next/head";
 import StrapiMedia from "../types/StrapiMedia";
+import { getMedia } from "../lib/getMedia";
+import { useContext } from "react";
 
 interface SEOProps {
   seo: {
