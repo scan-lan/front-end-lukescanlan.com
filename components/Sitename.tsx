@@ -5,6 +5,10 @@ import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";
 
+interface SitenameProps {
+  textWidth: number;
+}
+
 const sitenameCss = css({
   gridArea: "sitename",
 
@@ -31,10 +35,6 @@ const sitenameCss = css({
     },
   },
 });
-
-interface SitenameProps {
-  textWidth: number;
-}
 
 const Sitename = ({ textWidth }: SitenameProps) => {
   const svgWidth = textWidth < 10 ? textWidth : textWidth - 10;
