@@ -15,7 +15,7 @@ const strokeColor = "#ffffff";
 const sitenameCss = css({
   gridArea: "sitename",
 
-  "& h1": {
+  "& .sitename-text": {
     lineHeight: 0.9,
     fontWeight: 900,
   },
@@ -49,7 +49,7 @@ const Sitename = ({ textWidth }: SitenameProps) => {
     <div className="sitename" css={sitenameCss}>
       <Link href="/" passHref>
         <Button className="header-a">
-          <Typography variant="h1">
+          <Typography variant="h1" component="span" className="sitename-text">
             <svg height={90} width={svgWidth} style={{ overflow: "hidden" }}>
               <text
                 x="0"
