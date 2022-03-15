@@ -4,11 +4,19 @@ import ApiArticle from "../types/Article";
 import Card from "./Card";
 import Masonry from "@mui/lab/Masonry";
 import { css } from "@emotion/react";
+import { styled } from "@mui/system";
 
 interface ArticlesProps {
   articles: ApiArticle[];
   spacing?: number;
 }
+
+const ArticlesContainer = styled("main")(({ theme }) => ({
+  display: "grid",
+  width: "100%",
+  gridTemplateColumns: "repeat(12, 1fr)",
+  gridTemplateAreas: `". articles articles articles articles articles articles articles articles articles articles ."`,
+}));
 
 const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
   const articlesCss = css({
@@ -31,14 +39,29 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
     />
   ));
 
+  const columns: { xl?: number; lg?: number; sm?: number; xs?: number } = {
+    xl: 4,
+    lg: 3,
+    sm: 2,
+    xs: 1,
+  };
+
+  if (articleCards.length < 4) {
+    delete columns.xl;
+    if (articleCards.length < 3) {
+      delete columns.lg;
+      if (articleCards.length < 2) {
+        delete columns.sm;
+      }
+    }
+  }
+
   return (
-    <Masonry
-      columns={{ xl: 4, lg: 3, sm: 2, xs: 1 }}
-      spacing={spacing}
-      css={articlesCss}
-    >
-      {articleCards}
-    </Masonry>
+    <ArticlesContainer>
+      <Masonry columns={columns} spacing={spacing} css={articlesCss}>
+        {articleCards}
+      </Masonry>
+    </ArticlesContainer>
   );
 };
 

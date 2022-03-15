@@ -9,6 +9,9 @@ interface SitenameProps {
   textWidth: number;
 }
 
+const backgroundColor = "#5c7b65";
+const strokeColor = "#ffffff";
+
 const sitenameCss = css({
   gridArea: "sitename",
 
@@ -18,20 +21,23 @@ const sitenameCss = css({
   },
 
   "& .header-a": {
-    borderColor: "black",
-    stroke: "black",
+    backgroundColor: backgroundColor,
+    borderColor: strokeColor,
+    stroke: strokeColor,
+    fill: backgroundColor,
     padding: 0,
     overflow: "hidden",
     width: "100%",
 
     "&:hover, &:focus": {
-      borderColor: "white",
-      stroke: "white",
-      backgroundColor: "black",
+      borderColor: backgroundColor,
+      stroke: "none",
+      backgroundColor: strokeColor,
+      fill: backgroundColor,
     },
 
     ".MuiTouchRipple-child": {
-      backgroundColor: "white",
+      backgroundColor: backgroundColor,
     },
   },
 });
@@ -48,7 +54,6 @@ const Sitename = ({ textWidth }: SitenameProps) => {
               <text
                 x="0"
                 y="87"
-                fill="none"
                 strokeDasharray="3,4"
                 textLength={svgWidth}
                 lengthAdjust="spacingAndGlyphs"

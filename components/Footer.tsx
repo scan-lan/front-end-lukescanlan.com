@@ -4,9 +4,12 @@ import { styled } from "@mui/system";
 const StyledFooter = styled("footer")(({ theme }) => ({
   display: "grid",
   placeContent: "center",
-  borderTop: "1px black dotted",
+  borderTop: "2px white dashed",
   marginTop: theme.spacing(3),
   height: "5rem",
+  color: "#ffffff",
+  backgroundColor: "#5c7b65",
+  fontWeight: 500,
 }));
 
 const Footer = () => (
