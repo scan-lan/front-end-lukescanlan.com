@@ -28,20 +28,10 @@ interface HomeProps {
   };
 }
 
-const ArticleContainer = styled("main")(({ theme }) => ({
-  display: "grid",
-  width: "100%",
-  gridTemplateColumns: "repeat(12, 1fr)",
-  gridTemplateAreas: `". articles articles articles articles articles articles articles articles articles articles ."`,
-  // [theme.breakpoints.down("lg")]: {},
-}));
-
 const Home = ({ articles, navPages, homepage }: HomeProps) => (
   <Layout navPages={navPages.data}>
     <SEO seo={homepage.data.attributes.seo} />
-    <ArticleContainer>
-      <Articles articles={articles.data} spacing={1} />
-    </ArticleContainer>
+    <Articles articles={articles.data} spacing={1} />
   </Layout>
 );
 
