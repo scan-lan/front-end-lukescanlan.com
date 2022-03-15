@@ -33,8 +33,12 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
       topics={article.attributes.topics.data.map(
         (topic) => topic.attributes.name
       )}
-      date={article.attributes.publishedAt}
-      category={article.attributes.category.data.attributes.name}
+      date={article.attributes.written}
+      category={
+        article.attributes.category.data?.attributes.name
+          ? article.attributes.category.data.attributes.name
+          : null
+      }
       slug={article.attributes.slug}
     />
   ));

@@ -17,13 +17,13 @@ export default interface ApiArticle {
     authorsNote?: string;
     contentWarning?: string;
     writer: {
-      data: ApiWriter;
+      data: ApiWriter | null;
     };
     cover: {
       data: StrapiMedia;
     };
     category: {
-      data: ApiCategory;
+      data: ApiCategory | null;
     };
     topics: {
       data: ApiTopic[];
