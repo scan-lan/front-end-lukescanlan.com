@@ -9,56 +9,36 @@ export type mediaSize =
   | "original"
   | "thumbnail";
 
-const getSizeFromKey = (media: StrapiMedia, key: mediaSize): MediaFormat => {
-  switch (key) {
+export const getMedia = (
+  media: StrapiMedia,
+  size: mediaSize = "original"
+): MediaFormat => {
+  switch (size) {
     case "xs":
-      return media.attributes.formats.xsmall;
+      return media.attributes.formats?.xsmall
+        ? media.attributes.formats.xsmall
+        : media.attributes;
     case "s":
-      return media.attributes.formats.small;
+      return media.attributes.formats.small
+        ? media.attributes.formats.small
+        : media.attributes;
     case "m":
-      return media.attributes.formats.medium;
+      return media.attributes.formats.medium
+        ? media.attributes.formats.medium
+        : media.attributes;
     case "l":
-      return media.attributes.formats.large;
+      return media.attributes.formats.large
+        ? media.attributes.formats.large
+        : media.attributes;
     case "xl":
-      return media.attributes.formats.xlarge;
+      return media.attributes.formats.xlarge
+        ? media.attributes.formats.xlarge
+        : media.attributes;
     case "thumbnail":
       return media.attributes.formats.thumbnail;
     case "original":
       return media.attributes;
   }
-};
-
-export const getMedia = (
-  media: StrapiMedia,
-  size: mediaSize = "original"
-): MediaFormat => {
-  const sizeKeys: mediaSize[] = [
-    "thumbnail",
-    "xl",
-    "l",
-    "m",
-    "s",
-    "xs",
-    "original",
-  ];
-  let matched = false;
-  let mediaFormat = getSizeFromKey(media, "original");
-
-  for (let i = 0; i < sizeKeys.length; i++) {
-    if (size === sizeKeys[i]) {
-      matched = true;
-    }
-    if (matched && getSizeFromKey(media, sizeKeys[i])) {
-      try {
-        mediaFormat = getSizeFromKey(media, sizeKeys[i]);
-        break;
-      } catch (TypeError) {
-        continue;
-      }
-    }
-  }
-
-  return mediaFormat;
 };
 
 export const getMediaURL = (

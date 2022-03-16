@@ -19,12 +19,12 @@ export default interface StrapiMedia {
     width: number;
     height: number;
     formats: {
-      large: MediaFormat;
-      small: MediaFormat;
-      medium: MediaFormat;
-      xlarge: MediaFormat;
-      xsmall: MediaFormat;
       thumbnail: MediaFormat;
+      xsmall?: MediaFormat;
+      small?: MediaFormat;
+      medium?: MediaFormat;
+      large?: MediaFormat;
+      xlarge?: MediaFormat;
     };
     hash: string;
     ext: string;
