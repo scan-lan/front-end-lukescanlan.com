@@ -9,7 +9,7 @@ interface NavButtonProps {
   text: string;
 }
 
-const navButtonCss = css({
+const navButtonStyles = css({
   "&:hover": {
     backgroundColor: "white",
     borderColor: "black",
@@ -23,7 +23,7 @@ const navButtonCss = css({
 
 const NavButton = ({ href, text }: NavButtonProps) => (
   <Link href={href} passHref>
-    <Button variant="contained" css={navButtonCss} focusRipple={true}>
+    <Button variant="contained" css={navButtonStyles} focusRipple={true}>
       {text}
     </Button>
   </Link>

@@ -1,46 +1,52 @@
 /** @jsxImportSource @emotion/react */
 
+import { Theme, css } from "@emotion/react";
+
 import NavButton from "./NavButton";
 import NavPage from "../types/NavPage";
 import Sitename from "./Sitename";
-import { css } from "@emotion/react";
-import { styled } from "@mui/system";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
 import { useRef } from "react";
 
-const navCss = css({
-  display: "grid",
-  gridTemplateColumns: "repeat(12, 1fr)",
-  gridTemplateAreas: `
-    "sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename"
-    ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
-  `,
-  paddingBottom: 8,
-});
+interface NavProps {
+  navPages: NavPage[];
+  spacing?: number;
+}
 
-const ButtonsDiv = styled("div")(({ theme }) => ({
-  gridArea: "navbar",
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
-  gap: 8,
-  paddingTop: 8,
-  [theme.breakpoints.down("lg")]: {
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gridTemplateRows: "repeat(2, 1fr)",
-  },
-  [theme.breakpoints.down("sm")]: {
-    gridTemplateRows: "repeat(4, 1fr)",
-    gridTemplateColumns: "1fr",
-  },
-}));
+const Nav = ({ navPages, spacing = 1 }: NavProps) => {
+  const navStyles = (theme: Theme) =>
+    css({
+      display: "grid",
+      gridTemplateColumns: "repeat(12, 1fr)",
+      gridTemplateAreas: `
+      "sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename"
+      ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
+    `,
+      paddingBottom: theme.spacing(spacing),
 
-const Nav = ({ navPages }: { navPages: NavPage[] }) => {
+      "& .buttons": {
+        gridArea: "navbar",
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: theme.spacing(spacing),
+        paddingTop: theme.spacing(spacing),
+        [theme.breakpoints.down("lg")]: {
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gridTemplateRows: "repeat(2, 1fr)",
+        },
+        [theme.breakpoints.down("sm")]: {
+          gridTemplateRows: "repeat(4, 1fr)",
+          gridTemplateColumns: "1fr",
+        },
+      },
+    });
+
   const headerRef = useRef<HTMLElement>(null);
   const headerTextWidth = useContainerDimensions(headerRef).width;
   return (
-    <nav css={navCss} ref={headerRef}>
+    <nav css={navStyles} ref={headerRef}>
       <Sitename textWidth={headerTextWidth} />
-      <ButtonsDiv>
+      <div className="buttons">
         {navPages.map((navPage, i) => {
           const href =
             navPage.attributes.slug === "about"
@@ -50,7 +56,7 @@ const Nav = ({ navPages }: { navPages: NavPage[] }) => {
             <NavButton text={navPage.attributes.name} href={href} key={i} />
           );
         })}
-      </ButtonsDiv>
+      </div>
     </nav>
   );
 };

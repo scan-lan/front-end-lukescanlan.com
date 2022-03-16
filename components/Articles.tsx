@@ -1,28 +1,29 @@
 /** @jsxImportSource @emotion/react */
 
+import { Theme, css } from "@emotion/react";
+
 import ApiArticle from "../types/Article";
 import Card from "./Card";
 import Masonry from "@mui/lab/Masonry";
-import { css } from "@emotion/react";
-import { styled } from "@mui/system";
 
 interface ArticlesProps {
   articles: ApiArticle[];
   spacing?: number;
 }
 
-const ArticlesContainer = styled("main")(({ theme }) => ({
-  display: "grid",
-  width: "100%",
-  gridTemplateColumns: "repeat(12, 1fr)",
-  gridTemplateAreas: `". articles articles articles articles articles articles articles articles articles articles ."`,
-}));
-
 const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
-  const articlesCss = css({
-    gridArea: "articles",
-    width: `calc(100% + ${spacing * 8}px)`,
-  });
+  const mainStyles = (theme: Theme) =>
+    css({
+      display: "grid",
+      width: "100%",
+      gridTemplateColumns: "repeat(12, 1fr)",
+      gridTemplateAreas: `". articles articles articles articles articles articles articles articles articles articles ."`,
+
+      "& .masonry": {
+        gridArea: "articles",
+        width: `calc(100% + ${theme.spacing(spacing)}px)`,
+      },
+    });
 
   const articleCards = articles.map((article) => (
     <Card
@@ -61,11 +62,11 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
   }
 
   return (
-    <ArticlesContainer>
-      <Masonry columns={columns} spacing={spacing} css={articlesCss}>
+    <main css={mainStyles}>
+      <Masonry columns={columns} spacing={spacing} className="masonry">
         {articleCards}
       </Masonry>
-    </ArticlesContainer>
+    </main>
   );
 };
 

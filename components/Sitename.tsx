@@ -12,7 +12,7 @@ interface SitenameProps {
 const backgroundColor = "#5c7b65";
 const strokeColor = "#ffffff";
 
-const sitenameCss = css({
+const sitenameStyles = css({
   gridArea: "sitename",
 
   "& .sitename-text": {
@@ -46,7 +46,7 @@ const Sitename = ({ textWidth }: SitenameProps) => {
   const svgWidth = textWidth < 10 ? textWidth : textWidth - 10;
 
   return (
-    <div className="sitename" css={sitenameCss}>
+    <div className="sitename" css={sitenameStyles}>
       <Link href="/" passHref>
         <Button className="header-a">
           <Typography variant="h1" component="span" className="sitename-text">
