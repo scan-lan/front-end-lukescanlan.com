@@ -17,7 +17,9 @@ const sitenameStyles = css({
 
   "& .sitename-text": {
     lineHeight: 0.9,
+    fontFamily: "Roboto, sans-serif",
     fontWeight: 900,
+    fontSize: "6rem",
   },
 
   "& .header-a": {
@@ -49,7 +51,7 @@ const Sitename = ({ textWidth }: SitenameProps) => {
     <div className="sitename" css={sitenameStyles}>
       <Link href="/" passHref>
         <Button className="header-a">
-          <Typography variant="h1" component="span" className="sitename-text">
+          <span className="sitename-text">
             <svg height={90} width={svgWidth} style={{ overflow: "hidden" }}>
               <text
                 x="0"
@@ -61,7 +63,7 @@ const Sitename = ({ textWidth }: SitenameProps) => {
                 lukescanlan.com
               </text>
             </svg>
-          </Typography>
+          </span>
         </Button>
       </Link>
     </div>
