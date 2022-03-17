@@ -22,7 +22,7 @@ interface MyAppProps extends AppProps {
 }
 
 // Store Strapi Global object in context
-export const GlobalContext = createContext({});
+export const GlobalContext = createContext<Global | null>(null);
 
 const clientSideEmotionCache = createEmotionCache();
 const lightTheme = createTheme(lightThemeOptions);

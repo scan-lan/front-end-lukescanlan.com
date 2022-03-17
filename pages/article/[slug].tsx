@@ -1,8 +1,11 @@
+/** @jsxImportSource @emotion/react */
+
 import { GetStaticPaths, GetStaticProps } from "next";
+import { Theme, css } from "@emotion/react";
 
 import ApiArticle from "../../types/Article";
-import Container from "@mui/material/Container";
-import Image from "next/image";
+import ArticleImage from "../../components/ArticleImage";
+import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
 import NavPage from "../../types/NavPage";
 import ReactMarkdown from "react-markdown";
@@ -11,12 +14,75 @@ import StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";
 import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
+import remarkGfm from "remark-gfm";
 import { stringify } from "qs";
 
 interface ArticleProps {
   article: ApiArticle;
   navPages: NavPage[];
 }
+
+const contentStyles = (theme: Theme) =>
+  css({
+    display: "grid",
+    gridTemplateColumns: "repeat(12, 1fr)",
+
+    "& a": {
+      color: theme.palette.primary.main,
+      textDecoration: `underline solid ${theme.palette.primary.dark} .1em`,
+
+      "&:hover, &:focus": {
+        color: theme.palette.primary.light,
+        textDecoration: `underline solid ${theme.palette.primary.main} .1em`,
+      },
+    },
+
+    "& p + p": {
+      paddingTop: "1rem",
+    },
+
+    "& *": {
+      gridColumn: "3 / span 8",
+    },
+
+    "& p, & ul, & ol, & img": {
+      width: "100%",
+      maxWidth: "55ch",
+      gridColumn: "4 / span 6",
+      justifySelf: "center",
+    },
+
+    [theme.breakpoints.down("lg")]: {
+      "& *": {
+        gridColumn: "2 / span 10",
+      },
+
+      "& p, & ul, & ol": {
+        gridColumn: "3 / span 8",
+      },
+    },
+
+    [theme.breakpoints.down("md")]: {
+      "& *": {
+        gridColumn: "1 / span 12",
+      },
+
+      "& p, & ul, & ol": {
+        gridColumn: "2 / span 10",
+      },
+    },
+  });
+
+const componentMapping: Components = {
+  h1: ({ node, ...props }) => <Typography variant="h2" {...props} />,
+  h2: ({ node, ...props }) => <Typography variant="h3" {...props} />,
+  h3: ({ node, ...props }) => <Typography variant="h4" {...props} />,
+  h4: ({ node, ...props }) => <Typography variant="h5" {...props} />,
+  h5: ({ node, ...props }) => <Typography variant="h6" {...props} />,
+  h6: ({ node, ...props }) => <Typography variant="h6" {...props} />,
+  p: ({ node, ...props }) => <Typography variant="body1" {...props} />,
+  // img: ({node, src, ...props}) => <Image src={src} width="100%" {...props} />,
+};
 
 const Article = ({ article, navPages }: ArticleProps) => {
   const image = getMedia(article.attributes.cover.data, "xl");
@@ -31,18 +97,20 @@ const Article = ({ article, navPages }: ArticleProps) => {
   return (
     <Layout navPages={navPages}>
       <SEO seo={seo} />
-      <Image
-        src={image.url}
-        alt={article.attributes.cover.data.attributes.alternativeText}
-        width={image.width}
-        height={image.height}
+      <ArticleImage
+        image={image}
+        title={article.attributes.title}
+        altText={article.attributes.cover.data.attributes.alternativeText}
       />
-      <Container maxWidth="lg">
-        <Typography variant="h2">{article.attributes.title}</Typography>
-      </Container>
-      <Container maxWidth="sm">
-        <ReactMarkdown>{article.attributes.content}</ReactMarkdown>
-      </Container>
+      <main css={(theme) => css({ padding: theme.spacing(1) })}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={componentMapping}
+          css={contentStyles}
+        >
+          {article.attributes.content}
+        </ReactMarkdown>
+      </main>
     </Layout>
   );
 };
