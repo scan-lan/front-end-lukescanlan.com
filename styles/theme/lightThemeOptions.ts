@@ -4,27 +4,52 @@ export const lightThemeOptions: ThemeOptions = {
   palette: {
     mode: "light",
     primary: {
-      main: "#000000",
+      main: "#5c7b65",
     },
     secondary: {
-      main: "#ffffff",
+      main: "#78909c",
     },
   },
   typography: {
     fontFamily: "Atkinson Hyperlegible",
     h1: {
-      fontFamily: "Roboto, sans-serif",
+      fontFamily: "Roboto Slab, serif",
       fontWeight: 900,
+      fontVariant: "small-caps",
+    },
+    h2: {
+      fontFamily: "Roboto Slab, serif",
+      fontWeight: 900,
+      fontVariant: "small-caps",
+      paddingBottom: "1.2rem",
     },
     h3: {
       fontFamily: "Roboto Slab, serif",
       fontWeight: 700,
       fontVariant: "small-caps",
-      lineHeight: 0.9,
-      fontSize: "2.5rem",
+      paddingTop: ".5rem",
+      paddingBottom: "1rem",
+    },
+    h4: {
+      fontFamily: "Roboto Slab, serif",
+      fontWeight: 500,
+      fontVariant: "small-caps",
+      paddingBottom: "1rem",
+    },
+    h5: {
+      fontFamily: "Roboto Slab, serif",
+      fontWeight: 400,
+      fontVariant: "small-caps",
+      paddingBottom: "1rem",
+    },
+    h6: {
+      fontFamily: "Roboto Slab, serif",
+      fontWeight: 300,
+      fontVariant: "small-caps",
+      paddingBottom: "1rem",
     },
     body1: {
-      fontSize: "20px",
+      fontSize: "1.4rem",
       lineHeight: 1.4,
     },
     caption: {
