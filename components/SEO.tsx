@@ -1,6 +1,6 @@
-import Global from "../types/Global";
 import { GlobalContext } from "../pages/_app";
 import Head from "next/head";
+import React from "react";
 import StrapiMedia from "../types/StrapiMedia";
 import { getMedia } from "../lib/getMedia";
 import { useContext } from "react";
@@ -10,23 +10,30 @@ interface SEOProps {
     metaTitle: string;
     metaDescription: string;
     shareImage?: { data: StrapiMedia };
+    article?: boolean;
   };
 }
 
 const SEO = ({ seo }: SEOProps) => {
-  const global = useContext(GlobalContext) as Global;
+  const global = useContext(GlobalContext);
 
   const seoWithDefaults = {
-    ...global.attributes.defaultSEO,
+    ...global?.attributes.defaultSEO,
     ...seo,
   };
 
-  const fullSeo: any = {
+  const fullSeo = {
     ...seoWithDefaults,
     // Add title suffix
-    metaTitle: `${seoWithDefaults.metaTitle} | ${global.attributes.siteName}`,
+    metaTitle: `${seoWithDefaults.metaTitle} | ${
+      global?.attributes.siteName
+        ? global.attributes.siteName
+        : "lukescanlan.com"
+    }`,
     // Get full image URL
-    shareImage: getMedia(seoWithDefaults.shareImage.data, "m").url,
+    shareImage: seoWithDefaults?.shareImage
+      ? getMedia(seoWithDefaults.shareImage.data, "m").url
+      : undefined,
   };
 
   return (
