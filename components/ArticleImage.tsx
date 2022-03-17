@@ -26,6 +26,7 @@ const articleImageStyles = (theme: Theme) =>
       placeSelf: "center",
       maxWidth: "66vw",
       lineHeight: 1.4,
+      width: "100%",
 
       color: "white",
       fontSize: "clamp(2.5rem, 6vw + 1rem, 8rem)",

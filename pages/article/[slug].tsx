@@ -7,6 +7,7 @@ import ApiArticle from "../../types/Article";
 import ArticleImage from "../../components/ArticleImage";
 import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
+import Link from "@mui/material/Link";
 import NavPage from "../../types/NavPage";
 import ReactMarkdown from "react-markdown";
 import SEO from "../../components/SEO";
@@ -22,18 +23,17 @@ interface ArticleProps {
   navPages: NavPage[];
 }
 
+const mainContent = "& p, & ul, & ol, & img";
+
 const contentStyles = (theme: Theme) =>
   css({
     display: "grid",
     gridTemplateColumns: "repeat(12, 1fr)",
 
     "& a": {
-      color: theme.palette.primary.main,
-      textDecoration: `underline solid ${theme.palette.primary.dark} .1em`,
-
-      "&:hover, &:focus": {
-        color: theme.palette.primary.light,
-        textDecoration: `underline solid ${theme.palette.primary.main} .1em`,
+      textDecorationThickness: ".16rem",
+      "&:focus": {
+        textDecorationColor: theme.palette.secondary.dark,
       },
     },
 
@@ -45,7 +45,7 @@ const contentStyles = (theme: Theme) =>
       gridColumn: "3 / span 8",
     },
 
-    "& p, & ul, & ol, & img": {
+    [mainContent]: {
       width: "100%",
       maxWidth: "55ch",
       gridColumn: "4 / span 6",
@@ -57,7 +57,7 @@ const contentStyles = (theme: Theme) =>
         gridColumn: "2 / span 10",
       },
 
-      "& p, & ul, & ol": {
+      [mainContent]: {
         gridColumn: "3 / span 8",
       },
     },
@@ -67,7 +67,7 @@ const contentStyles = (theme: Theme) =>
         gridColumn: "1 / span 12",
       },
 
-      "& p, & ul, & ol": {
+      [mainContent]: {
         gridColumn: "2 / span 10",
       },
     },
@@ -81,6 +81,7 @@ const componentMapping: Components = {
   h5: ({ node, ...props }) => <Typography variant="h6" {...props} />,
   h6: ({ node, ...props }) => <Typography variant="h6" {...props} />,
   p: ({ node, ...props }) => <Typography variant="body1" {...props} />,
+  a: ({ node, ...props }) => <Link color="secondary.dark" {...props} />,
   // img: ({node, src, ...props}) => <Image src={src} width="100%" {...props} />,
 };
 
