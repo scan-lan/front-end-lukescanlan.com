@@ -38,13 +38,11 @@ export const lightThemeOptions: ThemeOptions = {
     },
     h5: {
       fontFamily: "Roboto Slab, serif",
-      fontWeight: 400,
       fontVariant: "small-caps",
       paddingBottom: "1rem",
     },
     h6: {
       fontFamily: "Roboto Slab, serif",
-      fontWeight: 300,
       fontVariant: "small-caps",
       paddingBottom: "1rem",
     },
@@ -53,14 +51,14 @@ export const lightThemeOptions: ThemeOptions = {
       lineHeight: 1.4,
     },
     caption: {
-      fontSize: "16px",
+      fontSize: "1rem",
       color: "#686868",
       lineHeight: 1,
     },
     button: {
       fontFamily: "Fraunces, Roboto Slab, Serif",
       fontWeight: 700,
-      fontSize: "20px",
+      fontSize: "1.25rem",
     },
   },
   components: {

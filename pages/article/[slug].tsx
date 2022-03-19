@@ -12,7 +12,9 @@ import NavPage from "../../types/NavPage";
 import ReactMarkdown from "react-markdown";
 import SEO from "../../components/SEO";
 import StrapiMeta from "../../types/StrapiMeta";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Typography from "@mui/material/Typography";
+import { a11yDark as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
 import remarkGfm from "remark-gfm";
@@ -41,6 +43,16 @@ const contentStyles = (theme: Theme) =>
       paddingTop: "1rem",
     },
 
+    "& pre": {
+      width: "100%",
+      overflow: "scroll",
+    },
+
+    "& code": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+
     "& *": {
       gridColumn: "3 / span 8",
     },
@@ -48,7 +60,6 @@ const contentStyles = (theme: Theme) =>
     [mainContent]: {
       width: "100%",
       maxWidth: "55ch",
-      gridColumn: "4 / span 6",
       justifySelf: "center",
     },
 
@@ -58,7 +69,7 @@ const contentStyles = (theme: Theme) =>
       },
 
       [mainContent]: {
-        gridColumn: "3 / span 8",
+        fontSize: "1.35rem",
       },
     },
 
@@ -69,6 +80,7 @@ const contentStyles = (theme: Theme) =>
 
       [mainContent]: {
         gridColumn: "2 / span 10",
+        fontSize: "1.2rem",
       },
     },
   });
@@ -81,7 +93,19 @@ const componentMapping: Components = {
   h5: ({ node, ...props }) => <Typography variant="h6" {...props} />,
   h6: ({ node, ...props }) => <Typography variant="h6" {...props} />,
   p: ({ node, ...props }) => <Typography variant="body1" {...props} />,
-  a: ({ node, ...props }) => <Link color="secondary.dark" {...props} />,
+  a: ({ node, ...props }) => <Link color="primary.main" {...props} />,
+  code: ({ node, inline, className, children, ...props }) => {
+    const match = /language-(\w+)/.exec(className || "");
+    return !inline && match ? (
+      <SyntaxHighlighter language={match[1]} PreTag="div" {...props}>
+        {String(children).replace(/\n$/, "")}
+      </SyntaxHighlighter>
+    ) : (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    );
+  },
   // img: ({node, src, ...props}) => <Image src={src} width="100%" {...props} />,
 };
 
@@ -103,7 +127,11 @@ const Article = ({ article, navPages }: ArticleProps) => {
         title={article.attributes.title}
         altText={article.attributes.cover.data.attributes.alternativeText}
       />
-      <main css={(theme) => css({ padding: theme.spacing(1) })}>
+      <main
+        css={(theme) =>
+          css({ padding: `${theme.spacing(3)} ${theme.spacing(1)}` })
+        }
+      >
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={componentMapping}
