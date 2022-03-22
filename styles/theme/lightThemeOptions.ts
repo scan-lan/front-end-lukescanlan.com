@@ -80,6 +80,14 @@ export const lightThemeOptions: ThemeOptions = {
         },
       },
     },
+    MuiAccordion: {
+      defaultProps: {
+        sx: {
+          boxShadow: "none",
+          border: "2px black dashed",
+        },
+      },
+    },
   },
   shape: {
     borderRadius: 10,

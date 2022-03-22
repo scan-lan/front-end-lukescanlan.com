@@ -9,6 +9,7 @@ import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
 import Link from "@mui/material/Link";
 import NavPage from "../../types/NavPage";
+import PrefaceAccordion from "../../components/PrefaceAccordion";
 import ReactMarkdown from "react-markdown";
 import SEO from "../../components/SEO";
 import StrapiMeta from "../../types/StrapiMeta";
@@ -29,58 +30,62 @@ const mainContent = "& p, & ul, & ol, & img";
 
 const contentStyles = (theme: Theme) =>
   css({
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
+    padding: `${theme.spacing(3)} ${theme.spacing(1)}`,
 
-    "& a": {
-      textDecorationThickness: ".16rem",
-      "&:focus": {
-        textDecorationColor: theme.palette.secondary.dark,
+    "& .markdown": {
+      display: "grid",
+      gridTemplateColumns: "repeat(12, 1fr)",
+
+      "& a": {
+        textDecorationThickness: ".16rem",
+        "&:focus": {
+          textDecorationColor: theme.palette.primary.main,
+        },
       },
-    },
 
-    "& p + p": {
-      paddingTop: "1rem",
-    },
+      "p + p, p + h2, p + h3, p + h4, p + h5, p + h6": {
+        paddingTop: "1rem",
+      },
 
-    "& pre": {
-      width: "100%",
-      overflow: "scroll",
-    },
+      "& pre": {
+        width: "100%",
+        overflow: "scroll",
+      },
 
-    "& code": {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-    },
+      "& code": {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+      },
 
-    "& *": {
-      gridColumn: "3 / span 8",
-    },
-
-    [mainContent]: {
-      width: "100%",
-      maxWidth: "55ch",
-      justifySelf: "center",
-    },
-
-    [theme.breakpoints.down("lg")]: {
       "& *": {
-        gridColumn: "2 / span 10",
+        gridColumn: "3 / span 8",
       },
 
       [mainContent]: {
-        fontSize: "1.35rem",
-      },
-    },
-
-    [theme.breakpoints.down("md")]: {
-      "& *": {
-        gridColumn: "1 / span 12",
+        width: "100%",
+        maxWidth: "55ch",
+        justifySelf: "center",
       },
 
-      [mainContent]: {
-        gridColumn: "2 / span 10",
-        fontSize: "1.2rem",
+      [theme.breakpoints.down("lg")]: {
+        "& *": {
+          gridColumn: "2 / span 10",
+        },
+
+        [mainContent]: {
+          fontSize: "1.35rem",
+        },
+      },
+
+      [theme.breakpoints.down("md")]: {
+        "& *": {
+          gridColumn: "1 / span 12",
+        },
+
+        [mainContent]: {
+          gridColumn: "2 / span 10",
+          fontSize: "1.2rem",
+        },
       },
     },
   });
@@ -106,7 +111,6 @@ const componentMapping: Components = {
       </code>
     );
   },
-  // img: ({node, src, ...props}) => <Image src={src} width="100%" {...props} />,
 };
 
 const Article = ({ article, navPages }: ArticleProps) => {
@@ -127,15 +131,17 @@ const Article = ({ article, navPages }: ArticleProps) => {
         title={article.attributes.title}
         altText={article.attributes.cover.data.attributes.alternativeText}
       />
-      <main
-        css={(theme) =>
-          css({ padding: `${theme.spacing(3)} ${theme.spacing(1)}` })
-        }
-      >
+      <main css={contentStyles}>
+        {article.attributes.contentWarning || article.attributes.authorsNote ? (
+          <PrefaceAccordion
+            contentWarning={article.attributes.contentWarning}
+            authorsNote={article.attributes.authorsNote}
+          />
+        ) : null}
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={componentMapping}
-          css={contentStyles}
+          className="markdown"
         >
           {article.attributes.content}
         </ReactMarkdown>
