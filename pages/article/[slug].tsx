@@ -21,6 +21,8 @@ import { getMedia } from "../../lib/getMedia";
 import remarkGfm from "remark-gfm";
 import { stringify } from "qs";
 
+// import { useRouter } from "next/router";
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const articles: { data: ApiArticle[] } = await getFromAPI("/articles");
 
@@ -30,7 +32,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         slug: article.attributes.slug,
       },
     })),
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -158,6 +160,21 @@ const Article = ({ article, navPages }: ArticleProps) => {
     shareImage: article.attributes.cover,
     article: true,
   };
+
+  // const router = useRouter();
+
+  // // If the page is not yet generated, this will be displayed
+  // // initially until getStaticProps() finishes running
+  // if (router.isFallback) {
+  //   return (
+  //     <main
+  //       css={contentStyles}
+  //       style={{ height: "80vh", placeContent: "center" }}
+  //     >
+  //       Loading...
+  //     </main>
+  //   );
+  // }
 
   return (
     <Layout navPages={navPages}>
