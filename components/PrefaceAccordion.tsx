@@ -65,6 +65,7 @@ const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
         <AccordionSummary>
           <Typography
             variant="h5"
+            component="span"
             css={{
               lineHeight: 1,
               padding: 0,
@@ -83,6 +84,7 @@ const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
         <AccordionSummary>
           <Typography
             variant="h5"
+            component="span"
             css={{
               lineHeight: 1,
               padding: 0,
