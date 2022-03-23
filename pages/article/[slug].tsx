@@ -4,6 +4,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Theme, css } from "@emotion/react";
 
 import ApiArticle from "../../types/Article";
+import ApiSEO from "../../types/SEO";
 import ArticleImage from "../../components/ArticleImage";
 import ArticleMeta from "../../components/ArticleMeta";
 import type { Components } from "react-markdown";
@@ -163,23 +164,26 @@ const Article = ({ article, navPages }: ArticleProps) => {
     );
   }
 
-  const image = getMedia(article.attributes.cover.data, "xl");
-
-  const seo = {
+  const seo: ApiSEO = {
     metaTitle: article.attributes.title,
     metaDescription: article.attributes.description,
-    shareImage: article.attributes.cover,
     article: true,
   };
+
+  if (article.attributes.cover.data !== null) {
+    seo.shareImage = { data: article.attributes.cover.data };
+  }
 
   return (
     <Layout navPages={navPages}>
       <SEO seo={seo} />
-      <ArticleImage
-        image={image}
-        title={article.attributes.title}
-        altText={article.attributes.cover.data.attributes.alternativeText}
-      />
+      {article.attributes.cover.data ? (
+        <ArticleImage
+          image={getMedia(article.attributes.cover.data, "xl")}
+          title={article.attributes.title}
+          altText={article.attributes.cover.data.attributes.alternativeText}
+        />
+      ) : null}
       <main css={contentStyles}>
         {article.attributes.contentWarning || article.attributes.authorsNote ? (
           <PrefaceAccordion

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { getMedia, mediaSize } from "../lib/getMedia";
+import { getMedia, getMediaURL, mediaSize } from "../lib/getMedia";
 
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { useContainerDimensions } from "../lib/useContainerDimensions";
 
 interface CardProps {
-  cover: StrapiMedia;
+  cover: StrapiMedia | null;
   title: string;
   description: string;
   category: string | null;
@@ -35,7 +35,6 @@ const Card = ({
   coverSize,
 }: CardProps) => {
   const ref = useRef(null);
-  const cardCover = getMedia(cover, coverSize ? coverSize : "m");
 
   const cardDimensions = useContainerDimensions(ref);
   const imageHeight = cardDimensions.width * (5 / 7);
@@ -57,24 +56,26 @@ const Card = ({
           ref={ref}
         >
           <CardActionArea>
-            <CardMedia
-              sx={{ borderBottom: "2px dashed #888", height: imageHeight }}
-            >
-              <div
-                style={{
-                  position: "relative",
-                  width: "100%",
-                  height: "100%",
-                }}
+            {cover ? (
+              <CardMedia
+                sx={{ borderBottom: "2px dashed #888", height: imageHeight }}
               >
-                <Image
-                  src={cardCover.url}
-                  alt={cover.attributes.alternativeText}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-            </CardMedia>
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <Image
+                    src={getMediaURL(cover, coverSize ? coverSize : "m")}
+                    alt={cover.attributes.alternativeText}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+              </CardMedia>
+            ) : null}
             <CardContent>
               <Stack width="100%" spacing={2}>
                 <Typography variant="caption">

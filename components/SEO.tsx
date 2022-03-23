@@ -1,17 +1,12 @@
+import ApiSEO from "../types/SEO";
 import { GlobalContext } from "../pages/_app";
 import Head from "next/head";
 import React from "react";
-import StrapiMedia from "../types/StrapiMedia";
 import { getMedia } from "../lib/getMedia";
 import { useContext } from "react";
 
 interface SEOProps {
-  seo: {
-    metaTitle: string;
-    metaDescription: string;
-    shareImage?: { data: StrapiMedia };
-    article?: boolean;
-  };
+  seo: ApiSEO;
 }
 
 const SEO = ({ seo }: SEOProps) => {
