@@ -20,8 +20,7 @@ import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
 import remarkGfm from "remark-gfm";
 import { stringify } from "qs";
-
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const articles: { data: ApiArticle[] } = await getFromAPI("/articles");
@@ -152,6 +151,18 @@ const componentMapping: Components = {
 };
 
 const Article = ({ article, navPages }: ArticleProps) => {
+  const router = useRouter();
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return (
+      <main style={{ display: "grid", height: "80vh", placeContent: "center" }}>
+        <Typography variant="h1">Loading...</Typography>
+      </main>
+    );
+  }
+
   const image = getMedia(article.attributes.cover.data, "xl");
 
   const seo = {
@@ -160,21 +171,6 @@ const Article = ({ article, navPages }: ArticleProps) => {
     shareImage: article.attributes.cover,
     article: true,
   };
-
-  // const router = useRouter();
-
-  // // If the page is not yet generated, this will be displayed
-  // // initially until getStaticProps() finishes running
-  // if (router.isFallback) {
-  //   return (
-  //     <main
-  //       css={contentStyles}
-  //       style={{ height: "80vh", placeContent: "center" }}
-  //     >
-  //       Loading...
-  //     </main>
-  //   );
-  // }
 
   return (
     <Layout navPages={navPages}>
