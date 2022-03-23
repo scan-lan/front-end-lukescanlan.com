@@ -12,12 +12,14 @@ interface SitenameProps {
 const backgroundColor = "#5c7b65";
 const strokeColor = "#ffffff";
 
-const sitenameCss = css({
+const sitenameStyles = css({
   gridArea: "sitename",
 
-  "& h1": {
+  "& .sitename-text": {
     lineHeight: 0.9,
+    fontFamily: "Roboto, sans-serif",
     fontWeight: 900,
+    fontSize: "6rem",
   },
 
   "& .header-a": {
@@ -46,10 +48,10 @@ const Sitename = ({ textWidth }: SitenameProps) => {
   const svgWidth = textWidth < 10 ? textWidth : textWidth - 10;
 
   return (
-    <div className="sitename" css={sitenameCss}>
+    <div className="sitename" css={sitenameStyles}>
       <Link href="/" passHref>
         <Button className="header-a">
-          <Typography variant="h1">
+          <span className="sitename-text">
             <svg height={90} width={svgWidth} style={{ overflow: "hidden" }}>
               <text
                 x="0"
@@ -61,7 +63,7 @@ const Sitename = ({ textWidth }: SitenameProps) => {
                 lukescanlan.com
               </text>
             </svg>
-          </Typography>
+          </span>
         </Button>
       </Link>
     </div>

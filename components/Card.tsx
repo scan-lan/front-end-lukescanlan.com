@@ -17,7 +17,7 @@ interface CardProps {
   cover: StrapiMedia;
   title: string;
   description: string;
-  category: string;
+  category: string | null;
   date: string;
   topics: string[];
   slug: string;
@@ -77,15 +77,27 @@ const Card = ({
             </CardMedia>
             <CardContent>
               <Stack width="100%" spacing={2}>
-                <Typography variant="caption">{category}</Typography>
-                <Typography variant="h3">{title}</Typography>
-                <Typography variant="body1">{description}</Typography>
+                <Typography variant="caption">
+                  {category ? category : ""}
+                </Typography>
+                <Typography
+                  variant="h3"
+                  sx={{ lineHeight: 0.9, fontSize: "2.5rem", paddingBottom: 0 }}
+                  component="h2"
+                >
+                  {title}
+                </Typography>
+                <Typography variant="body1" sx={{ fontSize: "1.25rem" }}>
+                  {description}
+                </Typography>
                 <Stack
                   direction="row"
                   justifyContent="space-between"
                   spacing={2}
                 >
-                  <Typography variant="caption">{topics}</Typography>
+                  <Typography variant="caption">
+                    {topics ? topics.sort().join(", ") : ""}
+                  </Typography>
                   <Typography variant="caption" sx={{ alignSelf: "flex-end" }}>
                     <Moment format="DD.MM.YYYY">{date}</Moment>
                   </Typography>

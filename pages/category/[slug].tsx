@@ -20,7 +20,7 @@ interface CategoryProps {
   navPages: NavPage[];
 }
 
-const titleContainerCss = css({
+const titleContainerStyles = css({
   display: "grid",
   // backgroundColor: "#5c7b65",
   marginBottom: "8px",
@@ -42,7 +42,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
   return (
     <Layout navPages={navPages}>
       <SEO seo={seo} />
-      <div css={titleContainerCss}>
+      <div css={titleContainerStyles}>
         <Typography variant="h1">{category.attributes.name}</Typography>
       </div>
       <Articles articles={articles} spacing={1} />

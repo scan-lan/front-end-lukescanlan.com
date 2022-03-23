@@ -1,21 +1,22 @@
-import React from "react";
-import { styled } from "@mui/system";
+/** @jsxImportSource @emotion/react */
 
-const StyledFooter = styled("footer")(({ theme }) => ({
-  display: "grid",
-  placeContent: "center",
-  borderTop: "2px white dashed",
-  marginTop: theme.spacing(3),
-  height: "5rem",
-  color: "#ffffff",
-  backgroundColor: "#5c7b65",
-  fontWeight: 500,
-}));
+import { Theme, css } from "@emotion/react";
+
+const footerStyles = (theme: Theme) =>
+  css({
+    display: "grid",
+    placeContent: "center",
+    borderTop: "2px white dashed",
+    height: theme.spacing(10),
+    color: "#ffffff",
+    backgroundColor: "#5c7b65",
+    fontWeight: 500,
+  });
 
 const Footer = () => (
-  <StyledFooter>
+  <footer css={footerStyles}>
     &copy; Luke Scanlan 2021&ndash;{new Date().getFullYear()}
-  </StyledFooter>
+  </footer>
 );
 
 export default Footer;
