@@ -5,6 +5,7 @@ import { Theme, css } from "@emotion/react";
 
 import ApiArticle from "../../types/Article";
 import ArticleImage from "../../components/ArticleImage";
+import ArticleMeta from "../../components/ArticleMeta";
 import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
 import Link from "@mui/material/Link";
@@ -15,11 +16,46 @@ import SEO from "../../components/SEO";
 import StrapiMeta from "../../types/StrapiMeta";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Typography from "@mui/material/Typography";
-import { a11yDark as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
 import remarkGfm from "remark-gfm";
 import { stringify } from "qs";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const articles: { data: ApiArticle[] } = await getFromAPI("/articles");
+
+  return {
+    paths: articles.data.map((article) => ({
+      params: {
+        slug: article.attributes.slug,
+      },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const articleQueryParams = stringify({
+    filters: {
+      slug: {
+        $eq: params?.slug,
+      },
+    },
+    populate: ["writer", "writer.picture", "cover", "category", "topics"],
+  });
+
+  const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
+    "/articles",
+    articleQueryParams
+  );
+
+  const navPages = await getFromAPI("/nav-pages");
+
+  return {
+    props: { article: articles.data[0], navPages: navPages.data },
+    revalidate: 1,
+  };
+};
 
 interface ArticleProps {
   article: ApiArticle;
@@ -145,45 +181,16 @@ const Article = ({ article, navPages }: ArticleProps) => {
         >
           {article.attributes.content}
         </ReactMarkdown>
+        <ArticleMeta
+          category={article.attributes.category.data}
+          published={article.attributes.publishedAt}
+          topics={article.attributes.topics.data}
+          updated={article.attributes.updatedAt}
+          writer={article.attributes.writer.data}
+        />
       </main>
     </Layout>
   );
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const articles: { data: ApiArticle[] } = await getFromAPI("/articles");
-
-  return {
-    paths: articles.data.map((article) => ({
-      params: {
-        slug: article.attributes.slug,
-      },
-    })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const articleQueryParams = stringify({
-    filters: {
-      slug: {
-        $eq: params?.slug,
-      },
-    },
-    populate: ["writer", "writer.picture", "cover", "category"],
-  });
-
-  const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
-    "/articles",
-    articleQueryParams
-  );
-
-  const navPages = await getFromAPI("/nav-pages");
-
-  return {
-    props: { article: articles.data[0], navPages: navPages.data },
-    revalidate: 1,
-  };
 };
 
 export default Article;

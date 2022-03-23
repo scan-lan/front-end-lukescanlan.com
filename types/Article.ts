@@ -26,7 +26,7 @@ export default interface ApiArticle {
       data: ApiCategory | null;
     };
     topics: {
-      data: ApiTopic[];
+      data: ApiTopic[] | null;
     };
   };
 }

@@ -6,51 +6,57 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 
 interface AccordionProps {
   contentWarning?: string;
   authorsNote?: string;
 }
 const borderStyle = "2px black dashed";
-const accordionStyles = (theme: Theme) => ({
-  display: "grid",
-  gridTemplateColumns: "repeat(12, 1fr)",
-  paddingBottom: theme.spacing(3),
+const accordionStyles = (theme: Theme) =>
+  css({
+    display: "grid",
+    gridTemplateColumns: "repeat(12, 1fr)",
+    paddingBottom: theme.spacing(3),
 
-  "& .accordion-row": {
-    maxWidth: "55ch",
-    width: "100%",
-    justifySelf: "center",
-    gridColumn: "3 / span 8",
+    "& .accordion-row": {
+      fontSize: "1.4rem",
+      maxWidth: "55ch",
+      width: "100%",
+      justifySelf: "center",
+      gridColumn: "3 / span 8",
 
-    [theme.breakpoints.down("lg")]: {
-      gridColumn: "2 / span 10",
-    },
+      [theme.breakpoints.down("lg")]: {
+        gridColumn: "2 / span 10",
+        fontSize: "1.35rem",
+      },
 
-    "&::before, &.Mui-expanded::before": {
-      opacity: 0,
-    },
+      [theme.breakpoints.down("md")]: {
+        fontSize: "1.2rem",
+      },
 
-    ":last-child": {
-      borderTop: "none",
-    },
+      "&::before, &.Mui-expanded::before": {
+        opacity: 0,
+      },
 
-    "&:first-child": {
-      borderTop: borderStyle,
-    },
+      ":last-child": {
+        borderTop: "none",
+      },
 
-    ":first-child.Mui-expanded + :last-child, :first-child + :last-child.Mui-expanded":
-      {
+      "&:first-child": {
         borderTop: borderStyle,
       },
-  },
 
-  ".highlight": {
-    backgroundColor: theme.palette.warning.light,
-    color: "black",
-  },
-});
+      ":first-child.Mui-expanded + :last-child, :first-child + :last-child.Mui-expanded":
+        {
+          borderTop: borderStyle,
+        },
+    },
+
+    ".highlight": {
+      backgroundColor: theme.palette.warning.light,
+      color: "black",
+    },
+  });
 
 const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
   <div css={accordionStyles}>
