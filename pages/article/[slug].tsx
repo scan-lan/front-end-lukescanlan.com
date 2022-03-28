@@ -5,7 +5,7 @@ import { Theme, css } from "@emotion/react";
 
 import ApiArticle from "../../types/Article";
 import ApiSEO from "../../types/SEO";
-import ArticleImage from "../../components/ArticleImage";
+import ArticleHeader from "../../components/ArticleHeader";
 import ArticleMeta from "../../components/ArticleMeta";
 import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
@@ -68,7 +68,7 @@ const mainContent = "& p, & ul, & ol, & img";
 
 const contentStyles = (theme: Theme) =>
   css({
-    padding: `${theme.spacing(3)} ${theme.spacing(1)}`,
+    padding: `0 ${theme.spacing(3)} ${theme.spacing(1)}`,
 
     "& .markdown": {
       display: "grid",
@@ -177,13 +177,18 @@ const Article = ({ article, navPages }: ArticleProps) => {
   return (
     <Layout navPages={navPages}>
       <SEO seo={seo} />
-      {article.attributes.cover.data ? (
-        <ArticleImage
-          image={getMedia(article.attributes.cover.data, "xl")}
-          title={article.attributes.title}
-          altText={article.attributes.cover.data.attributes.alternativeText}
-        />
-      ) : null}
+      <ArticleHeader
+        cover={
+          article.attributes.cover.data
+            ? {
+                image: getMedia(article.attributes.cover.data, "xl"),
+                altText:
+                  article.attributes.cover.data.attributes.alternativeText,
+              }
+            : null
+        }
+        title={article.attributes.title}
+      />
       <main css={contentStyles}>
         {article.attributes.contentWarning || article.attributes.authorsNote ? (
           <PrefaceAccordion
