@@ -35,7 +35,7 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
           ? article.attributes.topics.data.map((topic) => topic.attributes.name)
           : []
       }
-      date={article.attributes.written}
+      date={article.attributes.updatedAt}
       category={
         article.attributes.category.data?.attributes.name
           ? article.attributes.category.data.attributes.name

@@ -7,7 +7,6 @@ import React from "react";
 import SEO from "../components/SEO";
 import { getFromAPI } from "../lib/api";
 import { stringify } from "qs";
-import { styled } from "@mui/system";
 
 interface HomeProps {
   articles: {
@@ -38,7 +37,7 @@ const Home = ({ articles, navPages, homepage }: HomeProps) => (
 export const getStaticProps = async () => {
   const articlesQueryString = stringify({
     populate: ["category", "writer", "cover", "topics"],
-    sort: ["written:desc", "publishedAt:desc"],
+    sort: ["updatedAt:desc", "publishedAt:desc"],
   });
 
   // Run API calls in parallel

@@ -32,19 +32,22 @@ const MyApp = ({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) => {
-  const { global }: { global: { data: Global } } = pageProps;
+  const { global } = pageProps as { global: Global | null };
+
+  const favicon = global?.attributes.favicon.data
+    ? getMediaURL(global.attributes.favicon.data)
+    : null;
 
   return (
     <>
-      <Head>
-        <link
-          rel="shortcut icon"
-          href={getMediaURL(global.data.attributes.favicon.data)}
-        />
-      </Head>
+      {favicon ? (
+        <Head>
+          <link rel="shortcut icon" href={favicon} />
+        </Head>
+      ) : null}
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={lightTheme}>
-          <GlobalContext.Provider value={global.data}>
+          <GlobalContext.Provider value={global}>
             <CssBaseline />
             <Component {...pageProps} />
           </GlobalContext.Provider>
@@ -67,10 +70,13 @@ MyApp.getInitialProps = async (ctx: any) => {
   const appProps = await App.getInitialProps(ctx);
 
   // Fetch global site settings from Strapi
-  const global: Global = await getFromAPI("/global", globalQueryString);
+  const global: { data: Global } = await getFromAPI(
+    "/global",
+    globalQueryString
+  );
 
   // Pass the data to our page via props
-  return { ...appProps, pageProps: { global } };
+  return { ...appProps, pageProps: { global: global.data } };
 };
 
 export default MyApp;

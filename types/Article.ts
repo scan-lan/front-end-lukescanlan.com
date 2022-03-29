@@ -20,7 +20,7 @@ export default interface ApiArticle {
       data: ApiWriter | null;
     };
     cover: {
-      data: StrapiMedia;
+      data: StrapiMedia | null;
     };
     category: {
       data: ApiCategory | null;

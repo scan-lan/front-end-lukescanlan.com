@@ -13,42 +13,7 @@ import { css } from "@emotion/react";
 import { getFromAPI } from "../../lib/api";
 import type iCategory from "../../types/Category";
 import { stringify } from "qs";
-
-interface CategoryProps {
-  articles: ApiArticle[];
-  category: iCategory;
-  navPages: NavPage[];
-}
-
-const titleContainerStyles = css({
-  display: "grid",
-  // backgroundColor: "#5c7b65",
-  marginBottom: "8px",
-  gridTemplateColumns: "repeat(12, 1fr)",
-  "& h1": {
-    gridColumn: "span 12",
-    textAlign: "right",
-    padding: "10rem 1rem",
-    color: "#5c7b65",
-  },
-});
-
-const Category = ({ articles, category, navPages }: CategoryProps) => {
-  const seo = {
-    metaTitle: category.attributes.name,
-    metaDescription: `All ${category.attributes.name} articles`,
-  };
-
-  return (
-    <Layout navPages={navPages}>
-      <SEO seo={seo} />
-      <div css={titleContainerStyles}>
-        <Typography variant="h1">{category.attributes.name}</Typography>
-      </div>
-      <Articles articles={articles} spacing={1} />
-    </Layout>
-  );
-};
+import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const categories: { data: iCategory[] } = await getFromAPI("/categories");
@@ -59,7 +24,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         slug: category.attributes.slug,
       },
     })),
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -89,6 +54,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     },
     populate: "*",
+    sort: ["updatedAt:desc", "publishedAt:desc"],
   });
 
   const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
@@ -104,6 +70,52 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
     revalidate: 1,
   };
+};
+
+interface CategoryProps {
+  articles: ApiArticle[];
+  category: iCategory;
+  navPages: NavPage[];
+}
+
+const titleContainerStyles = css({
+  display: "grid",
+  // backgroundColor: "#5c7b65",
+  marginBottom: "8px",
+  gridTemplateColumns: "repeat(12, 1fr)",
+  "& h1": {
+    gridColumn: "span 12",
+    textAlign: "right",
+    padding: "10rem 1rem",
+    color: "#5c7b65",
+  },
+});
+
+const Category = ({ articles, category, navPages }: CategoryProps) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return (
+      <main style={{ display: "grid", height: "80vh", placeContent: "center" }}>
+        <Typography variant="h1">Loading...</Typography>
+      </main>
+    );
+  }
+
+  const seo = {
+    metaTitle: category.attributes.name,
+    metaDescription: `All ${category.attributes.name} articles`,
+  };
+
+  return (
+    <Layout navPages={navPages}>
+      <SEO seo={seo} />
+      <div css={titleContainerStyles}>
+        <Typography variant="h1">{category.attributes.name}</Typography>
+      </div>
+      <Articles articles={articles} spacing={1} />
+    </Layout>
+  );
 };
 
 export default Category;

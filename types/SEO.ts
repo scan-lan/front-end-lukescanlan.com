@@ -4,7 +4,8 @@ export default interface ApiSEO {
   id?: number;
   metaTitle: string;
   metaDescription: string;
-  shareImage: {
+  article?: boolean;
+  shareImage?: {
     data: StrapiMedia;
   };
 }

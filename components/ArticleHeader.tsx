@@ -1,0 +1,99 @@
+/** @jsxImportSource @emotion/react */
+
+import { Theme, css } from "@emotion/react";
+
+import Image from "next/image";
+import { MediaFormat } from "../types/StrapiMedia";
+import Typography from "@mui/material/Typography";
+
+interface ArticleImageProps {
+  cover: {
+    image: MediaFormat;
+    altText: string;
+  } | null;
+  title: string;
+}
+
+const articleTitleStyles = (theme: Theme) =>
+  css({
+    paddingBottom: theme.spacing(1),
+    display: "grid",
+    gridTemplateColumns: "repeat(12, 1fr)",
+
+    h1: {
+      textAlign: "right",
+      gridColumn: "3 / span 8",
+
+      [theme.breakpoints.down("lg")]: {
+        gridColumn: "2 / span 10",
+      },
+
+      [theme.breakpoints.down("md")]: {
+        gridColumn: "span 12",
+      },
+    },
+  });
+
+const articleImageStyles = (theme: Theme) =>
+  css({
+    paddingBottom: theme.spacing(1),
+    display: "grid",
+
+    "& img": {
+      zIndex: 0,
+    },
+
+    "& h1": {
+      position: "absolute",
+      zIndex: 1,
+      placeSelf: "center",
+      maxWidth: "66vw",
+      lineHeight: 1.4,
+      width: "100%",
+
+      color: "white",
+      fontSize: "clamp(2.5rem, 6vw + 1rem, 8rem)",
+      fontFamily: "Roboto Slab, Roboto, serif",
+
+      [theme.breakpoints.down("lg")]: {
+        maxWidth: "80vw",
+      },
+
+      [theme.breakpoints.down("md")]: {
+        maxWidth: "90vw",
+      },
+
+      [theme.breakpoints.down("sm")]: {
+        maxWidth: "98vw",
+      },
+    },
+  });
+
+const ArticleHeader = ({ cover, title }: ArticleImageProps) => (
+  <div css={cover ? articleImageStyles : articleTitleStyles}>
+    {cover ? (
+      <>
+        <Image
+          src={cover.image.url}
+          alt={cover.altText}
+          width={cover.image.width}
+          height={cover.image.height}
+          priority
+        />
+        <Typography variant="h1">
+          <span
+            style={{
+              backgroundColor: "rgba(0%, 0%, 0%, 0.5)",
+            }}
+          >
+            {title}
+          </span>
+        </Typography>
+      </>
+    ) : (
+      <Typography variant="h1">{title}</Typography>
+    )}
+  </div>
+);
+
+export default ArticleHeader;

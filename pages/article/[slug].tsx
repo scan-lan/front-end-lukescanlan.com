@@ -4,7 +4,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Theme, css } from "@emotion/react";
 
 import ApiArticle from "../../types/Article";
-import ArticleImage from "../../components/ArticleImage";
+import ApiSEO from "../../types/SEO";
+import ArticleHeader from "../../components/ArticleHeader";
 import ArticleMeta from "../../components/ArticleMeta";
 import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
@@ -20,6 +21,7 @@ import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
 import remarkGfm from "remark-gfm";
 import { stringify } from "qs";
+import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const articles: { data: ApiArticle[] } = await getFromAPI("/articles");
@@ -30,7 +32,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         slug: article.attributes.slug,
       },
     })),
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -66,7 +68,7 @@ const mainContent = "& p, & ul, & ol, & img";
 
 const contentStyles = (theme: Theme) =>
   css({
-    padding: `${theme.spacing(3)} ${theme.spacing(1)}`,
+    padding: `0 ${theme.spacing(3)} ${theme.spacing(1)}`,
 
     "& .markdown": {
       display: "grid",
@@ -150,22 +152,42 @@ const componentMapping: Components = {
 };
 
 const Article = ({ article, navPages }: ArticleProps) => {
-  const image = getMedia(article.attributes.cover.data, "xl");
+  const router = useRouter();
 
-  const seo = {
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return (
+      <main style={{ display: "grid", height: "80vh", placeContent: "center" }}>
+        <Typography variant="h1">Loading...</Typography>
+      </main>
+    );
+  }
+
+  const seo: ApiSEO = {
     metaTitle: article.attributes.title,
     metaDescription: article.attributes.description,
-    shareImage: article.attributes.cover,
     article: true,
   };
+
+  if (article.attributes.cover.data !== null) {
+    seo.shareImage = { data: article.attributes.cover.data };
+  }
 
   return (
     <Layout navPages={navPages}>
       <SEO seo={seo} />
-      <ArticleImage
-        image={image}
+      <ArticleHeader
+        cover={
+          article.attributes.cover.data
+            ? {
+                image: getMedia(article.attributes.cover.data, "xl"),
+                altText:
+                  article.attributes.cover.data.attributes.alternativeText,
+              }
+            : null
+        }
         title={article.attributes.title}
-        altText={article.attributes.cover.data.attributes.alternativeText}
       />
       <main css={contentStyles}>
         {article.attributes.contentWarning || article.attributes.authorsNote ? (
