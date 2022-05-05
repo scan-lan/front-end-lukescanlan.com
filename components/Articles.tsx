@@ -5,9 +5,10 @@ import { Theme, css } from "@emotion/react";
 import ApiArticle from "../types/Article";
 import Card from "./Card";
 import Masonry from "@mui/lab/Masonry";
+import SkeletonCard from "./Card/SkeletonCard";
 
 interface ArticlesProps {
-  articles: ApiArticle[];
+  articles: ApiArticle[] | null;
   spacing?: number;
 }
 
@@ -24,26 +25,26 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
       },
     });
 
-  const articleCards = articles.map((article) => (
-    <Card
-      key={article.attributes.slug}
-      cover={article.attributes.cover.data}
-      title={article.attributes.title}
-      description={article.attributes.description}
-      topics={
-        article.attributes.topics.data
-          ? article.attributes.topics.data.map((topic) => topic.attributes.name)
-          : []
-      }
-      date={article.attributes.updatedAt}
-      category={
-        article.attributes.category.data?.attributes.name
-          ? article.attributes.category.data.attributes.name
-          : null
-      }
-      slug={article.attributes.slug}
-    />
-  ));
+  const articleCards = articles
+    ? articles.map((article) => (
+        <Card
+          key={article.attributes.slug}
+          cover={article.attributes.cover.data}
+          title={article.attributes.title}
+          description={article.attributes.description}
+          topics={
+            article.attributes.topics.data
+              ? article.attributes.topics.data.map(
+                  (topic) => topic.attributes.name
+                )
+              : []
+          }
+          date={article.attributes.updatedAt}
+          category={article.attributes.category.data?.attributes.name || null}
+          slug={article.attributes.slug}
+        />
+      ))
+    : Array.from<number>({ length: 8 }).map((i) => <SkeletonCard key={i} />);
 
   const columns: { xl?: number; lg?: number; sm?: number; xs?: number } = {
     xl: 4,

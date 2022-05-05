@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 
 interface LayoutProps {
   children: ReactNode;
-  navPages: NavPage[];
+  navPages: NavPage[] | null;
   seo?: ApiSEO;
 }
 

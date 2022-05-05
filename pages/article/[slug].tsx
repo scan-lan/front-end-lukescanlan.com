@@ -14,6 +14,7 @@ import NavPage from "../../types/NavPage";
 import PrefaceAccordion from "../../components/PrefaceAccordion";
 import ReactMarkdown from "react-markdown";
 import SEO from "../../components/SEO";
+import Skeleton from "@mui/material/Skeleton";
 import StrapiMeta from "../../types/StrapiMeta";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Typography from "@mui/material/Typography";
@@ -24,14 +25,16 @@ import { stringify } from "qs";
 import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles: { data: ApiArticle[] } = await getFromAPI("/articles");
+  const articles = await getFromAPI<{ data: ApiArticle[] }>("/articles");
 
   return {
-    paths: articles.data.map((article) => ({
-      params: {
-        slug: article.attributes.slug,
-      },
-    })),
+    paths: articles
+      ? articles.data.map((article) => ({
+          params: {
+            slug: article.attributes.slug,
+          },
+        }))
+      : [],
     fallback: true,
   };
 };
@@ -46,25 +49,28 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     populate: ["writer", "writer.picture", "cover", "category", "topics"],
   });
 
-  const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
+  const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
     "/articles",
     articleQueryParams
   );
 
-  const navPages = await getFromAPI("/nav-pages");
+  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
 
   return {
-    props: { article: articles.data[0], navPages: navPages.data },
+    props: {
+      article: articles?.data[0] || null,
+      navPages: navPages?.data || null,
+    },
     revalidate: 1,
   };
 };
 
 interface ArticleProps {
-  article: ApiArticle;
+  article: ApiArticle | null;
   navPages: NavPage[];
 }
 
-const mainContent = "& p, & ul, & ol, & img";
+const mainContent = "& p, & ul, & ol, & img, & .p-skeleton";
 
 const contentStyles = (theme: Theme) =>
   css({
@@ -156,63 +162,80 @@ const Article = ({ article, navPages }: ArticleProps) => {
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  if (router.isFallback) {
+  if (router.isFallback || article === null) {
     return (
-      <main style={{ display: "grid", height: "80vh", placeContent: "center" }}>
-        <Typography variant="h1">Loading...</Typography>
-      </main>
+      <Layout navPages={navPages}>
+        <ArticleHeader cover={null} title={null} />
+        <main css={contentStyles}>
+          <div className="markdown">
+            {Array.from<number>({ length: 40 }).map((i) => (
+              <Skeleton
+                variant="text"
+                width="100%"
+                className="p-skeleton"
+                key={i}
+              >
+                <Typography variant="body1">.</Typography>
+              </Skeleton>
+            ))}
+          </div>
+        </main>
+      </Layout>
     );
   }
 
-  const seo: ApiSEO = {
-    metaTitle: article.attributes.title,
-    metaDescription: article.attributes.description,
-    article: true,
-  };
+  if (article !== null) {
+    const seo: ApiSEO = {
+      metaTitle: article.attributes.title,
+      metaDescription: article.attributes.description,
+      article: true,
+    };
 
-  if (article.attributes.cover.data !== null) {
-    seo.shareImage = { data: article.attributes.cover.data };
-  }
+    if (article.attributes.cover.data !== null) {
+      seo.shareImage = { data: article.attributes.cover.data };
+    }
 
-  return (
-    <Layout navPages={navPages}>
-      <SEO seo={seo} />
-      <ArticleHeader
-        cover={
-          article.attributes.cover.data
-            ? {
-                image: getMedia(article.attributes.cover.data, "xl"),
-                altText:
-                  article.attributes.cover.data.attributes.alternativeText,
-              }
-            : null
-        }
-        title={article.attributes.title}
-      />
-      <main css={contentStyles}>
-        {article.attributes.contentWarning || article.attributes.authorsNote ? (
-          <PrefaceAccordion
-            contentWarning={article.attributes.contentWarning}
-            authorsNote={article.attributes.authorsNote}
-          />
-        ) : null}
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={componentMapping}
-          className="markdown"
-        >
-          {article.attributes.content}
-        </ReactMarkdown>
-        <ArticleMeta
-          category={article.attributes.category.data}
-          published={article.attributes.publishedAt}
-          topics={article.attributes.topics.data}
-          updated={article.attributes.updatedAt}
-          writer={article.attributes.writer.data}
+    return (
+      <Layout navPages={navPages}>
+        <SEO seo={seo} />
+        <ArticleHeader
+          cover={
+            article.attributes.cover.data
+              ? {
+                  image: getMedia(article.attributes.cover.data, "xl"),
+                  altText:
+                    article.attributes.cover.data.attributes.alternativeText,
+                }
+              : null
+          }
+          title={article.attributes.title}
         />
-      </main>
-    </Layout>
-  );
+        <main css={contentStyles}>
+          {article.attributes.contentWarning ||
+          article.attributes.authorsNote ? (
+            <PrefaceAccordion
+              contentWarning={article.attributes.contentWarning}
+              authorsNote={article.attributes.authorsNote}
+            />
+          ) : null}
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={componentMapping}
+            className="markdown"
+          >
+            {article.attributes.content}
+          </ReactMarkdown>
+          <ArticleMeta
+            category={article.attributes.category.data}
+            published={article.attributes.publishedAt}
+            topics={article.attributes.topics.data}
+            updated={article.attributes.updatedAt}
+            writer={article.attributes.writer.data}
+          />
+        </main>
+      </Layout>
+    );
+  }
 };
 
 export default Article;

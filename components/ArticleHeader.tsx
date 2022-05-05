@@ -4,6 +4,7 @@ import { Theme, css } from "@emotion/react";
 
 import Image from "next/image";
 import { MediaFormat } from "../types/StrapiMedia";
+import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 
 interface ArticleImageProps {
@@ -11,7 +12,7 @@ interface ArticleImageProps {
     image: MediaFormat;
     altText: string;
   } | null;
-  title: string;
+  title: string | null;
 }
 
 const articleTitleStyles = (theme: Theme) =>
@@ -20,7 +21,7 @@ const articleTitleStyles = (theme: Theme) =>
     display: "grid",
     gridTemplateColumns: "repeat(12, 1fr)",
 
-    h1: {
+    ".title": {
       textAlign: "right",
       gridColumn: "3 / span 8",
 
@@ -90,8 +91,19 @@ const ArticleHeader = ({ cover, title }: ArticleImageProps) => (
           </span>
         </Typography>
       </>
+    ) : title ? (
+      <Typography variant="h1" className="title">
+        {title}
+      </Typography>
     ) : (
-      <Typography variant="h1">{title}</Typography>
+      <Skeleton
+        variant="text"
+        width="65%"
+        sx={{ justifySelf: "end" }}
+        className="title"
+      >
+        <Typography variant="h1">.</Typography>
+      </Skeleton>
     )}
   </div>
 );

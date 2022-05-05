@@ -4,10 +4,11 @@ import { Theme, css } from "@emotion/react";
 
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import Skeleton from "@mui/material/Skeleton";
 
 interface NavButtonProps {
-  href: string;
-  text: string;
+  href?: string;
+  text?: string;
 }
 
 const navButtonStyles = (theme: Theme) =>
@@ -26,12 +27,17 @@ const navButtonStyles = (theme: Theme) =>
     },
   });
 
-const NavButton = ({ href, text }: NavButtonProps) => (
-  <Link href={href} passHref>
+const NavButton = ({ href, text }: NavButtonProps) =>
+  href && text ? (
+    <Link href={href} passHref>
+      <Button variant="contained" css={navButtonStyles} focusRipple={true}>
+        {text}
+      </Button>
+    </Link>
+  ) : (
     <Button variant="contained" css={navButtonStyles} focusRipple={true}>
-      {text}
+      <Skeleton variant="text" width="100%" sx={{ bgcolor: "grey.800" }} />
     </Button>
-  </Link>
-);
+  );
 
 export default NavButton;

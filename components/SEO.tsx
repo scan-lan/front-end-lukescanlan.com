@@ -6,7 +6,7 @@ import { getMedia } from "../lib/getMedia";
 import { useContext } from "react";
 
 interface SEOProps {
-  seo: ApiSEO;
+  seo: ApiSEO | null;
 }
 
 const SEO = ({ seo }: SEOProps) => {
