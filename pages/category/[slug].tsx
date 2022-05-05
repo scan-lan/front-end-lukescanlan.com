@@ -99,9 +99,14 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
 
   if (router.isFallback) {
     return (
-      <main style={{ display: "grid", height: "80vh", placeContent: "center" }}>
-        <Typography variant="h1">Loading...</Typography>
-      </main>
+      <Layout navPages={null}>
+        <div css={titleContainerStyles}>
+          <Skeleton variant="text">
+            <Typography variant="h1">Non-Fiction</Typography>
+          </Skeleton>
+        </div>
+        <Articles articles={null} spacing={1} />
+      </Layout>
     );
   }
 
