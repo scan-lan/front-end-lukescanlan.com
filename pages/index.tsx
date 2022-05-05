@@ -1,6 +1,6 @@
 import ApiArticle from "../types/Article";
-import ApiSEO from "../types/SEO";
 import Articles from "../components/Articles";
+import Homepage from "../types/Homepage";
 import Layout from "../components/Layout";
 import NavPage from "../types/NavPage";
 import React from "react";
@@ -9,28 +9,19 @@ import { getFromAPI } from "../lib/api";
 import { stringify } from "qs";
 
 interface HomeProps {
-  articles: {
+  articles?: {
     data: ApiArticle[];
   };
-  navPages: {
+  navPages?: {
     data: NavPage[];
   };
-  homepage: {
-    data: {
-      attributes: {
-        seo: ApiSEO;
-        hero: {
-          title: string;
-        };
-      };
-    };
-  };
+  homepage?: Homepage;
 }
 
 const Home = ({ articles, navPages, homepage }: HomeProps) => (
-  <Layout navPages={navPages.data}>
-    <SEO seo={homepage.data.attributes.seo} />
-    <Articles articles={articles.data} spacing={1} />
+  <Layout navPages={navPages?.data || null}>
+    <SEO seo={homepage?.data.attributes.seo || null} />
+    <Articles articles={articles?.data || null} spacing={1} />
   </Layout>
 );
 
@@ -42,9 +33,9 @@ export const getStaticProps = async () => {
 
   // Run API calls in parallel
   const [articles, navPages, homepage] = await Promise.all([
-    getFromAPI("/articles", articlesQueryString),
-    getFromAPI("/nav-pages"),
-    getFromAPI("/homepage"),
+    getFromAPI<{ data: ApiArticle[] }>("/articles", articlesQueryString),
+    getFromAPI<{ data: NavPage[] }>("/nav-pages"),
+    getFromAPI<{ data: Homepage }>("/homepage"),
   ]);
 
   return {
