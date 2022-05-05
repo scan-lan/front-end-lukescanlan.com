@@ -3,27 +3,30 @@
 import { GetStaticPaths, GetStaticProps } from "next/types";
 
 import ApiArticle from "../../types/Article";
+import type ApiCategory from "../../types/Category";
 import Articles from "../../components/Articles";
 import Layout from "../../components/Layout";
 import NavPage from "../../types/NavPage";
 import SEO from "../../components/SEO";
+import Skeleton from "@mui/material/Skeleton";
 import type StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";
 import { getFromAPI } from "../../lib/api";
-import type iCategory from "../../types/Category";
 import { stringify } from "qs";
 import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categories: { data: iCategory[] } = await getFromAPI("/categories");
+  const categories = await getFromAPI<{ data: ApiCategory[] }>("/categories");
 
   return {
-    paths: categories.data.map((category) => ({
-      params: {
-        slug: category.attributes.slug,
-      },
-    })),
+    paths: categories
+      ? categories.data.map((category) => ({
+          params: {
+            slug: category.attributes.slug,
+          },
+        }))
+      : [],
     fallback: true,
   };
 };
@@ -37,11 +40,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   });
 
-  const category: { data: iCategory[]; meta: StrapiMeta } = await getFromAPI(
+  const category = await getFromAPI<{ data: ApiCategory[]; meta: StrapiMeta }>(
     "/categories",
     categoryQueryString
   );
-  const navPages: { data: NavPage[]; meta: StrapiMeta } = await getFromAPI(
+  const navPages = await getFromAPI<{ data: NavPage[]; meta: StrapiMeta }>(
     "/nav-pages"
   );
 
@@ -57,25 +60,25 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     sort: ["updatedAt:desc", "publishedAt:desc"],
   });
 
-  const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
+  const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
     "/articles",
     articlesQueryString
   );
 
   return {
     props: {
-      articles: articles.data,
-      category: category.data[0],
-      navPages: navPages.data,
+      articles: articles?.data || null,
+      category: category?.data[0] || null,
+      navPages: navPages?.data || null,
     },
     revalidate: 1,
   };
 };
 
 interface CategoryProps {
-  articles: ApiArticle[];
-  category: iCategory;
-  navPages: NavPage[];
+  articles: ApiArticle[] | null;
+  category: ApiCategory | null;
+  navPages: NavPage[] | null;
 }
 
 const titleContainerStyles = css({
@@ -102,16 +105,24 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
     );
   }
 
-  const seo = {
-    metaTitle: category.attributes.name,
-    metaDescription: `All ${category.attributes.name} articles`,
-  };
+  const seo = category
+    ? {
+        metaTitle: category.attributes.name,
+        metaDescription: `All ${category.attributes.name} articles`,
+      }
+    : null;
 
   return (
     <Layout navPages={navPages}>
       <SEO seo={seo} />
       <div css={titleContainerStyles}>
-        <Typography variant="h1">{category.attributes.name}</Typography>
+        {category ? (
+          <Typography variant="h1">{category.attributes.name}</Typography>
+        ) : (
+          <Skeleton variant="text">
+            <Typography variant="h1">Non-Fiction</Typography>
+          </Skeleton>
+        )}
       </div>
       <Articles articles={articles} spacing={1} />
     </Layout>

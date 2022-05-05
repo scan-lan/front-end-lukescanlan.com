@@ -6,7 +6,7 @@ import NavPage from "../types/NavPage";
 import { getFromAPI } from "../lib/api";
 
 interface AboutProps {
-  navPages: NavPage[];
+  navPages: NavPage[] | null;
 }
 
 const About = ({ navPages }: AboutProps) => {
@@ -26,10 +26,10 @@ const About = ({ navPages }: AboutProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const navPages: { data: NavPage } = await getFromAPI("/nav-pages");
+  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
 
   return {
-    props: { navPages: navPages.data },
+    props: { navPages: navPages?.data || null },
     revalidate: 1,
   };
 };

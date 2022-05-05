@@ -24,14 +24,16 @@ import { stringify } from "qs";
 import { useRouter } from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles: { data: ApiArticle[] } = await getFromAPI("/articles");
+  const articles = await getFromAPI<{ data: ApiArticle[] }>("/articles");
 
   return {
-    paths: articles.data.map((article) => ({
-      params: {
-        slug: article.attributes.slug,
-      },
-    })),
+    paths: articles
+      ? articles.data.map((article) => ({
+          params: {
+            slug: article.attributes.slug,
+          },
+        }))
+      : [],
     fallback: true,
   };
 };
@@ -46,21 +48,24 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     populate: ["writer", "writer.picture", "cover", "category", "topics"],
   });
 
-  const articles: { data: ApiArticle[]; meta: StrapiMeta } = await getFromAPI(
+  const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
     "/articles",
     articleQueryParams
   );
 
-  const navPages = await getFromAPI("/nav-pages");
+  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
 
   return {
-    props: { article: articles.data[0], navPages: navPages.data },
+    props: {
+      article: articles?.data[0] || null,
+      navPages: navPages?.data || null,
+    },
     revalidate: 1,
   };
 };
 
 interface ArticleProps {
-  article: ApiArticle;
+  article: ApiArticle | null;
   navPages: NavPage[];
 }
 
