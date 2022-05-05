@@ -9,7 +9,7 @@ import { useContainerDimensions } from "../lib/useContainerDimensions";
 import { useRef } from "react";
 
 interface NavProps {
-  navPages: NavPage[];
+  navPages: NavPage[] | null;
   spacing?: number;
 }
 
@@ -47,15 +47,17 @@ const Nav = ({ navPages, spacing = 1 }: NavProps) => {
     <nav css={navStyles} ref={headerRef}>
       <Sitename textWidth={headerTextWidth} />
       <div className="buttons">
-        {navPages.map((navPage, i) => {
-          const href =
-            navPage.attributes.slug === "about"
-              ? "/about"
-              : `/category/${navPage.attributes.slug}`;
-          return (
-            <NavButton text={navPage.attributes.name} href={href} key={i} />
-          );
-        })}
+        {navPages
+          ? navPages.map((navPage, i) => {
+              const href =
+                navPage.attributes.slug === "about"
+                  ? "/about"
+                  : `/category/${navPage.attributes.slug}`;
+              return (
+                <NavButton text={navPage.attributes.name} href={href} key={i} />
+              );
+            })
+          : Array.from<number>({ length: 4 }).map((i) => <NavButton key={i} />)}
       </div>
     </nav>
   );
