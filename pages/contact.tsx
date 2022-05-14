@@ -5,7 +5,6 @@ import { Email } from "react-obfuscate-email";
 import { GetStaticProps } from "next/types";
 import Image from "next/image";
 import Layout from "../components/Layout";
-import Link from "@mui/material/Link";
 import Markdown from "../components/Markdown";
 import NavPage from "../types/NavPage";
 import { Theme } from "@mui/material/styles";
