@@ -49,9 +49,9 @@ const mainStyles = (theme: Theme) =>
     ".blurb": {
       justifySelf: "right",
       alignSelf: "center",
-      padding: `0 ${theme.spacing(1)}`,
+      padding: theme.spacing(1),
       p: {
-        maxWidth: "40ch",
+        maxWidth: "35ch",
       },
       h4: {
         textAlign: "right",
@@ -68,24 +68,36 @@ const mainStyles = (theme: Theme) =>
       borderTop: "2px black dashed",
     },
 
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       gridTemplateColumns: "1fr",
-      gridTemplateRows: "repeat(2, 1fr) 2fr",
+      gridTemplateRows: "1fr 2fr 1fr",
 
       ".blurb": {
         gridRow: 1,
       },
 
-      ".email": {
-        gridRow: 2,
-      },
-
       ".image": {
-        gridRow: 3,
+        gridRow: 2,
         borderRight: "none",
         borderTop: "2px black dashed",
         padding: `${theme.spacing(2)} ${theme.spacing(1)}`,
+        margin: 0,
       },
+
+      ".email": {
+        gridRow: 3,
+        margin: 0,
+      },
+    },
+  });
+
+const emailStyles = (theme: Theme) =>
+  css({
+    color: theme.palette.primary.main,
+    textDecoration: `2px ${theme.palette.primary.light} underline`,
+
+    ":hover, :focus": {
+      textDecorationColor: theme.palette.primary.dark,
     },
   });
 
@@ -108,9 +120,9 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
         <div className="email">
           <Typography>
             Click{" "}
-            <Link>
-              <Email email="luke@lukescanlan.com">here</Email>
-            </Link>{" "}
+            <Email email="luke@lukescanlan.com" css={emailStyles}>
+              here
+            </Email>{" "}
             for my email
           </Typography>
         </div>
