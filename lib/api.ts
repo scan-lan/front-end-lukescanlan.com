@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const getStrapiURL = () =>
-  `${process.env.API_URL || "http://localhost:1337/api"}`;
+const getStrapiURL = () => process.env.API_URL || "http://localhost:1337/api";
 
 const api = axios.create({
   baseURL: getStrapiURL(),
