@@ -10,9 +10,9 @@ import ArticleMeta from "../../components/ArticleMeta";
 import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
 import Link from "@mui/material/Link";
+import Markdown from "../../components/Markdown";
 import NavPage from "../../types/NavPage";
 import PrefaceAccordion from "../../components/PrefaceAccordion";
-import ReactMarkdown from "react-markdown";
 import SEO from "../../components/SEO";
 import Skeleton from "@mui/material/Skeleton";
 import StrapiMeta from "../../types/StrapiMeta";
@@ -20,7 +20,6 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Typography from "@mui/material/Typography";
 import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
-import remarkGfm from "remark-gfm";
 import { stringify } from "qs";
 import { useRouter } from "next/router";
 
@@ -93,7 +92,6 @@ const contentStyles = (theme: Theme) =>
 
       "& pre": {
         width: "100%",
-        overflow: "scroll",
       },
 
       "& code": {
@@ -168,12 +166,12 @@ const Article = ({ article, navPages }: ArticleProps) => {
         <ArticleHeader cover={null} title={null} />
         <main css={contentStyles}>
           <div className="markdown">
-            {Array.from<number>({ length: 40 }).map((i) => (
+            {Array.from<number>({ length: 40 }).map((_, i) => (
               <Skeleton
                 variant="text"
                 width="100%"
                 className="p-skeleton"
-                key={i}
+                key={i.toString()}
               >
                 <Typography variant="body1">.</Typography>
               </Skeleton>
@@ -218,13 +216,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
               authorsNote={article.attributes.authorsNote}
             />
           ) : null}
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={componentMapping}
-            className="markdown"
-          >
-            {article.attributes.content}
-          </ReactMarkdown>
+          <Markdown>{article.attributes.content}</Markdown>
           <ArticleMeta
             category={article.attributes.category.data}
             published={article.attributes.publishedAt}
