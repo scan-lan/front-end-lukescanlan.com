@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { getMedia, getMediaURL, mediaSize } from "../../lib/getMedia";
+import { getMediaURL, mediaSize } from "../../lib/getMedia";
 
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";

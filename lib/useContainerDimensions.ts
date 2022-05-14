@@ -1,27 +1,32 @@
-import { MutableRefObject, useEffect, useState } from "react";
+import { Ref, useEffect, useState } from "react";
 
-export const useContainerDimensions = (ref: MutableRefObject<any>) => {
+export const useContainerDimensions = (ref: Ref<HTMLElement>) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    const getDimensions = () => ({
-      width: ref.current.offsetWidth,
-      height: ref.current.offsetHeight,
-    });
+    if (ref && typeof ref === "object") {
+      const getDimensions = (prevDimensions: {
+        width: number;
+        height: number;
+      }) => ({
+        width: ref.current?.offsetWidth || prevDimensions.width,
+        height: ref.current?.offsetHeight || prevDimensions.height,
+      });
 
-    const handleResize = () => {
-      setDimensions(getDimensions());
-    };
+      if (ref.current) {
+        setDimensions((prevDimensions) => getDimensions(prevDimensions));
+      }
 
-    if (ref.current) {
-      setDimensions(getDimensions());
+      const handleResize = () => {
+        setDimensions((prevDimensions) => getDimensions(prevDimensions));
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
     }
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, [ref]);
 
   return dimensions;

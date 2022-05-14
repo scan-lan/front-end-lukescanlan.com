@@ -18,10 +18,11 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
       display: "grid",
       width: "100%",
       gridTemplateColumns: "repeat(12, 1fr)",
+      paddingTop: theme.spacing(spacing),
 
       "& .masonry": {
         gridColumn: "2 / span 10",
-        width: `calc(100% + ${theme.spacing(spacing)}px)`,
+        width: `calc(100% + ${theme.spacing(spacing)})`,
       },
     });
 
@@ -39,12 +40,14 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
                 )
               : []
           }
-          date={article.attributes.updatedAt}
+          date={article.attributes.written || article.attributes.publishedAt}
           category={article.attributes.category.data?.attributes.name || null}
           slug={article.attributes.slug}
         />
       ))
-    : Array.from<number>({ length: 8 }).map((i) => <SkeletonCard key={i} />);
+    : Array.from<number>({ length: 8 }).map((_, i) => (
+        <SkeletonCard key={i.toString()} />
+      ));
 
   const columns: { xl?: number; lg?: number; sm?: number; xs?: number } = {
     xl: 4,

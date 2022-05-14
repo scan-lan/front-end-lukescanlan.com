@@ -57,7 +57,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     },
     populate: "*",
-    sort: ["updatedAt:desc", "publishedAt:desc"],
+    sort: ["written:desc", "updatedAt:desc"],
   });
 
   const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { GetStaticProps } from "next";
+import { GetStaticProps } from "next/types";
 import Layout from "../components/Layout";
 import NavPage from "../types/NavPage";
 import { getFromAPI } from "../lib/api";

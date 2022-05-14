@@ -13,38 +13,43 @@ interface NavProps {
   spacing?: number;
 }
 
-const Nav = ({ navPages, spacing = 1 }: NavProps) => {
-  const navStyles = (theme: Theme) =>
-    css({
-      display: "grid",
-      gridTemplateColumns: "repeat(12, 1fr)",
-      gridTemplateAreas: `
+const navStyles = (theme: Theme) =>
+  css({
+    display: "grid",
+    gridTemplateColumns: "repeat(12, 1fr)",
+    gridTemplateAreas: `
       "sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename"
       ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
     `,
-      paddingBottom: theme.spacing(spacing),
 
+    "& .buttons": {
+      gridArea: "navbar",
+      display: "grid",
+      gridTemplateColumns: "repeat(4, 1fr)",
+      [theme.breakpoints.down("lg")]: {
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gridTemplateRows: "repeat(2, 1fr)",
+      },
+      [theme.breakpoints.down("sm")]: {
+        gridTemplateRows: "repeat(4, 1fr)",
+        gridTemplateColumns: "1fr",
+      },
+    },
+  });
+
+const Nav = ({ navPages, spacing = 1 }: NavProps) => {
+  const spacingStyles = (theme: Theme) =>
+    css({
       "& .buttons": {
-        gridArea: "navbar",
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
         gap: theme.spacing(spacing),
         paddingTop: theme.spacing(spacing),
-        [theme.breakpoints.down("lg")]: {
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gridTemplateRows: "repeat(2, 1fr)",
-        },
-        [theme.breakpoints.down("sm")]: {
-          gridTemplateRows: "repeat(4, 1fr)",
-          gridTemplateColumns: "1fr",
-        },
       },
     });
 
-  const headerRef = useRef<HTMLElement>(null);
-  const headerTextWidth = useContainerDimensions(headerRef).width;
+  const navRef = useRef<HTMLElement>(null);
+  const headerTextWidth = useContainerDimensions(navRef).width;
   return (
-    <nav css={navStyles} ref={headerRef}>
+    <nav css={[navStyles, spacingStyles]} ref={navRef}>
       <Sitename textWidth={headerTextWidth} />
       <div className="buttons">
         {navPages
@@ -54,10 +59,16 @@ const Nav = ({ navPages, spacing = 1 }: NavProps) => {
                   ? "/about"
                   : `/category/${navPage.attributes.slug}`;
               return (
-                <NavButton text={navPage.attributes.name} href={href} key={i} />
+                <NavButton
+                  text={navPage.attributes.name}
+                  href={href}
+                  key={i.toString()}
+                />
               );
             })
-          : Array.from<number>({ length: 4 }).map((i) => <NavButton key={i} />)}
+          : Array.from<number>({ length: 4 }).map((_, i) => (
+              <NavButton key={i.toString()} />
+            ))}
       </div>
     </nav>
   );

@@ -7,20 +7,16 @@ import ApiArticle from "../../types/Article";
 import ApiSEO from "../../types/SEO";
 import ArticleHeader from "../../components/ArticleHeader";
 import ArticleMeta from "../../components/ArticleMeta";
-import type { Components } from "react-markdown";
 import Layout from "../../components/Layout";
-import Link from "@mui/material/Link";
+import Markdown from "../../components/Markdown";
 import NavPage from "../../types/NavPage";
 import PrefaceAccordion from "../../components/PrefaceAccordion";
-import ReactMarkdown from "react-markdown";
 import SEO from "../../components/SEO";
 import Skeleton from "@mui/material/Skeleton";
 import StrapiMeta from "../../types/StrapiMeta";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Typography from "@mui/material/Typography";
 import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
-import remarkGfm from "remark-gfm";
 import { stringify } from "qs";
 import { useRouter } from "next/router";
 
@@ -93,7 +89,6 @@ const contentStyles = (theme: Theme) =>
 
       "& pre": {
         width: "100%",
-        overflow: "scroll",
       },
 
       "& code": {
@@ -134,29 +129,6 @@ const contentStyles = (theme: Theme) =>
     },
   });
 
-const componentMapping: Components = {
-  h1: ({ node, ...props }) => <Typography variant="h2" {...props} />,
-  h2: ({ node, ...props }) => <Typography variant="h3" {...props} />,
-  h3: ({ node, ...props }) => <Typography variant="h4" {...props} />,
-  h4: ({ node, ...props }) => <Typography variant="h5" {...props} />,
-  h5: ({ node, ...props }) => <Typography variant="h6" {...props} />,
-  h6: ({ node, ...props }) => <Typography variant="h6" {...props} />,
-  p: ({ node, ...props }) => <Typography variant="body1" {...props} />,
-  a: ({ node, ...props }) => <Link color="primary.main" {...props} />,
-  code: ({ node, inline, className, children, ...props }) => {
-    const match = /language-(\w+)/.exec(className || "");
-    return !inline && match ? (
-      <SyntaxHighlighter language={match[1]} PreTag="div" {...props}>
-        {String(children).replace(/\n$/, "")}
-      </SyntaxHighlighter>
-    ) : (
-      <code className={className} {...props}>
-        {children}
-      </code>
-    );
-  },
-};
-
 const Article = ({ article, navPages }: ArticleProps) => {
   const router = useRouter();
 
@@ -168,12 +140,12 @@ const Article = ({ article, navPages }: ArticleProps) => {
         <ArticleHeader cover={null} title={null} />
         <main css={contentStyles}>
           <div className="markdown">
-            {Array.from<number>({ length: 40 }).map((i) => (
+            {Array.from<number>({ length: 40 }).map((_, i) => (
               <Skeleton
                 variant="text"
                 width="100%"
                 className="p-skeleton"
-                key={i}
+                key={i.toString()}
               >
                 <Typography variant="body1">.</Typography>
               </Skeleton>
@@ -218,13 +190,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
               authorsNote={article.attributes.authorsNote}
             />
           ) : null}
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={componentMapping}
-            className="markdown"
-          >
-            {article.attributes.content}
-          </ReactMarkdown>
+          <Markdown>{article.attributes.content}</Markdown>
           <ArticleMeta
             category={article.attributes.category.data}
             published={article.attributes.publishedAt}
