@@ -28,7 +28,7 @@ const Home = ({ articles, navPages, homepage }: HomeProps) => (
 export const getStaticProps = async () => {
   const articlesQueryString = stringify({
     populate: ["category", "writer", "cover", "topics"],
-    sort: ["updatedAt:desc", "publishedAt:desc"],
+    sort: ["written:desc", "updatedAt:desc"],
   });
 
   // Run API calls in parallel

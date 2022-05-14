@@ -39,7 +39,7 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
                 )
               : []
           }
-          date={article.attributes.updatedAt}
+          date={article.attributes.written || article.attributes.publishedAt}
           category={article.attributes.category.data?.attributes.name || null}
           slug={article.attributes.slug}
         />
