@@ -1,17 +1,16 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, css } from "@emotion/react";
-
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import Skeleton from "@mui/material/Skeleton";
+import { css } from "@emotion/react";
 
 interface NavButtonProps {
   href?: string;
   text?: string;
 }
 
-const navButtonStyles = (theme: Theme) =>
+const navButtonStyles = () =>
   css({
     // backgroundColor: theme.palette.secondary.main,
     backgroundColor: "black",

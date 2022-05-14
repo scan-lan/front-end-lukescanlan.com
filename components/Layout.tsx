@@ -20,7 +20,7 @@ const layoutStyles = () =>
     height: "100%",
   });
 
-const Layout = ({ children, navPages, seo }: LayoutProps) => (
+const Layout = ({ children, navPages }: LayoutProps) => (
   <div css={layoutStyles}>
     <Nav navPages={navPages} />
     <>{children}</>
