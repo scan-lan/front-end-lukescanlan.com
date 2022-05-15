@@ -16,15 +16,15 @@ const getFromAPI = async <T>(path: string, queryString = "populate=*") => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      if (process.env.NODE_ENV !== "production") {
-        console.log("http request failed");
-        console.log(error);
-      }
+      // if (process.env.NODE_ENV !== "production") {
+      console.log("http request failed");
+      console.log(error);
+      // }
     } else {
-      if (process.env.NODE_ENV !== "production") {
-        console.log("unexpected error");
-        console.log(error);
-      }
+      // if (process.env.NODE_ENV !== "production") {
+      console.log("unexpected error");
+      console.log(error);
+      // }
     }
   }
 };
