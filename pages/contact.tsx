@@ -11,19 +11,7 @@ import { Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";
 import { getFromAPI } from "../lib/api";
-
-export const getStaticProps: GetStaticProps = async () => {
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
-  const contactPage = await getFromAPI<{ data: ContactPage }>("/contact");
-
-  return {
-    props: {
-      navPages: navPages?.data || null,
-      contactPage: contactPage?.data || null,
-    },
-    revalidate: 1,
-  };
-};
+import { useRouter } from "next/router";
 
 interface ContactProps {
   navPages: NavPage[] | null;
@@ -65,6 +53,14 @@ const mainStyles = (theme: Theme) =>
       padding: `0 ${theme.spacing(1)}`,
       marginRight: theme.spacing(1),
       borderTop: "2px black dashed",
+      a: {
+        color: theme.palette.primary.main,
+        textDecoration: `2px ${theme.palette.primary.light} underline`,
+
+        ":hover, :focus": {
+          textDecorationColor: theme.palette.primary.dark,
+        },
+      },
     },
 
     [theme.breakpoints.down("md")]: {
@@ -90,57 +86,77 @@ const mainStyles = (theme: Theme) =>
     },
   });
 
-const emailStyles = (theme: Theme) =>
-  css({
-    color: theme.palette.primary.main,
-    textDecoration: `2px ${theme.palette.primary.light} underline`,
-
-    ":hover, :focus": {
-      textDecorationColor: theme.palette.primary.dark,
-    },
-  });
-
 const Contact = ({ navPages, contactPage }: ContactProps) => {
+  const router = useRouter();
+
+  if (router.isFallback || contactPage === null) {
+    return (
+      <Layout navPages={navPages}>
+        <main css={mainStyles}>
+          <div className="blurb">
+            <Typography>
+              I&apos;m payin 5 quid a month for this email, so make it worth my
+              while.
+            </Typography>
+          </div>
+          <div className="email">
+            <Typography>
+              Click <Email email="luke@lukescanlan.com">here</Email> for my
+              email
+            </Typography>
+          </div>
+          <div className="image">
+            <Image
+              src="/contactPage.jpg"
+              alt="Luke in repose at a bridge over white water"
+              width={1600}
+              height={1200}
+              priority
+            />
+          </div>
+        </main>
+      </Layout>
+    );
+  }
   const image = contactPage?.attributes.contactImage.data || null;
 
   return (
     <Layout navPages={navPages}>
       <main css={mainStyles}>
         <div className="blurb">
-          {contactPage ? (
-            <Markdown>{contactPage.attributes.blurb}</Markdown>
-          ) : (
-            <Typography>
-              I&apos;m payin 5 quid a month for this email, so make it worth my
-              while.
-            </Typography>
-          )}
+          <Markdown>{contactPage.attributes.blurb}</Markdown>
         </div>
         <div className="email">
           <Typography>
-            Click{" "}
-            <Email email="luke@lukescanlan.com" css={emailStyles}>
-              here
-            </Email>{" "}
-            for my email
+            Click <Email email="luke@lukescanlan.com">here</Email> for my email
           </Typography>
         </div>
         <div className="image">
-          {image ? (
-            <Image
-              alt=""
-              src={image.attributes.formats.xlarge?.url || image.attributes.url}
-              width={image.attributes.width}
-              height={image.attributes.height}
-              priority
-            />
-          ) : (
-            <Typography>Imagine an image here</Typography>
-          )}
+          <Image
+            alt=""
+            src={image.attributes.formats.xlarge?.url || image.attributes.url}
+            width={image.attributes.width}
+            height={image.attributes.height}
+            priority
+          />
         </div>
       </main>
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
+  const contactPage = await getFromAPI<{ data: ContactPage }>("/contact");
+  console.log(contactPage);
+
+  return {
+    props: {
+      navPages: navPages?.data || null,
+      contactPage: contactPage?.data || null,
+    },
+    revalidate: 1,
+  };
 };
 
 export default Contact;
