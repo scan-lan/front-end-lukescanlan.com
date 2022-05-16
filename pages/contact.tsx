@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import ContactContainer from "../components/ContactContainer";
 import ContactPage from "../types/ContactPage";
 import { Email } from "react-obfuscate-email";
 import { GetStaticProps } from "next/types";
@@ -18,70 +19,14 @@ interface ContactProps {
   contactPage: ContactPage | null;
 }
 
-const mainStyles = (theme: Theme) =>
+const containerStyles = (theme: Theme) =>
   css({
-    display: "grid",
-    gridTemplateColumns: "3fr 2fr",
-    gridTemplateRows: "3fr 2fr",
+    ".text-two p a": {
+      color: theme.palette.primary.main,
+      textDecoration: `2px ${theme.palette.primary.light} underline`,
 
-    ".image": {
-      gridRow: "1 / span 2",
-      display: "grid",
-      placeContent: "center",
-      margin: `${theme.spacing(1)} 0`,
-      padding: `0 ${theme.spacing(1)}`,
-      borderRight: "2px black dashed",
-    },
-
-    ".blurb": {
-      justifySelf: "right",
-      alignSelf: "center",
-      padding: theme.spacing(1),
-      p: {
-        maxWidth: "35ch",
-      },
-      h4: {
-        textAlign: "right",
-      },
-    },
-
-    ".email": {
-      height: "100%",
-      display: "grid",
-      alignContent: "center",
-      textAlign: "center",
-      padding: `0 ${theme.spacing(1)}`,
-      marginRight: theme.spacing(1),
-      borderTop: "2px black dashed",
-      a: {
-        color: theme.palette.primary.main,
-        textDecoration: `2px ${theme.palette.primary.light} underline`,
-
-        ":hover, :focus": {
-          textDecorationColor: theme.palette.primary.dark,
-        },
-      },
-    },
-
-    [theme.breakpoints.down("md")]: {
-      gridTemplateColumns: "1fr",
-      gridTemplateRows: "1fr 2fr 1fr",
-
-      ".blurb": {
-        gridRow: 1,
-      },
-
-      ".image": {
-        gridRow: 2,
-        borderRight: "none",
-        borderTop: "2px black dashed",
-        padding: `${theme.spacing(2)} ${theme.spacing(1)}`,
-        margin: 0,
-      },
-
-      ".email": {
-        gridRow: 3,
-        margin: 0,
+      ":hover, :focus": {
+        textDecorationColor: theme.palette.primary.dark,
       },
     },
   });
@@ -92,29 +37,37 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
   if (router.isFallback || contactPage === null) {
     return (
       <Layout navPages={navPages}>
-        <main css={mainStyles}>
-          <div className="blurb">
+        <ContactContainer additionalCss={containerStyles}>
+          <div className="blurb text-one">
             <Typography>
               I&apos;m payin 5 quid a month for this email, so make it worth my
               while.
             </Typography>
           </div>
-          <div className="email">
+          <div className="email text-two">
             <Typography>
               Click <Email email="luke@lukescanlan.com">here</Email> for my
               email
             </Typography>
           </div>
           <div className="image">
-            <Image
-              src="/contactPage.jpg"
-              alt="Luke in repose at a bridge over white water"
-              width={1600}
-              height={1200}
-              priority
-            />
+            <div
+              css={{
+                position: "relative",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              <Image
+                src="/contactPage.jpg"
+                alt="Luke in repose at a bridge over white water"
+                layout="fill"
+                objectFit="contain"
+                priority
+              />
+            </div>
           </div>
-        </main>
+        </ContactContainer>
       </Layout>
     );
   }
@@ -122,25 +75,33 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
 
   return (
     <Layout navPages={navPages}>
-      <main css={mainStyles}>
-        <div className="blurb">
+      <ContactContainer additionalCss={containerStyles}>
+        <div className="text-one">
           <Markdown>{contactPage.attributes.blurb}</Markdown>
         </div>
-        <div className="email">
+        <div className="text-two">
           <Typography>
             Click <Email email="luke@lukescanlan.com">here</Email> for my email
           </Typography>
         </div>
         <div className="image">
-          <Image
-            alt=""
-            src={image.attributes.formats.xlarge?.url || image.attributes.url}
-            width={image.attributes.width}
-            height={image.attributes.height}
-            priority
-          />
+          <div
+            css={{
+              position: "relative",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <Image
+              alt=""
+              src={image.attributes.formats.xlarge?.url || image.attributes.url}
+              layout="fill"
+              objectFit="contain"
+              priority
+            />
+          </div>
         </div>
-      </main>
+      </ContactContainer>
     </Layout>
   );
 };
@@ -148,7 +109,6 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
 export const getStaticProps: GetStaticProps = async () => {
   const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
   const contactPage = await getFromAPI<{ data: ContactPage }>("/contact");
-  console.log(contactPage);
 
   return {
     props: {
