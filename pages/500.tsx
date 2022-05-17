@@ -23,7 +23,9 @@ const Custom500 = ({ navPages }: Custom500Props) => (
   <Layout navPages={navPages}>
     <ContactContainer>
       <div className="text-one">
-        <Typography variant="h2">Oops—500</Typography>
+        <Typography variant="h2" className="no-break-out">
+          Oops—500
+        </Typography>
         <Typography>That means I&apos;ve fucked something up.</Typography>
       </div>
       <div className="image">

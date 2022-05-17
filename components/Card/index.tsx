@@ -129,6 +129,7 @@ const Card = ({
                       fontSize: "2.5rem",
                       paddingBottom: 0,
                     }}
+                    className="no-break-out"
                     component="h2"
                   >
                     {title}
@@ -144,7 +145,11 @@ const Card = ({
                     </Typography>
                   </Skeleton>
                 ) : (
-                  <Typography variant="body1" sx={{ fontSize: "1.25rem" }}>
+                  <Typography
+                    variant="body1"
+                    sx={{ fontSize: "1.25rem" }}
+                    className="no-break-out"
+                  >
                     {description}
                   </Typography>
                 )}

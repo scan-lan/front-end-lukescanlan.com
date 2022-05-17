@@ -6,14 +6,62 @@ import Typography from "@mui/material/Typography";
 import remarkGfm from "remark-gfm";
 
 const componentMapping: Components = {
-  h1: ({ ...props }) => <Typography variant="h2" {...props} />,
-  h2: ({ ...props }) => <Typography variant="h3" {...props} />,
-  h3: ({ ...props }) => <Typography variant="h4" {...props} />,
-  h4: ({ ...props }) => <Typography variant="h5" {...props} />,
-  h5: ({ ...props }) => <Typography variant="h6" {...props} />,
-  h6: ({ ...props }) => <Typography variant="h6" {...props} />,
-  p: ({ ...props }) => <Typography variant="body1" {...props} />,
-  a: ({ ...props }) => <Link color="primary.main" {...props} />,
+  h1: ({ className, ...props }) => (
+    <Typography
+      variant="h2"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
+  h2: ({ className, ...props }) => (
+    <Typography
+      variant="h3"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
+  h3: ({ className, ...props }) => (
+    <Typography
+      variant="h4"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
+  h4: ({ className, ...props }) => (
+    <Typography
+      variant="h5"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
+  h5: ({ className, ...props }) => (
+    <Typography
+      variant="h6"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
+  h6: ({ className, ...props }) => (
+    <Typography
+      variant="h6"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
+  p: ({ className, ...props }) => (
+    <Typography
+      variant="body1"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
+  a: ({ className, ...props }) => (
+    <Link
+      color="primary.main"
+      className={`no-break-out ${className}`}
+      {...props}
+    />
+  ),
   code: ({ inline, className, children, ...props }) => {
     const match = /language-(\w+)/.exec(className || "");
     return !inline && match ? (
@@ -21,7 +69,7 @@ const componentMapping: Components = {
         {String(children).replace(/\n$/, "")}
       </SyntaxHighlighter>
     ) : (
-      <code className={className} {...props}>
+      <code className={`${className} no-break-out`} {...props}>
         {children}
       </code>
     );

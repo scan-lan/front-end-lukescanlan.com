@@ -75,7 +75,9 @@ const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography variant="body1">{contentWarning}</Typography>
+          <Typography variant="body1" className="no-break-out">
+            {contentWarning}
+          </Typography>
         </AccordionDetails>
       </Accordion>
     ) : null}
@@ -94,7 +96,9 @@ const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography variant="body1">{authorsNote}</Typography>
+          <Typography variant="body1" className="no-break-out">
+            {authorsNote}
+          </Typography>
         </AccordionDetails>
       </Accordion>
     ) : null}

@@ -23,7 +23,9 @@ const Custom404 = ({ navPages }: Custom404Props) => (
   <Layout navPages={navPages}>
     <ContactContainer>
       <div className="text-one">
-        <Typography variant="h2">Oops—404</Typography>
+        <Typography variant="h2" className="no-break-out">
+          Oops—404
+        </Typography>
         <Typography>You&apos;re lost.</Typography>
       </div>
       <div className="image">
