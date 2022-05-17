@@ -13,6 +13,7 @@ const strokeColor = "#ffffff";
 
 const sitenameStyles = css({
   gridArea: "sitename",
+  overflow: "clip",
 
   "& .sitename-text": {
     lineHeight: 0.9,
@@ -51,13 +52,14 @@ const Sitename = ({ textWidth }: SitenameProps) => {
       <Link href="/" passHref>
         <Button className="header-a">
           <span className="sitename-text">
-            <svg height={90} width={svgWidth} style={{ overflow: "hidden" }}>
+            <svg height={90} width={svgWidth} style={{ overflow: "clip" }}>
               <text
                 x="0"
                 y="87"
                 strokeDasharray="3,4"
                 textLength={svgWidth}
                 lengthAdjust="spacingAndGlyphs"
+                style={{ overflow: "clip" }}
               >
                 lukescanlan.com
               </text>

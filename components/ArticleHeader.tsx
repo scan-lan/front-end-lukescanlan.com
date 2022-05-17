@@ -17,7 +17,7 @@ interface ArticleImageProps {
 
 const articleTitleStyles = (theme: Theme) =>
   css({
-    paddingBottom: theme.spacing(1),
+    padding: `${theme.spacing(1)} 0`,
     display: "grid",
     gridTemplateColumns: "repeat(12, 1fr)",
 
@@ -37,7 +37,7 @@ const articleTitleStyles = (theme: Theme) =>
 
 const articleImageStyles = (theme: Theme) =>
   css({
-    paddingBottom: theme.spacing(1),
+    padding: `${theme.spacing(1)} 0`,
     display: "grid",
 
     "& img": {
