@@ -42,11 +42,11 @@ const accordionStyles = (theme: Theme) =>
         borderTop: "none",
       },
 
-      "&:first-child": {
+      "&:first-of-type": {
         borderTop: borderStyle,
       },
 
-      ":first-child.Mui-expanded + :last-child, :first-child + :last-child.Mui-expanded":
+      "&:first-of-type.Mui-expanded + :last-child, &:first-of-type + :last-child.Mui-expanded":
         {
           borderTop: borderStyle,
         },
