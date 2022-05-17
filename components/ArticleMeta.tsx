@@ -25,30 +25,21 @@ const articleMetaStyles = (theme: Theme) =>
     justifySelf: "center",
     gridColumn: "3 / span 8",
 
-    [theme.breakpoints.down("lg")]: {
-      gridColumn: "2 / span 10",
-      fontSize: "1.35rem",
-    },
-
-    [theme.breakpoints.down("md")]: {
-      fontSize: "1.2rem",
-    },
-
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
     gridTemplateRows: "repeat(2, 1fr)",
     gridTemplateAreas: `
-      "published updated"
-      "category topics"
+    "date-one date-two"
+    "category topics"
     `,
     alignItems: "center",
 
-    "#published": {
-      gridArea: "published",
+    "#date-one": {
+      gridArea: "date-one",
     },
 
-    "#updated": {
-      gridArea: "updated",
+    "#date-two": {
+      gridArea: "date-two",
       justifySelf: "end",
     },
 
@@ -68,20 +59,37 @@ const articleMetaStyles = (theme: Theme) =>
     "#writer": {
       gridArea: "writer",
     },
+
+    [theme.breakpoints.down("lg")]: {
+      gridColumn: "2 / span 10",
+      fontSize: "1.35rem",
+    },
+
+    [theme.breakpoints.down("md")]: {
+      gridTemplateColumns: "1fr",
+      gridTemplateRows: "repeat(4, 1fr)",
+      gridTemplateAreas: `
+        "date-one"
+        "date-two"
+        "category"
+        "topics"
+      `,
+    },
   });
 
 interface ArticleMetaProps {
-  category: ApiCategory | null;
-  published: string;
-  topics: ApiTopic[] | null;
+  written: string;
   updated: string;
+  category: ApiCategory | null;
+  topics: ApiTopic[] | null;
+  published: string;
   writer: ApiWriter | null;
 }
 
 const ArticleMeta = ({
-  category,
-  published,
+  written,
   updated,
+  category,
   topics,
 }: ArticleMetaProps) => (
   <div css={containerStyles}>
@@ -91,11 +99,11 @@ const ArticleMeta = ({
           By {writer.attributes.name}
         </Typography>
       ) : null} */}
-      <Typography variant="caption" id="published">
-        <Moment format="DD.MM.YYYY">{published}</Moment>
+      <Typography variant="caption" id="date-one">
+        Written <Moment format="DD.MM.YYYY">{written}</Moment>
       </Typography>
-      {updated !== published ? (
-        <Typography variant="caption" id="updated">
+      {updated !== written ? (
+        <Typography variant="caption" id="date-two">
           Updated <Moment format="DD.MM.YYYY">{updated}</Moment>
         </Typography>
       ) : null}

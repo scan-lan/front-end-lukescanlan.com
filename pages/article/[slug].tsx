@@ -192,10 +192,11 @@ const Article = ({ article, navPages }: ArticleProps) => {
           ) : null}
           <Markdown>{article.attributes.content}</Markdown>
           <ArticleMeta
-            category={article.attributes.category.data}
-            published={article.attributes.publishedAt}
-            topics={article.attributes.topics.data}
+            written={article.attributes.written}
             updated={article.attributes.updatedAt}
+            category={article.attributes.category.data}
+            topics={article.attributes.topics.data}
+            published={article.attributes.publishedAt}
             writer={article.attributes.writer.data}
           />
         </main>
