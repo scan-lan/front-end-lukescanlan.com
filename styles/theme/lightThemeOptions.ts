@@ -11,7 +11,7 @@ export const lightThemeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: "Atkinson Hyperlegible",
+    fontFamily: "Atkinson Hyperlegible, Roboto, sans-serif",
     h1: {
       fontFamily: "Roboto Slab, serif",
       fontWeight: 900,
