@@ -2,6 +2,7 @@
 
 import AboutButton from "../components/AboutButton";
 import AboutPage from "../types/AboutPage";
+import AboutTitle from "../components/AboutTitle";
 import { GetStaticProps } from "next/types";
 import Layout from "../components/Layout";
 import Markdown from "../components/Markdown";
@@ -111,19 +112,7 @@ const About = ({ navPages, about }: AboutProps) => {
   return (
     <Layout navPages={navPages}>
       <main css={mainStyles}>
-        <Typography
-          variant="h1"
-          id="title"
-          css={(theme) => ({
-            fontFamily: "sans-serif",
-            padding: `0 ${theme.spacing(1)}`,
-            color: theme.palette.secondary.contrastText,
-            backgroundColor: theme.palette.secondary.main,
-            fontVariant: "none",
-          })}
-        >
-          about
-        </Typography>
+        <AboutTitle textLength={600} />
         <AboutButton
           name="what"
           active={state.what}

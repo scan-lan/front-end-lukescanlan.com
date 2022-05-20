@@ -13,7 +13,7 @@ interface AboutButtonProps {
   setState: (_: AboutState) => void;
 }
 
-const buttonStyles = (theme: Theme) =>
+const buttonStyles = (_: Theme) =>
   css({
     border: "none",
     textDecoration: "4px underline",
