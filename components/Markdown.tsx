@@ -55,9 +55,10 @@ const componentMapping: Components = {
       {...props}
     />
   ),
-  a: ({ className, ...props }) => (
+  a: ({ className, href, ...props }) => (
     <Link
       color="primary.main"
+      href={href}
       className={`no-break-out ${className}`}
       {...props}
     />

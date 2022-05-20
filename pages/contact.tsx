@@ -81,7 +81,8 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
         </div>
         <div className="text-two">
           <Typography>
-            Click <Email email="luke@lukescanlan.com">here</Email> for my email
+            Email me—
+            <Email email="hello@lukescanlan.com" />
           </Typography>
         </div>
         <div className="image">

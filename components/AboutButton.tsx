@@ -60,12 +60,12 @@ const AboutButton = ({
     css={buttonStyles}
     onClick={
       active
-        ? (event) => switchActive(null, setState)
-        : (event) => switchActive(name, setState)
+        ? () => switchActive(null, setState)
+        : () => switchActive(name, setState)
     }
   >
     <Typography variant="h3" sx={{ padding: 0 }}>
-      {name}
+      {`${name}?`}
     </Typography>
   </Button>
 );
