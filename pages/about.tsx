@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";
 import { getFromAPI } from "../lib/api";
 import { useState } from "react";
+import useWindowDimensions from "../lib/useWindowDimensions";
 
 interface AboutProps {
   navPages: NavPage[] | null;
@@ -108,11 +109,12 @@ const About = ({ navPages, about }: AboutProps) => {
     why: false,
     who: false,
   });
+  const windowDimensions = useWindowDimensions();
 
   return (
     <Layout navPages={navPages}>
       <main css={mainStyles}>
-        <AboutTitle textLength={600} />
+        <AboutTitle textLength={windowDimensions.width * 0.5} />
         <AboutButton
           name="what"
           active={state.what}

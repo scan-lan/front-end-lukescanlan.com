@@ -74,7 +74,7 @@ export const lightThemeOptions: ThemeOptions = {
           textTransform: "none",
           borderRadius: 0,
           boxShadow: "none",
-          "&:hover, &:focus": {
+          ":hover, :focus, :active": {
             boxShadow: "none",
           },
         },
