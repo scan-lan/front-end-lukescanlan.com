@@ -5,8 +5,7 @@ import { Theme, css } from "@emotion/react";
 import NavButton from "./NavButton";
 import NavPage from "../types/NavPage";
 import Sitename from "./Sitename";
-import { useContainerDimensions } from "../lib/useContainerDimensions";
-import { useRef } from "react";
+import useWindowDimensions from "../lib/useWindowDimensions";
 
 interface NavProps {
   navPages: NavPage[] | null;
@@ -45,12 +44,11 @@ const Nav = ({ navPages, spacing = 1 }: NavProps) => {
         paddingTop: theme.spacing(spacing),
       },
     });
+  const windowDimensions = useWindowDimensions();
 
-  const navRef = useRef<HTMLElement>(null);
-  const headerTextWidth = useContainerDimensions(navRef).width;
   return (
-    <nav css={[navStyles, spacingStyles]} ref={navRef}>
-      <Sitename textWidth={headerTextWidth} />
+    <nav css={[navStyles, spacingStyles]}>
+      <Sitename textWidth={windowDimensions.width} />
       <div className="buttons">
         {navPages
           ? navPages.map((navPage, i) => {
