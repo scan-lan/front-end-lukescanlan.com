@@ -18,8 +18,6 @@ interface NavProps {
 
 const navStyles = (theme: Theme) =>
   css({
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
     gridTemplateAreas: `
       "sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename"
       ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
@@ -60,7 +58,7 @@ const Nav = ({ navPages, spacing = 1 }: NavProps) => {
     });
 
   return (
-    <nav css={[navStyles, spacingStyles]}>
+    <nav css={[navStyles, spacingStyles]} className="twelve-column">
       <Sitename textWidth={windowDimensions.width} />
       <div className="nav-menu">
         <Collapse

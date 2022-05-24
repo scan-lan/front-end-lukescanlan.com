@@ -21,6 +21,7 @@ interface AboutProps {
 
 const mainStyles = (theme: Theme) =>
   css({
+    gridColumn: "2 / span 10",
     display: "grid",
     gridTemplateColumns: "1fr min-content 1fr",
     gridTemplateRows: "1fr repeat(3, min-content) 1fr",
@@ -113,40 +114,42 @@ const About = ({ navPages, about }: AboutProps) => {
 
   return (
     <Layout navPages={navPages}>
-      <main css={mainStyles}>
-        <AboutTitle textLength={windowDimensions.width * 0.5} />
-        <AboutButton
-          name="what"
-          active={state.what}
-          className="align-end justify-end"
-          setState={setState}
-        />
-        <AboutButton
-          name="why"
-          active={state.why}
-          className="align-start justify-end"
-          setState={setState}
-        />
-        <AboutButton
-          name="who"
-          active={state.who}
-          className="align-end justify-start"
-          setState={setState}
-        />
-        <AboutButton
-          name="where"
-          active={state.where}
-          className="justify-start align-start"
-          setState={setState}
-        />
-        <div id="blurb">
-          {about ? (
-            <Markdown>{getBlurb(state, about)}</Markdown>
-          ) : (
-            <Typography variant="body1">tbc</Typography>
-          )}
-        </div>
-      </main>
+      <div className="twelve-column">
+        <main css={mainStyles}>
+          <AboutTitle textLength={windowDimensions.width * 0.4} />
+          <AboutButton
+            name="what"
+            active={state.what}
+            className="align-end justify-end"
+            setState={setState}
+          />
+          <AboutButton
+            name="why"
+            active={state.why}
+            className="align-start justify-end"
+            setState={setState}
+          />
+          <AboutButton
+            name="who"
+            active={state.who}
+            className="align-end justify-start"
+            setState={setState}
+          />
+          <AboutButton
+            name="where"
+            active={state.where}
+            className="justify-start align-start"
+            setState={setState}
+          />
+          <div id="blurb">
+            {about ? (
+              <Markdown>{getBlurb(state, about)}</Markdown>
+            ) : (
+              <Typography variant="body1">tbc</Typography>
+            )}
+          </div>
+        </main>
+      </div>
     </Layout>
   );
 };

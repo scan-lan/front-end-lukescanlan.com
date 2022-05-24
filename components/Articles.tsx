@@ -15,9 +15,7 @@ interface ArticlesProps {
 const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
   const mainStyles = (theme: Theme) =>
     css({
-      display: "grid",
       width: "100%",
-      gridTemplateColumns: "repeat(12, 1fr)",
       paddingTop: theme.spacing(spacing),
 
       "& .masonry": {
@@ -67,7 +65,7 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
   }
 
   return (
-    <main css={mainStyles}>
+    <main css={mainStyles} className="twelve-column">
       <Masonry columns={columns} spacing={spacing} className="masonry">
         {articleCards}
       </Masonry>

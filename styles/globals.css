@@ -32,3 +32,8 @@ a {
   -webkit-hyphens: auto;
   hyphens: auto;
 }
+
+.twelve-column {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
