@@ -17,7 +17,7 @@ const footerStyles = (theme: Theme) =>
 
     ".footer-content": {
       textAlign: "center",
-      padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+      padding: theme.spacing(2),
       a: {
         color: theme.palette.primary.contrastText,
         textDecorationColor: "#ccc",
