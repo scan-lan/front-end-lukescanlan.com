@@ -51,7 +51,7 @@ const componentMapping: Components = {
   p: ({ className, ...props }) => (
     <Typography
       variant="body1"
-      className={`no-break-out ${className}`}
+      className={`${className} no-break-out`}
       {...props}
     />
   ),
@@ -59,7 +59,7 @@ const componentMapping: Components = {
     <Link
       color="primary.main"
       href={href}
-      className={`no-break-out ${className}`}
+      className={`${className} no-break-out`}
       {...props}
     />
   ),

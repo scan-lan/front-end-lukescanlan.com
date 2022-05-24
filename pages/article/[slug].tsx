@@ -110,10 +110,6 @@ const contentStyles = (theme: Theme) =>
         "& *": {
           gridColumn: "2 / span 10",
         },
-
-        [mainContent]: {
-          fontSize: "1.35rem",
-        },
       },
 
       [theme.breakpoints.down("md")]: {
@@ -123,7 +119,6 @@ const contentStyles = (theme: Theme) =>
 
         [mainContent]: {
           gridColumn: "2 / span 10",
-          fontSize: "1.2rem",
         },
       },
     },

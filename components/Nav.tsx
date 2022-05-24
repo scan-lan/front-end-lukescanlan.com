@@ -72,7 +72,7 @@ const Nav = ({ navPages, spacing = 1 }: NavProps) => {
             },
           }}
           unmountOnExit
-          timeout={theme.transitions.duration.shortest}
+          timeout={theme.transitions.duration.shorter}
         >
           <Hamburger
             toggled={isOpen}
@@ -80,11 +80,12 @@ const Nav = ({ navPages, spacing = 1 }: NavProps) => {
             easing={theme.transitions.easing.easeInOut}
             label="Show menu"
             hideOutline={false}
+            size={30}
           />
         </Collapse>
         <Collapse
           in={isOpen || !showMenuButton}
-          timeout={theme.transitions.duration.shortest}
+          timeout={theme.transitions.duration.shorter}
           unmountOnExit
           className="buttons"
         >

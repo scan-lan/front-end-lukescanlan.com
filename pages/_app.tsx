@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 
 import { CacheProvider, EmotionCache } from "@emotion/react";
+import { ThemeProvider, responsiveFontSizes } from "@mui/material/styles";
 
 import App from "next/app";
 import type { AppProps } from "next/app";
@@ -8,7 +9,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Global from "../types/Global";
 import Head from "next/head";
 import React from "react";
-import { ThemeProvider } from "@mui/material/styles";
 import { createContext } from "react";
 import createEmotionCache from "../lib/createEmotionCache";
 import { createTheme } from "@mui/material/styles";
@@ -25,7 +25,7 @@ interface MyAppProps extends AppProps {
 export const GlobalContext = createContext<Global | null>(null);
 
 const clientSideEmotionCache = createEmotionCache();
-const lightTheme = createTheme(lightThemeOptions);
+const lightTheme = responsiveFontSizes(createTheme(lightThemeOptions));
 
 const MyApp = ({
   Component,
