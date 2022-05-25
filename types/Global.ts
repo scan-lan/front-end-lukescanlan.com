@@ -1,4 +1,4 @@
-import ApiSEO from "./SEO";
+import ApiSeo from "./ApiSeo";
 import StrapiMedia from "./StrapiMedia";
 
 export default interface Global {
@@ -11,6 +11,6 @@ export default interface Global {
     favicon: {
       data: StrapiMedia;
     };
-    defaultSEO: ApiSEO;
+    defaultSEO: ApiSeo;
   };
 }

@@ -4,7 +4,6 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Theme, css } from "@emotion/react";
 
 import ApiArticle from "../../types/Article";
-import ApiSEO from "../../types/SEO";
 import ArticleHeader from "../../components/ArticleHeader";
 import ArticleMeta from "../../components/ArticleMeta";
 import Layout from "../../components/Layout";
@@ -12,6 +11,7 @@ import Markdown from "../../components/Markdown";
 import NavPage from "../../types/NavPage";
 import PrefaceAccordion from "../../components/PrefaceAccordion";
 import SEO from "../../components/SEO";
+import Seo from "../../types/CustomSeo";
 import Skeleton from "@mui/material/Skeleton";
 import StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";
@@ -154,10 +154,9 @@ const Article = ({ article, navPages }: ArticleProps) => {
   }
 
   if (article !== null) {
-    const seo: ApiSEO = {
+    const seo: Seo = {
       metaTitle: article.attributes.title,
       metaDescription: article.attributes.description,
-      article: true,
     };
 
     if (article.attributes.cover.data !== null) {
@@ -166,7 +165,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
 
     return (
       <Layout navPages={navPages}>
-        <SEO seo={seo} />
+        <SEO seo={seo} article />
         <ArticleHeader
           cover={
             article.attributes.cover.data

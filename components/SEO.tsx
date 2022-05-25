@@ -1,15 +1,17 @@
-import ApiSEO from "../types/SEO";
+import ApiSeo from "../types/ApiSeo";
 import { GlobalContext } from "../pages/_app";
 import Head from "next/head";
 import React from "react";
+import Seo from "../types/CustomSeo";
 import { getMedia } from "../lib/getMedia";
 import { useContext } from "react";
 
 interface SEOProps {
-  seo: ApiSEO | null;
+  seo: ApiSeo | Seo | null;
+  article: boolean;
 }
 
-const SEO = ({ seo }: SEOProps) => {
+const SEO = ({ seo, article = false }: SEOProps) => {
   const global = useContext(GlobalContext);
 
   const seoWithDefaults = {
@@ -28,7 +30,7 @@ const SEO = ({ seo }: SEOProps) => {
     // Get full image URL
     shareImage: seoWithDefaults?.shareImage
       ? getMedia(seoWithDefaults.shareImage.data, "m").url
-      : undefined,
+      : null,
   };
 
   return (
@@ -54,7 +56,7 @@ const SEO = ({ seo }: SEOProps) => {
           <meta name="image" content={fullSeo.shareImage} />
         </>
       )}
-      {fullSeo.article && <meta property="og:type" content="article" />}
+      {article && <meta property="og:type" content="article" />}
       <meta name="twitter:card" content="summary_large_image" />
     </Head>
   );
