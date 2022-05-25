@@ -36,7 +36,7 @@ const AboutTitle = ({ textLength }: { textLength: number }) => {
         css={{ marginBottom: `-${svgHeight / 3}px` }}
       >
         <text
-          y={svgHeight - 10}
+          y={svgHeight - 15}
           textLength={textLength}
           lengthAdjust="spacingAndGlyphs"
           style={{ overflow: "clip" }}

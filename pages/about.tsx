@@ -22,6 +22,7 @@ interface AboutProps {
 const mainStyles = (theme: Theme) =>
   css({
     gridColumn: "2 / span 10",
+    padding: theme.spacing(1, 0),
     display: "grid",
     gridTemplateColumns: "1fr min-content 1fr",
     gridTemplateRows: "1fr repeat(3, min-content) 1fr",
@@ -55,10 +56,7 @@ const mainStyles = (theme: Theme) =>
 
     "#what": {
       gridArea: "what",
-    },
-
-    "#where": {
-      gridArea: "where",
+      marginTop: theme.spacing(1),
     },
 
     "#why": {
@@ -69,12 +67,18 @@ const mainStyles = (theme: Theme) =>
       gridArea: "who",
     },
 
+    "#where": {
+      gridArea: "where",
+      marginBottom: theme.spacing(1),
+    },
+
     "#blurb": {
       gridArea: "blurb",
       display: "grid",
       placeContent: "center",
+      padding: theme.spacing(0, 0.5),
       p: {
-        maxWidth: "40ch",
+        maxWidth: "45ch",
       },
     },
 

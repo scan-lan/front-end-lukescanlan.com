@@ -53,7 +53,9 @@ const Nav = ({ navPages, spacing = 1 }: NavProps) => {
     css({
       ".buttons .MuiCollapse-wrapperInner": {
         gap: theme.spacing(spacing),
-        paddingTop: theme.spacing(spacing),
+        padding: showMenuButton
+          ? theme.spacing(0, 0, spacing)
+          : theme.spacing(spacing, 0, 0),
       },
     });
 
