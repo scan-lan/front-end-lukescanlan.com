@@ -134,6 +134,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
   if (router.isFallback || article === null) {
     return (
       <Layout navPages={navPages}>
+        <Seo seo={null} />
         <ArticleHeader cover={null} title={null} />
         <main css={contentStyles}>
           <div className="markdown">
@@ -154,18 +155,18 @@ const Article = ({ article, navPages }: ArticleProps) => {
   }
 
   if (article !== null) {
-    const seo: iSeo = {
+    const articleSeo: iSeo = {
       metaTitle: article.attributes.title,
       metaDescription: article.attributes.description,
     };
 
     if (article.attributes.cover.data !== null) {
-      seo.shareImage = { data: article.attributes.cover.data };
+      articleSeo.shareImage = { data: article.attributes.cover.data };
     }
 
     return (
       <Layout navPages={navPages}>
-        <Seo seo={seo} article />
+        <Seo seo={articleSeo} article />
         <ArticleHeader
           cover={
             article.attributes.cover.data

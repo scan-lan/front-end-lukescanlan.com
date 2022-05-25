@@ -40,6 +40,7 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
   if (router.isFallback || contactPage === null) {
     return (
       <Layout navPages={navPages}>
+        <Seo seo={null} />
         <ContactContainer additionalCss={containerStyles}>
           <div className="blurb text-one">
             <Typography>

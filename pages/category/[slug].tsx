@@ -100,6 +100,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
   if (router.isFallback) {
     return (
       <Layout navPages={null}>
+        <Seo seo={null} />
         <div css={titleContainerStyles}>
           <Skeleton variant="text">
             <Typography variant="h1">Non-Fiction</Typography>

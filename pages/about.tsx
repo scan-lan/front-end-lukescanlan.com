@@ -163,7 +163,7 @@ const About = ({ navPages, about }: AboutProps) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const aboutQuery = stringify({
-    populate: ["seo.shareImage"],
+    populate: "seo.shareImage",
   });
   const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
   const about = await getFromAPI<{ data: AboutPage }>("/about", aboutQuery);

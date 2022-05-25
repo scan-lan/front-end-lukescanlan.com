@@ -18,15 +18,17 @@ const Seo = ({ seo, article = false }: SeoProps) => {
     ...global?.attributes.defaultSeo,
     ...seo,
   };
+  const sitename = global?.attributes.siteName
+    ? global.attributes.siteName
+    : "lukescanlan.com";
+  const title = article
+    ? `${seoWithDefaults.metaTitle} | ${sitename}`
+    : seoWithDefaults.metaTitle;
 
   const fullSeo = {
     ...seoWithDefaults,
     // Add title suffix
-    metaTitle: `${seoWithDefaults.metaTitle} | ${
-      global?.attributes.siteName
-        ? global.attributes.siteName
-        : "lukescanlan.com"
-    }`,
+    metaTitle: title === "unknown" ? sitename : title,
     // Get full image URL
     shareImage: seoWithDefaults?.shareImage
       ? typeof seoWithDefaults.shareImage === "string"
