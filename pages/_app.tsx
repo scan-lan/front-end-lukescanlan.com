@@ -63,7 +63,7 @@ const MyApp = ({
 // https://github.com/vercel/next.js/discussions/10949
 MyApp.getInitialProps = async (ctx: any) => {
   const globalQueryString = stringify({
-    populate: ["favicon", "defaultSEO", "defaultSEO.shareImage"],
+    populate: ["favicon", "defaultSeo.shareImage"],
   });
 
   // Calls page's `getInitialProps` and fills `appProps.pageProps`

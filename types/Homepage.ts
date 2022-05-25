@@ -1,9 +1,9 @@
-import ApiSEO from "./SEO";
+import ApiSeo from "./ApiSeo";
 
 export default interface Homepage {
   data: {
     attributes: {
-      seo: ApiSEO;
+      seo: ApiSeo;
       hero: {
         title: string;
       };

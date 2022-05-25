@@ -4,19 +4,19 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Theme, css } from "@emotion/react";
 
 import ApiArticle from "../../types/Article";
-import ApiSEO from "../../types/SEO";
 import ArticleHeader from "../../components/ArticleHeader";
 import ArticleMeta from "../../components/ArticleMeta";
 import Layout from "../../components/Layout";
 import Markdown from "../../components/Markdown";
 import NavPage from "../../types/NavPage";
 import PrefaceAccordion from "../../components/PrefaceAccordion";
-import SEO from "../../components/SEO";
+import Seo from "../../components/Seo";
 import Skeleton from "@mui/material/Skeleton";
 import StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";
 import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
+import iSeo from "../../types/Seo";
 import { stringify } from "qs";
 import { useRouter } from "next/router";
 
@@ -134,6 +134,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
   if (router.isFallback || article === null) {
     return (
       <Layout navPages={navPages}>
+        <Seo seo={null} />
         <ArticleHeader cover={null} title={null} />
         <main css={contentStyles}>
           <div className="markdown">
@@ -154,19 +155,18 @@ const Article = ({ article, navPages }: ArticleProps) => {
   }
 
   if (article !== null) {
-    const seo: ApiSEO = {
+    const articleSeo: iSeo = {
       metaTitle: article.attributes.title,
       metaDescription: article.attributes.description,
-      article: true,
     };
 
     if (article.attributes.cover.data !== null) {
-      seo.shareImage = { data: article.attributes.cover.data };
+      articleSeo.shareImage = { data: article.attributes.cover.data };
     }
 
     return (
       <Layout navPages={navPages}>
-        <SEO seo={seo} />
+        <Seo seo={articleSeo} article />
         <ArticleHeader
           cover={
             article.attributes.cover.data

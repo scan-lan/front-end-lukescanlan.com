@@ -8,10 +8,13 @@ import Image from "next/image";
 import Layout from "../components/Layout";
 import Markdown from "../components/Markdown";
 import NavPage from "../types/NavPage";
+import Seo from "../components/Seo";
 import { Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";
 import { getFromAPI } from "../lib/api";
+import { getMediaURL } from "../lib/getMedia";
+import iSeo from "../types/Seo";
 import { useRouter } from "next/router";
 
 interface ContactProps {
@@ -37,6 +40,7 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
   if (router.isFallback || contactPage === null) {
     return (
       <Layout navPages={navPages}>
+        <Seo seo={null} />
         <ContactContainer additionalCss={containerStyles}>
           <div className="blurb text-one">
             <Typography>
@@ -71,10 +75,17 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
       </Layout>
     );
   }
+
   const image = contactPage?.attributes.contactImage.data || null;
+  const contactSeo: iSeo = {
+    metaTitle: contactPage.attributes.seo.metaTitle,
+    metaDescription: contactPage.attributes.seo.metaDescription,
+    shareImage: getMediaURL(image, "m"),
+  };
 
   return (
     <Layout navPages={navPages}>
+      <Seo seo={contactSeo} />
       <ContactContainer additionalCss={containerStyles}>
         <div className="text-one">
           <Markdown>{contactPage.attributes.blurb}</Markdown>

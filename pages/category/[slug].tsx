@@ -7,7 +7,7 @@ import type ApiCategory from "../../types/Category";
 import Articles from "../../components/Articles";
 import Layout from "../../components/Layout";
 import NavPage from "../../types/NavPage";
-import SEO from "../../components/SEO";
+import Seo from "../../components/Seo";
 import Skeleton from "@mui/material/Skeleton";
 import type StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";
@@ -100,6 +100,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
   if (router.isFallback) {
     return (
       <Layout navPages={null}>
+        <Seo seo={null} />
         <div css={titleContainerStyles}>
           <Skeleton variant="text">
             <Typography variant="h1">Non-Fiction</Typography>
@@ -119,7 +120,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
 
   return (
     <Layout navPages={navPages}>
-      <SEO seo={seo} />
+      <Seo seo={seo} />
       <div css={titleContainerStyles}>
         {category ? (
           <Typography variant="h1">{category.attributes.name}</Typography>

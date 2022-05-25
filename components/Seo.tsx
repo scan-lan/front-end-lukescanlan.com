@@ -1,34 +1,40 @@
-import ApiSEO from "../types/SEO";
+import ApiSeo from "../types/ApiSeo";
 import { GlobalContext } from "../pages/_app";
 import Head from "next/head";
 import React from "react";
-import { getMedia } from "../lib/getMedia";
+import Seo from "../types/Seo";
+import { getMediaURL } from "../lib/getMedia";
 import { useContext } from "react";
 
-interface SEOProps {
-  seo: ApiSEO | null;
+interface SeoProps {
+  seo: ApiSeo | Seo | null;
+  article?: boolean;
 }
 
-const SEO = ({ seo }: SEOProps) => {
+const Seo = ({ seo, article = false }: SeoProps) => {
   const global = useContext(GlobalContext);
 
   const seoWithDefaults = {
-    ...global?.attributes.defaultSEO,
+    ...global?.attributes.defaultSeo,
     ...seo,
   };
+  const sitename = global?.attributes.siteName
+    ? global.attributes.siteName
+    : "lukescanlan.com";
+  const title = article
+    ? `${seoWithDefaults.metaTitle} | ${sitename}`
+    : seoWithDefaults.metaTitle;
 
   const fullSeo = {
     ...seoWithDefaults,
     // Add title suffix
-    metaTitle: `${seoWithDefaults.metaTitle} | ${
-      global?.attributes.siteName
-        ? global.attributes.siteName
-        : "lukescanlan.com"
-    }`,
+    metaTitle: title === "unknown" ? sitename : title,
     // Get full image URL
     shareImage: seoWithDefaults?.shareImage
-      ? getMedia(seoWithDefaults.shareImage.data, "m").url
-      : undefined,
+      ? typeof seoWithDefaults.shareImage === "string"
+        ? seoWithDefaults.shareImage
+        : getMediaURL(seoWithDefaults.shareImage.data, "m")
+      : null,
   };
 
   return (
@@ -54,10 +60,10 @@ const SEO = ({ seo }: SEOProps) => {
           <meta name="image" content={fullSeo.shareImage} />
         </>
       )}
-      {fullSeo.article && <meta property="og:type" content="article" />}
+      {article && <meta property="og:type" content="article" />}
       <meta name="twitter:card" content="summary_large_image" />
     </Head>
   );
 };
 
-export default SEO;
+export default Seo;

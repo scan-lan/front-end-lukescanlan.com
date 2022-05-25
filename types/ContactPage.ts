@@ -1,3 +1,4 @@
+import ApiSeo from "./ApiSeo";
 import StrapiMedia from "./StrapiMedia";
 
 export default interface ContactPage {
@@ -10,5 +11,6 @@ export default interface ContactPage {
     contactImage: {
       data: StrapiMedia;
     };
+    seo: ApiSeo;
   };
 }

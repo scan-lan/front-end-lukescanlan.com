@@ -23,7 +23,7 @@ const AboutTitle = ({ textLength }: { textLength: number }) => {
     <Typography
       variant="h1"
       sx={{
-        fontFamily: "sans-serif",
+        fontFamily: "Roboto, sans-serif",
         fontVariant: "none",
       }}
       ref={ref}
@@ -36,7 +36,7 @@ const AboutTitle = ({ textLength }: { textLength: number }) => {
         css={{ marginBottom: `-${svgHeight / 3}px` }}
       >
         <text
-          y={svgHeight - 15}
+          y={svgHeight * 0.8}
           textLength={textLength}
           lengthAdjust="spacingAndGlyphs"
           style={{ overflow: "clip" }}

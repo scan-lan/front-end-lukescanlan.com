@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import ApiSEO from "../types/SEO";
+import ApiSeo from "../types/ApiSeo";
 import Footer from "./Footer";
 import Nav from "./Nav";
 import NavPage from "../types/NavPage";
@@ -10,7 +10,7 @@ import { css } from "@emotion/react";
 interface LayoutProps {
   children: ReactNode;
   navPages: NavPage[] | null;
-  seo?: ApiSEO;
+  seo?: ApiSeo;
 }
 
 const layoutStyles = () =>
