@@ -1,3 +1,5 @@
+import ApiSeo from "./ApiSeo";
+
 export default interface AboutPage {
   id: number;
   attributes: {
@@ -8,5 +10,6 @@ export default interface AboutPage {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
+    seo: ApiSeo;
   };
 }

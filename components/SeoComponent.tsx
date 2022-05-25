@@ -2,13 +2,13 @@ import ApiSeo from "../types/ApiSeo";
 import { GlobalContext } from "../pages/_app";
 import Head from "next/head";
 import React from "react";
-import Seo from "../types/CustomSeo";
+import Seo from "../types/Seo";
 import { getMedia } from "../lib/getMedia";
 import { useContext } from "react";
 
 interface SEOProps {
   seo: ApiSeo | Seo | null;
-  article: boolean;
+  article?: boolean;
 }
 
 const SEO = ({ seo, article = false }: SEOProps) => {

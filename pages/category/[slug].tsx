@@ -7,7 +7,7 @@ import type ApiCategory from "../../types/Category";
 import Articles from "../../components/Articles";
 import Layout from "../../components/Layout";
 import NavPage from "../../types/NavPage";
-import SEO from "../../components/SEO";
+import SEO from "../../components/SeoComponent";
 import Skeleton from "@mui/material/Skeleton";
 import type StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";

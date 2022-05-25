@@ -4,7 +4,7 @@ import Homepage from "../types/Homepage";
 import Layout from "../components/Layout";
 import NavPage from "../types/NavPage";
 import React from "react";
-import SEO from "../components/SEO";
+import SEO from "../components/SeoComponent";
 import { getFromAPI } from "../lib/api";
 import { stringify } from "qs";
 

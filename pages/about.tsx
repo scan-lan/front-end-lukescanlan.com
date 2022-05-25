@@ -7,10 +7,12 @@ import { GetStaticProps } from "next/types";
 import Layout from "../components/Layout";
 import Markdown from "../components/Markdown";
 import NavPage from "../types/NavPage";
+import Seo from "../components/SeoComponent";
 import { Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";
 import { getFromAPI } from "../lib/api";
+import { stringify } from "qs";
 import { useState } from "react";
 import useWindowDimensions from "../lib/useWindowDimensions";
 
@@ -118,6 +120,7 @@ const About = ({ navPages, about }: AboutProps) => {
 
   return (
     <Layout navPages={navPages}>
+      <Seo seo={about?.attributes.seo || null} />
       <div className="twelve-column">
         <main css={mainStyles}>
           <AboutTitle textLength={windowDimensions.width * 0.4} />
@@ -159,8 +162,11 @@ const About = ({ navPages, about }: AboutProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
+  const aboutQuery = stringify({
+    populate: ["seo.shareImage"],
+  });
   const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
-  const about = await getFromAPI<{ data: AboutPage }>("/about");
+  const about = await getFromAPI<{ data: AboutPage }>("/about", aboutQuery);
 
   return {
     props: { navPages: navPages?.data || null, about: about?.data || null },
