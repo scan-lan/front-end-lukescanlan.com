@@ -3,7 +3,7 @@ import { GlobalContext } from "../pages/_app";
 import Head from "next/head";
 import React from "react";
 import Seo from "../types/Seo";
-import { getMedia } from "../lib/getMedia";
+import { getMediaURL } from "../lib/getMedia";
 import { useContext } from "react";
 
 interface SeoProps {
@@ -29,7 +29,9 @@ const Seo = ({ seo, article = false }: SeoProps) => {
     }`,
     // Get full image URL
     shareImage: seoWithDefaults?.shareImage
-      ? getMedia(seoWithDefaults.shareImage.data, "m").url
+      ? typeof seoWithDefaults.shareImage === "string"
+        ? seoWithDefaults.shareImage
+        : getMediaURL(seoWithDefaults.shareImage.data, "m")
       : null,
   };
 

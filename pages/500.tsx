@@ -5,8 +5,10 @@ import { GetStaticProps } from "next";
 import Image from "next/image";
 import Layout from "../components/Layout";
 import NavPage from "../types/NavPage";
+import Seo from "../components/Seo";
 import Typography from "@mui/material/Typography";
 import { getFromAPI } from "../lib/api";
+import iSeo from "../types/Seo";
 
 interface Custom500Props {
   navPages: NavPage[] | null;
@@ -19,8 +21,15 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
+const seo500: iSeo = {
+  metaTitle: "500 | lukescanlan.com",
+  metaDescription: "Sorry... 500",
+  shareImage: "/error.png",
+};
+
 const Custom500 = ({ navPages }: Custom500Props) => (
   <Layout navPages={navPages}>
+    <Seo seo={seo500} />
     <ContactContainer>
       <div className="text-one">
         <Typography variant="h2" className="no-break-out">
