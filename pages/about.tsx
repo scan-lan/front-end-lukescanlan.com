@@ -7,7 +7,7 @@ import { GetStaticProps } from "next/types";
 import Layout from "../components/Layout";
 import Markdown from "../components/Markdown";
 import NavPage from "../types/NavPage";
-import Seo from "../components/SeoComponent";
+import Seo from "../components/Seo";
 import { Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";

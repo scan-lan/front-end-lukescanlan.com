@@ -4,7 +4,7 @@ import Homepage from "../types/Homepage";
 import Layout from "../components/Layout";
 import NavPage from "../types/NavPage";
 import React from "react";
-import SEO from "../components/SeoComponent";
+import Seo from "../components/Seo";
 import { getFromAPI } from "../lib/api";
 import { stringify } from "qs";
 
@@ -20,7 +20,7 @@ interface HomeProps {
 
 const Home = ({ articles, navPages, homepage }: HomeProps) => (
   <Layout navPages={navPages?.data || null}>
-    <SEO seo={homepage?.data.attributes.seo || null} />
+    <Seo seo={homepage?.data.attributes.seo || null} />
     <Articles articles={articles?.data || null} spacing={1} />
   </Layout>
 );

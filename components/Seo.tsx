@@ -6,16 +6,16 @@ import Seo from "../types/Seo";
 import { getMedia } from "../lib/getMedia";
 import { useContext } from "react";
 
-interface SEOProps {
+interface SeoProps {
   seo: ApiSeo | Seo | null;
   article?: boolean;
 }
 
-const SEO = ({ seo, article = false }: SEOProps) => {
+const Seo = ({ seo, article = false }: SeoProps) => {
   const global = useContext(GlobalContext);
 
   const seoWithDefaults = {
-    ...global?.attributes.defaultSEO,
+    ...global?.attributes.defaultSeo,
     ...seo,
   };
 
@@ -62,4 +62,4 @@ const SEO = ({ seo, article = false }: SEOProps) => {
   );
 };
 
-export default SEO;
+export default Seo;

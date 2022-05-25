@@ -10,13 +10,13 @@ import Layout from "../../components/Layout";
 import Markdown from "../../components/Markdown";
 import NavPage from "../../types/NavPage";
 import PrefaceAccordion from "../../components/PrefaceAccordion";
-import SEO from "../../components/SeoComponent";
-import Seo from "../../types/Seo";
+import Seo from "../../components/Seo";
 import Skeleton from "@mui/material/Skeleton";
 import StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";
 import { getFromAPI } from "../../lib/api";
 import { getMedia } from "../../lib/getMedia";
+import iSeo from "../../types/Seo";
 import { stringify } from "qs";
 import { useRouter } from "next/router";
 
@@ -154,7 +154,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
   }
 
   if (article !== null) {
-    const seo: Seo = {
+    const seo: iSeo = {
       metaTitle: article.attributes.title,
       metaDescription: article.attributes.description,
     };
@@ -165,7 +165,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
 
     return (
       <Layout navPages={navPages}>
-        <SEO seo={seo} article />
+        <Seo seo={seo} article />
         <ArticleHeader
           cover={
             article.attributes.cover.data

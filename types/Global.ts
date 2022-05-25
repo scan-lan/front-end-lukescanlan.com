@@ -11,6 +11,6 @@ export default interface Global {
     favicon: {
       data: StrapiMedia;
     };
-    defaultSEO: ApiSeo;
+    defaultSeo: ApiSeo;
   };
 }

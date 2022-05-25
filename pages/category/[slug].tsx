@@ -7,7 +7,7 @@ import type ApiCategory from "../../types/Category";
 import Articles from "../../components/Articles";
 import Layout from "../../components/Layout";
 import NavPage from "../../types/NavPage";
-import SEO from "../../components/SeoComponent";
+import Seo from "../../components/Seo";
 import Skeleton from "@mui/material/Skeleton";
 import type StrapiMeta from "../../types/StrapiMeta";
 import Typography from "@mui/material/Typography";
@@ -119,7 +119,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
 
   return (
     <Layout navPages={navPages}>
-      <SEO seo={seo} />
+      <Seo seo={seo} />
       <div css={titleContainerStyles}>
         {category ? (
           <Typography variant="h1">{category.attributes.name}</Typography>
