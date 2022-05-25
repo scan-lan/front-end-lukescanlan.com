@@ -77,11 +77,14 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
   }
 
   const image = contactPage?.attributes.contactImage.data || null;
-  const contactSeo: iSeo = {
-    metaTitle: contactPage.attributes.seo.metaTitle,
-    metaDescription: contactPage.attributes.seo.metaDescription,
-    shareImage: getMediaURL(image, "m"),
-  };
+  const contactSeo =
+    contactPage.attributes.seo !== null
+      ? ({
+          metaTitle: contactPage.attributes.seo.metaTitle,
+          metaDescription: contactPage.attributes.seo.metaDescription,
+          shareImage: getMediaURL(image, "m"),
+        } as iSeo)
+      : null;
 
   return (
     <Layout navPages={navPages}>

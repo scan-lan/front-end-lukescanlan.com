@@ -10,6 +10,6 @@ export default interface AboutPage {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
-    seo: ApiSeo;
+    seo: ApiSeo | null;
   };
 }

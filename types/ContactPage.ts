@@ -11,6 +11,6 @@ export default interface ContactPage {
     contactImage: {
       data: StrapiMedia;
     };
-    seo: ApiSeo;
+    seo: ApiSeo | null;
   };
 }
