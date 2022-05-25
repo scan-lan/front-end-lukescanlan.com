@@ -1,12 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, css } from "@emotion/react";
+import { Theme, css, useTheme } from "@emotion/react";
 
+import Collapse from "@mui/material/Collapse";
+import { Sling as Hamburger } from "hamburger-react";
 import NavButton from "./NavButton";
 import NavPage from "../types/NavPage";
 import Sitename from "./Sitename";
-import { useContainerDimensions } from "../lib/useContainerDimensions";
-import { useRef } from "react";
+import { useMediaQuery } from "@mui/material";
+import { useState } from "react";
+import useWindowDimensions from "../lib/useWindowDimensions";
 
 interface NavProps {
   navPages: NavPage[] | null;
@@ -15,15 +18,18 @@ interface NavProps {
 
 const navStyles = (theme: Theme) =>
   css({
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
     gridTemplateAreas: `
       "sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename sitename"
       ". navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar ."
     `,
 
-    "& .buttons": {
+    ".nav-menu": {
       gridArea: "navbar",
+      display: "grid",
+      justifyContent: "stretch",
+    },
+
+    ".buttons .MuiCollapse-wrapperInner": {
       display: "grid",
       gridTemplateColumns: "repeat(4, 1fr)",
       [theme.breakpoints.down("lg")]: {
@@ -38,37 +44,69 @@ const navStyles = (theme: Theme) =>
   });
 
 const Nav = ({ navPages, spacing = 1 }: NavProps) => {
-  const spacingStyles = (theme: Theme) =>
+  const windowDimensions = useWindowDimensions();
+  const theme = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const showMenuButton = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const spacingStyles = () =>
     css({
-      "& .buttons": {
+      ".buttons .MuiCollapse-wrapperInner": {
         gap: theme.spacing(spacing),
-        paddingTop: theme.spacing(spacing),
+        padding: showMenuButton
+          ? theme.spacing(0, 0, spacing)
+          : theme.spacing(spacing, 0, 0),
       },
     });
 
-  const navRef = useRef<HTMLElement>(null);
-  const headerTextWidth = useContainerDimensions(navRef).width;
   return (
-    <nav css={[navStyles, spacingStyles]} ref={navRef}>
-      <Sitename textWidth={headerTextWidth} />
-      <div className="buttons">
-        {navPages
-          ? navPages.map((navPage, i) => {
-              const href =
-                navPage.attributes.slug === "about"
-                  ? "/about"
-                  : `/category/${navPage.attributes.slug}`;
-              return (
-                <NavButton
-                  text={navPage.attributes.name}
-                  href={href}
-                  key={i.toString()}
-                />
-              );
-            })
-          : Array.from<number>({ length: 4 }).map((_, i) => (
-              <NavButton key={i.toString()} />
-            ))}
+    <nav css={[navStyles, spacingStyles]} className="twelve-column">
+      <Sitename textWidth={windowDimensions.width} />
+      <div className="nav-menu">
+        <Collapse
+          in={showMenuButton}
+          css={{
+            ".MuiCollapse-wrapperInner": {
+              display: "grid",
+              justifyContent: "center",
+            },
+          }}
+          unmountOnExit
+          timeout={theme.transitions.duration.shorter}
+        >
+          <Hamburger
+            toggled={isOpen}
+            toggle={setIsOpen}
+            easing={theme.transitions.easing.easeInOut}
+            label="Show menu"
+            hideOutline={false}
+            size={30}
+          />
+        </Collapse>
+        <Collapse
+          in={isOpen || !showMenuButton}
+          timeout={theme.transitions.duration.shorter}
+          unmountOnExit
+          className="buttons"
+        >
+          {navPages
+            ? navPages.map((navPage, i) => {
+                const href =
+                  navPage.attributes.slug === "about"
+                    ? "/about"
+                    : `/category/${navPage.attributes.slug}`;
+                return (
+                  <NavButton
+                    text={navPage.attributes.name}
+                    href={href}
+                    key={i.toString()}
+                  />
+                );
+              })
+            : Array.from<number>({ length: 4 }).map((_, i) => (
+                <NavButton key={i.toString()} />
+              ))}
+        </Collapse>
       </div>
     </nav>
   );

@@ -145,11 +145,7 @@ const Card = ({
                     </Typography>
                   </Skeleton>
                 ) : (
-                  <Typography
-                    variant="body1"
-                    sx={{ fontSize: "1.25rem" }}
-                    className="no-break-out"
-                  >
+                  <Typography variant="body1" className="no-break-out">
                     {description}
                   </Typography>
                 )}

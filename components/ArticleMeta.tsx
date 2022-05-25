@@ -10,15 +10,9 @@ import Moment from "react-moment";
 import MuiLink from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const containerStyles = (theme: Theme) =>
-  css({
-    paddingTop: theme.spacing(3),
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
-  });
-
 const articleMetaStyles = (theme: Theme) =>
   css({
+    padding: theme.spacing(0, 0.5),
     fontSize: "1.4rem",
     maxWidth: "55ch",
     width: "100%",
@@ -27,20 +21,28 @@ const articleMetaStyles = (theme: Theme) =>
 
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
-    gridTemplateRows: "repeat(2, 1fr)",
+    gridTemplateRows: "repeat(2, min-content)",
     gridTemplateAreas: `
     "date-one date-two"
     "category topics"
     `,
     alignItems: "center",
 
+    "> span, > div": {
+      padding: theme.spacing(1, 0),
+    },
+
     "#date-one": {
       gridArea: "date-one",
     },
 
+    ".right": {
+      justifySelf: "end",
+      textAlign: "right",
+    },
+
     "#date-two": {
       gridArea: "date-two",
-      justifySelf: "end",
     },
 
     "#category": {
@@ -49,10 +51,11 @@ const articleMetaStyles = (theme: Theme) =>
 
     "#topics": {
       gridArea: "topics",
-      justifySelf: "end",
+      lineHeight: "1.2",
 
       ".topic + .topic::before": {
         content: `", "`,
+        fontWeight: 700,
       },
     },
 
@@ -65,9 +68,10 @@ const articleMetaStyles = (theme: Theme) =>
       fontSize: "1.35rem",
     },
 
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
+      padding: 0,
       gridTemplateColumns: "1fr",
-      gridTemplateRows: "repeat(4, 1fr)",
+      gridTemplateRows: "repeat(4, min-content)",
       gridTemplateAreas: `
         "date-one"
         "date-two"
@@ -92,7 +96,7 @@ const ArticleMeta = ({
   category,
   topics,
 }: ArticleMetaProps) => (
-  <div css={containerStyles}>
+  <div className="twelve-column">
     <div css={articleMetaStyles}>
       {/* {writer ? (
         <Typography variant="caption" id="writer">
@@ -103,7 +107,7 @@ const ArticleMeta = ({
         Written <Moment format="DD.MM.YYYY">{written}</Moment>
       </Typography>
       {updated !== written ? (
-        <Typography variant="caption" id="date-two">
+        <Typography variant="caption" id="date-two" className="right">
           Updated <Moment format="DD.MM.YYYY">{updated}</Moment>
         </Typography>
       ) : null}
@@ -115,7 +119,7 @@ const ArticleMeta = ({
         </Typography>
       ) : null}
       {topics ? (
-        <div id="topics">
+        <div id="topics" className="right">
           {topics.sort().map((topic, i) => (
             <Typography variant="caption" key={i} className="topic">
               <Link href={`/topic/${topic.attributes.slug}`} passHref>

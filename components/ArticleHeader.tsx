@@ -17,12 +17,11 @@ interface ArticleImageProps {
 
 const articleTitleStyles = (theme: Theme) =>
   css({
-    padding: `${theme.spacing(1)} 0`,
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
+    padding: theme.spacing(1, 0),
 
     ".title": {
       textAlign: "right",
+      paddingRight: theme.spacing(1),
       gridColumn: "3 / span 8",
 
       [theme.breakpoints.down("lg")]: {
@@ -37,7 +36,7 @@ const articleTitleStyles = (theme: Theme) =>
 
 const articleImageStyles = (theme: Theme) =>
   css({
-    padding: `${theme.spacing(1)} 0`,
+    padding: theme.spacing(1, 0),
     display: "grid",
 
     "& img": {
@@ -71,7 +70,10 @@ const articleImageStyles = (theme: Theme) =>
   });
 
 const ArticleHeader = ({ cover, title }: ArticleImageProps) => (
-  <div css={cover ? articleImageStyles : articleTitleStyles}>
+  <div
+    css={cover ? articleImageStyles : articleTitleStyles}
+    className={cover ? "" : "twelve-column"}
+  >
     {cover ? (
       <>
         <Image

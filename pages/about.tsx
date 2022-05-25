@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { css } from "@emotion/react";
 import { getFromAPI } from "../lib/api";
 import { useState } from "react";
+import useWindowDimensions from "../lib/useWindowDimensions";
 
 interface AboutProps {
   navPages: NavPage[] | null;
@@ -20,6 +21,8 @@ interface AboutProps {
 
 const mainStyles = (theme: Theme) =>
   css({
+    gridColumn: "2 / span 10",
+    padding: theme.spacing(1, 0),
     display: "grid",
     gridTemplateColumns: "1fr min-content 1fr",
     gridTemplateRows: "1fr repeat(3, min-content) 1fr",
@@ -53,10 +56,7 @@ const mainStyles = (theme: Theme) =>
 
     "#what": {
       gridArea: "what",
-    },
-
-    "#where": {
-      gridArea: "where",
+      marginTop: theme.spacing(1),
     },
 
     "#why": {
@@ -67,12 +67,18 @@ const mainStyles = (theme: Theme) =>
       gridArea: "who",
     },
 
+    "#where": {
+      gridArea: "where",
+      marginBottom: theme.spacing(1),
+    },
+
     "#blurb": {
       gridArea: "blurb",
       display: "grid",
       placeContent: "center",
+      padding: theme.spacing(0, 0.5),
       p: {
-        maxWidth: "40ch",
+        maxWidth: "45ch",
       },
     },
 
@@ -108,43 +114,46 @@ const About = ({ navPages, about }: AboutProps) => {
     why: false,
     who: false,
   });
+  const windowDimensions = useWindowDimensions();
 
   return (
     <Layout navPages={navPages}>
-      <main css={mainStyles}>
-        <AboutTitle textLength={600} />
-        <AboutButton
-          name="what"
-          active={state.what}
-          className="align-end justify-end"
-          setState={setState}
-        />
-        <AboutButton
-          name="why"
-          active={state.why}
-          className="align-start justify-end"
-          setState={setState}
-        />
-        <AboutButton
-          name="who"
-          active={state.who}
-          className="align-end justify-start"
-          setState={setState}
-        />
-        <AboutButton
-          name="where"
-          active={state.where}
-          className="justify-start align-start"
-          setState={setState}
-        />
-        <div id="blurb">
-          {about ? (
-            <Markdown>{getBlurb(state, about)}</Markdown>
-          ) : (
-            <Typography variant="body1">tbc</Typography>
-          )}
-        </div>
-      </main>
+      <div className="twelve-column">
+        <main css={mainStyles}>
+          <AboutTitle textLength={windowDimensions.width * 0.4} />
+          <AboutButton
+            name="what"
+            active={state.what}
+            className="align-end justify-end"
+            setState={setState}
+          />
+          <AboutButton
+            name="why"
+            active={state.why}
+            className="align-start justify-end"
+            setState={setState}
+          />
+          <AboutButton
+            name="who"
+            active={state.who}
+            className="align-end justify-start"
+            setState={setState}
+          />
+          <AboutButton
+            name="where"
+            active={state.where}
+            className="justify-start align-start"
+            setState={setState}
+          />
+          <div id="blurb">
+            {about ? (
+              <Markdown>{getBlurb(state, about)}</Markdown>
+            ) : (
+              <Typography variant="body1">tbc</Typography>
+            )}
+          </div>
+        </main>
+      </div>
     </Layout>
   );
 };

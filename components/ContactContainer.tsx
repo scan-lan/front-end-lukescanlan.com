@@ -13,7 +13,7 @@ const mainStyles = (theme: Theme) =>
 
     ".image": {
       gridRow: "1 / span 2",
-      margin: `${theme.spacing(1)} 0`,
+      margin: theme.spacing(1, 0),
       padding: theme.spacing(1),
       borderRight: "2px black dashed",
     },
@@ -35,7 +35,7 @@ const mainStyles = (theme: Theme) =>
       display: "grid",
       alignContent: "center",
       textAlign: "center",
-      padding: `0 ${theme.spacing(1)}`,
+      padding: theme.spacing(0, 1),
       marginRight: theme.spacing(1),
       borderTop: "2px black dashed",
     },
@@ -52,7 +52,7 @@ const mainStyles = (theme: Theme) =>
         gridRow: 2,
         borderRight: "none",
         borderTop: "2px black dashed",
-        padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
+        padding: theme.spacing(1),
         margin: 0,
       },
 

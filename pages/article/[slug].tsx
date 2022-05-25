@@ -70,8 +70,6 @@ const mainContent = "& p, & ul, & ol, & img, & .p-skeleton";
 
 const contentStyles = (theme: Theme) =>
   css({
-    padding: `0 ${theme.spacing(3)} ${theme.spacing(1)}`,
-
     "& .markdown": {
       display: "grid",
       gridTemplateColumns: "repeat(12, 1fr)",
@@ -110,10 +108,6 @@ const contentStyles = (theme: Theme) =>
         "& *": {
           gridColumn: "2 / span 10",
         },
-
-        [mainContent]: {
-          fontSize: "1.35rem",
-        },
       },
 
       [theme.breakpoints.down("md")]: {
@@ -121,9 +115,12 @@ const contentStyles = (theme: Theme) =>
           gridColumn: "1 / span 12",
         },
 
+        "h2, h3, h4, h5, h6": {
+          paddingLeft: theme.spacing(1),
+        },
+
         [mainContent]: {
           gridColumn: "2 / span 10",
-          fontSize: "1.2rem",
         },
       },
     },

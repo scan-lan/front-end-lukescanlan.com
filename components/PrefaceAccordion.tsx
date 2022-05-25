@@ -14,8 +14,6 @@ interface AccordionProps {
 const borderStyle = "2px black dashed";
 const accordionStyles = (theme: Theme) =>
   css({
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
     paddingBottom: theme.spacing(3),
 
     "& .accordion-row": {
@@ -59,7 +57,7 @@ const accordionStyles = (theme: Theme) =>
   });
 
 const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
-  <div css={accordionStyles}>
+  <div css={accordionStyles} className="twelve-column">
     {contentWarning ? (
       <Accordion className="accordion-row highlight">
         <AccordionSummary>

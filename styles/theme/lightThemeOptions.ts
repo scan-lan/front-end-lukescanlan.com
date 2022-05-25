@@ -48,7 +48,9 @@ export const lightThemeOptions: ThemeOptions = {
     },
     body1: {
       fontSize: "1.4rem",
-      lineHeight: 1.4,
+    },
+    body2: {
+      fontSize: "1.2rem",
     },
     caption: {
       fontSize: "1rem",
@@ -74,7 +76,8 @@ export const lightThemeOptions: ThemeOptions = {
           textTransform: "none",
           borderRadius: 0,
           boxShadow: "none",
-          "&:hover, &:focus": {
+          padding: "4px 8px",
+          ":hover, :focus, :active": {
             boxShadow: "none",
           },
         },
