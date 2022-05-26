@@ -98,27 +98,27 @@ const ArticleMeta = ({
 }: ArticleMetaProps) => (
   <div className="twelve-column">
     <div css={articleMetaStyles}>
-      {/* {writer ? (
+      {/* {writer && (
         <Typography variant="caption" id="writer">
           By {writer.attributes.name}
         </Typography>
-      ) : null} */}
+      )} */}
       <Typography variant="caption" id="date-one">
         Written <Moment format="DD.MM.YYYY">{written}</Moment>
       </Typography>
-      {updated !== written ? (
+      {updated !== written && (
         <Typography variant="caption" id="date-two" className="right">
           Updated <Moment format="DD.MM.YYYY">{updated}</Moment>
         </Typography>
-      ) : null}
-      {category ? (
+      )}
+      {category && (
         <Typography variant="caption" id="category">
           <Link href={`/category/${category.attributes.slug}`} passHref>
             <MuiLink>{category.attributes.name}</MuiLink>
           </Link>
         </Typography>
-      ) : null}
-      {topics ? (
+      )}
+      {topics && (
         <div id="topics" className="right">
           {topics.sort().map((topic, i) => (
             <Typography variant="caption" key={i} className="topic">
@@ -128,7 +128,7 @@ const ArticleMeta = ({
             </Typography>
           ))}
         </div>
-      ) : null}
+      )}
     </div>
   </div>
 );

@@ -66,7 +66,7 @@ const Card = ({
           ref={ref}
         >
           <CardActionArea>
-            {cover || dummyCard ? (
+            {(cover || dummyCard) && (
               <CardMedia
                 sx={{ borderBottom: "2px dashed #888", height: imageHeight }}
               >
@@ -93,7 +93,7 @@ const Card = ({
                   )}
                 </div>
               </CardMedia>
-            ) : null}
+            )}
             <CardContent>
               <Stack width="100%" spacing={2}>
                 {/* Category */}

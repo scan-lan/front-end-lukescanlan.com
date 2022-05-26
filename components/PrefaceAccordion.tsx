@@ -58,7 +58,7 @@ const accordionStyles = (theme: Theme) =>
 
 const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
   <div css={accordionStyles} className="twelve-column">
-    {contentWarning ? (
+    {contentWarning && (
       <Accordion className="accordion-row highlight">
         <AccordionSummary>
           <Typography
@@ -78,8 +78,8 @@ const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
           </Typography>
         </AccordionDetails>
       </Accordion>
-    ) : null}
-    {authorsNote ? (
+    )}
+    {authorsNote && (
       <Accordion className="accordion-row">
         <AccordionSummary>
           <Typography
@@ -99,7 +99,7 @@ const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
           </Typography>
         </AccordionDetails>
       </Accordion>
-    ) : null}
+    )}
   </div>
 );
 

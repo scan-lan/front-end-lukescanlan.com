@@ -180,13 +180,13 @@ const Article = ({ article, navPages }: ArticleProps) => {
           title={article.attributes.title}
         />
         <main css={contentStyles}>
-          {article.attributes.contentWarning ||
-          article.attributes.authorsNote ? (
+          {(article.attributes.contentWarning ||
+            article.attributes.authorsNote) && (
             <PrefaceAccordion
               contentWarning={article.attributes.contentWarning}
               authorsNote={article.attributes.authorsNote}
             />
-          ) : null}
+          )}
           <Markdown>{article.attributes.content}</Markdown>
           <ArticleMeta
             written={article.attributes.written}
