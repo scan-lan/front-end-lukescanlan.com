@@ -40,11 +40,11 @@ const MyApp = ({
 
   return (
     <>
-      {favicon ? (
+      {favicon && (
         <Head>
           <link rel="shortcut icon" href={favicon} />
         </Head>
-      ) : null}
+      )}
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={lightTheme}>
           <GlobalContext.Provider value={global}>
