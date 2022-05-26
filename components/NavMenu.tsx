@@ -46,7 +46,7 @@ const NavMenu = ({ navPages, spacing }: NavMenuProps) => {
         }}
         enter={transitionsEnabled}
         unmountOnExit
-        timeout={theme.transitions.duration.shorter}
+        timeout={theme.transitions.duration.standard}
       >
         <Hamburger
           toggled={isOpen}
@@ -60,7 +60,7 @@ const NavMenu = ({ navPages, spacing }: NavMenuProps) => {
       {/* Menu */}
       <Collapse
         in={isOpen || !showMenuButton}
-        timeout={theme.transitions.duration.shorter}
+        timeout={theme.transitions.duration.standard}
         exit={transitionsEnabled}
         unmountOnExit
         className="buttons"
