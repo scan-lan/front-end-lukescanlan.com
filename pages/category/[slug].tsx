@@ -5,6 +5,8 @@ import { GetStaticPaths, GetStaticProps } from "next/types";
 import ApiArticle from "../../types/Article";
 import type ApiCategory from "../../types/Category";
 import Articles from "../../components/Articles";
+import Custom404 from "../404";
+import Head from "next/head";
 import Layout from "../../components/Layout";
 import NavPage from "../../types/NavPage";
 import Seo from "../../components/Seo";
@@ -111,12 +113,21 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
     );
   }
 
-  const seo = category
-    ? {
-        metaTitle: category.attributes.name,
-        metaDescription: `All ${category.attributes.name} articles`,
-      }
-    : null;
+  if (category === null || articles === null) {
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <Custom404 navPages={navPages} />
+      </>
+    );
+  }
+
+  const seo = {
+    metaTitle: category.attributes.name,
+    metaDescription: `All ${category.attributes.name} articles`,
+  };
 
   return (
     <Layout navPages={navPages}>

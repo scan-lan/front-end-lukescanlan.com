@@ -6,6 +6,8 @@ import { Theme, css } from "@emotion/react";
 import ApiArticle from "../../types/Article";
 import ArticleHeader from "../../components/ArticleHeader";
 import ArticleMeta from "../../components/ArticleMeta";
+import Custom404 from "../404";
+import Head from "next/head";
 import Layout from "../../components/Layout";
 import Markdown from "../../components/Markdown";
 import NavPage from "../../types/NavPage";
@@ -131,7 +133,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  if (router.isFallback || article === null) {
+  if (router.isFallback) {
     return (
       <Layout navPages={navPages}>
         <Seo seo={null} />
@@ -154,52 +156,61 @@ const Article = ({ article, navPages }: ArticleProps) => {
     );
   }
 
-  if (article !== null) {
-    const articleSeo: iSeo = {
-      metaTitle: article.attributes.title,
-      metaDescription: article.attributes.description,
-    };
-
-    if (article.attributes.cover.data !== null) {
-      articleSeo.shareImage = { data: article.attributes.cover.data };
-    }
-
+  if (article === null) {
     return (
-      <Layout navPages={navPages}>
-        <Seo seo={articleSeo} article />
-        <ArticleHeader
-          cover={
-            article.attributes.cover.data
-              ? {
-                  image: getMedia(article.attributes.cover.data, "xl"),
-                  altText:
-                    article.attributes.cover.data.attributes.alternativeText,
-                }
-              : null
-          }
-          title={article.attributes.title}
-        />
-        <main css={contentStyles}>
-          {(article.attributes.contentWarning ||
-            article.attributes.authorsNote) && (
-            <PrefaceAccordion
-              contentWarning={article.attributes.contentWarning}
-              authorsNote={article.attributes.authorsNote}
-            />
-          )}
-          <Markdown>{article.attributes.content}</Markdown>
-          <ArticleMeta
-            written={article.attributes.written}
-            updated={article.attributes.updatedAt}
-            category={article.attributes.category.data}
-            topics={article.attributes.topics.data}
-            published={article.attributes.publishedAt}
-            writer={article.attributes.writer.data}
-          />
-        </main>
-      </Layout>
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <Custom404 navPages={navPages} />
+      </>
     );
   }
+
+  const articleSeo: iSeo = {
+    metaTitle: article.attributes.title,
+    metaDescription: article.attributes.description,
+  };
+
+  if (article.attributes.cover.data !== null) {
+    articleSeo.shareImage = { data: article.attributes.cover.data };
+  }
+
+  return (
+    <Layout navPages={navPages}>
+      <Seo seo={articleSeo} article />
+      <ArticleHeader
+        cover={
+          article.attributes.cover.data
+            ? {
+                image: getMedia(article.attributes.cover.data, "xl"),
+                altText:
+                  article.attributes.cover.data.attributes.alternativeText,
+              }
+            : null
+        }
+        title={article.attributes.title}
+      />
+      <main css={contentStyles}>
+        {(article.attributes.contentWarning ||
+          article.attributes.authorsNote) && (
+          <PrefaceAccordion
+            contentWarning={article.attributes.contentWarning}
+            authorsNote={article.attributes.authorsNote}
+          />
+        )}
+        <Markdown>{article.attributes.content}</Markdown>
+        <ArticleMeta
+          written={article.attributes.written}
+          updated={article.attributes.updatedAt}
+          category={article.attributes.category.data}
+          topics={article.attributes.topics.data}
+          published={article.attributes.publishedAt}
+          writer={article.attributes.writer.data}
+        />
+      </main>
+    </Layout>
+  );
 };
 
 export default Article;
