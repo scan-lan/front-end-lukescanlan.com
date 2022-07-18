@@ -2,8 +2,8 @@
 
 import { Theme, css } from "@emotion/react";
 
+import { Button } from "@mui/material";
 import Link from "next/link";
-import MuiLink from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
 const footerStyles = (theme: Theme) =>
@@ -32,7 +32,7 @@ const Footer = () => (
   <footer css={footerStyles}>
     <div className="footer-content">
       <Link href="/contact" passHref>
-        <MuiLink>Contact</MuiLink>
+        <Button variant="link">Contact</Button>
       </Link>
       <Typography align="center" variant="body1">
         &copy; Luke Scanlan 2021&ndash;{new Date().getFullYear()}

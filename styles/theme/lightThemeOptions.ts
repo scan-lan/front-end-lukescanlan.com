@@ -1,4 +1,5 @@
 import { ThemeOptions } from "@mui/material/styles";
+import { css } from "@emotion/react"
 
 export const lightThemeOptions: ThemeOptions = {
   palette: {
@@ -81,6 +82,23 @@ export const lightThemeOptions: ThemeOptions = {
           },
         },
       },
+      variants: [
+        {
+          props: {
+            variant: "link",
+          },
+          style: css({
+            border: "none",
+            textDecoration: "underline",
+            fontWeight: "inherit",
+            fontFamily: "inherit",
+            ":hover": {
+              backgroundColor: "inherit",
+              textDecoration: "underline"
+            }
+          })
+        }
+      ]
     },
     MuiAccordion: {
       defaultProps: {
