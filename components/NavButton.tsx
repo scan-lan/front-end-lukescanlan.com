@@ -13,6 +13,7 @@ interface NavButtonProps {
 const navButtonStyles = () =>
   css({
     // backgroundColor: theme.palette.secondary.main,
+    border: "2px dashed white",
     backgroundColor: "black",
 
     "&:hover": {

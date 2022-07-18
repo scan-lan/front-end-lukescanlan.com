@@ -23,6 +23,7 @@ const sitenameStyles = css({
   },
 
   "& .header-a": {
+    border: "2px dashed",
     backgroundColor: backgroundColor,
     borderColor: strokeColor,
     stroke: strokeColor,

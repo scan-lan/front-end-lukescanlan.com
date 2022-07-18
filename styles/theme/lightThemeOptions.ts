@@ -72,7 +72,6 @@ export const lightThemeOptions: ThemeOptions = {
     MuiButton: {
       defaultProps: {
         sx: {
-          border: "2px white dashed",
           textTransform: "none",
           borderRadius: 0,
           boxShadow: "none",
