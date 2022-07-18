@@ -94,8 +94,8 @@ const ArticleMeta = ({
   written,
   updated,
   category,
-  topics,
-}: ArticleMetaProps) => (
+}: // topics,
+ArticleMetaProps) => (
   <div className="twelve-column">
     <div css={articleMetaStyles}>
       {/* {writer && (
@@ -118,7 +118,7 @@ const ArticleMeta = ({
           </Link>
         </Typography>
       )}
-      {topics && (
+      {/* {topics && (
         <div id="topics" className="right">
           {topics.sort().map((topic, i) => (
             <Typography variant="caption" key={i} className="topic">
@@ -128,7 +128,7 @@ const ArticleMeta = ({
             </Typography>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   </div>
 );
