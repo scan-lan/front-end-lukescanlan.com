@@ -8,16 +8,16 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "dependencies": {
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.7.1",
+    "@emotion/cache": "^11.9.3",
+    "@emotion/react": "^11.9.3",
     "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.6.0",
+    "@emotion/styled": "^11.9.3",
     "@fontsource/roboto": "^4.5.3",
     "@mui/lab": "^5.0.0-alpha.72",
-    "@mui/material": "^5.4.1",
+    "@mui/material": "^5.9.0",
     "@types/qs": "^6.9.7",
     "axios": "^0.27.2",
     "hamburger-react": "^2.5.0",
