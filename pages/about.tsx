@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import AboutButton from "../components/AboutButton"
-import AboutPage from "../types/AboutPage"
+import AboutButton, { baseState } from "../components/AboutButton"
+import AboutPage, { AboutPageState, AboutQuestion } from "../types/AboutPage"
 import AboutTitle from "../components/AboutTitle"
 import { GetStaticProps } from "next/types"
 import Layout from "../components/Layout"
@@ -17,8 +17,8 @@ import { useState } from "react"
 import useWindowDimensions from "../lib/useWindowDimensions"
 
 interface AboutProps {
-  navPages: NavPage[] | null;
-  about: AboutPage | null;
+  navPages: NavPage[] | null
+  about: AboutPage | null
 }
 
 const mainStyles = (theme: Theme) =>
@@ -94,28 +94,16 @@ const mainStyles = (theme: Theme) =>
     },
   })
 
-export interface AboutState {
-  what: boolean;
-  where: boolean;
-  why: boolean;
-  who: boolean;
-}
-
-const getBlurb = (state: AboutState, about: AboutPage) => {
-  if (state.what) return about.attributes.what
-  if (state.where) return about.attributes.where
-  if (state.who) return about.attributes.who
-  if (state.why) return about.attributes.why
-  return ""
+const getBlurb = (state: AboutPageState, about: AboutPage) => {
+  const activeButton = (Object.entries(state) as [AboutQuestion, boolean][])
+    .filter(([_, val]) => val)
+    .map<AboutQuestion>(([name, _]) => name)
+  if (!activeButton) return ""
+  return about.attributes[activeButton[0]]
 }
 
 const About = ({ navPages, about }: AboutProps) => {
-  const [state, setState] = useState<AboutState>({
-    what: false,
-    where: false,
-    why: false,
-    who: false,
-  })
+  const [state, setState] = useState<AboutPageState>(baseState)
   const windowDimensions = useWindowDimensions()
 
   return (

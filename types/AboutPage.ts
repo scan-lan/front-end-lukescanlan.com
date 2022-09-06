@@ -1,15 +1,14 @@
 import ApiSeo from "./ApiSeo"
 
+export type AboutQuestion = "what" | "where" | "why" | "who"
+export type AboutPageState = Record<AboutQuestion, boolean>
+
 export default interface AboutPage {
-  id: number;
+  id: number
   attributes: {
-    what: string;
-    where: string;
-    who: string;
-    why: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    seo: ApiSeo | null;
-  };
+    createdAt: string
+    updatedAt: string
+    publishedAt: string
+    seo: ApiSeo | null
+  } & Record<AboutQuestion, string>
 }

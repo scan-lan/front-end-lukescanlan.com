@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { AboutState } from "../pages/about"
+import { AboutPageState } from "../types/AboutPage"
 import Button from "@mui/material/Button"
 import { Theme } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
@@ -10,7 +10,7 @@ interface AboutButtonProps {
   name: "what" | "where" | "why" | "who"
   className: string
   active: boolean
-  setState: (state: AboutState) => void
+  setState: (state: AboutPageState) => void
 }
 
 const buttonStyles = (_: Theme) =>
@@ -31,12 +31,12 @@ const buttonStyles = (_: Theme) =>
     },
   })
 
-const baseState = {
+export const baseState = {
   what: false,
   where: false,
   why: false,
   who: false,
-}
+} as const
 
 const AboutButton = ({
   name,
