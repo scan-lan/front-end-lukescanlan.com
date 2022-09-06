@@ -18,8 +18,8 @@ import iSeo from "../types/Seo"
 import { useRouter } from "next/router"
 
 interface ContactProps {
-  navPages: NavPage[] | null;
-  contactPage: ContactPage | null;
+  navPages: NavPage[] | null
+  contactPage: ContactPage | null
 }
 
 const containerStyles = (theme: Theme) =>

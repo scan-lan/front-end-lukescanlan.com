@@ -12,8 +12,8 @@ import { useState } from "react"
 import { useTimeout } from "usehooks-ts"
 
 interface NavMenuProps {
-  navPages: NavPage[] | null;
-  spacing: number;
+  navPages: NavPage[] | null
+  spacing: number
 }
 
 const NavMenu = ({ navPages, spacing }: NavMenuProps) => {

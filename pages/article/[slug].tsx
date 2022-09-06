@@ -65,8 +65,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 }
 
 interface ArticleProps {
-  article: ApiArticle | null;
-  navPages: NavPage[];
+  article: ApiArticle | null
+  navPages: NavPage[]
 }
 
 const mainContent = "& p, & ul, & ol, & img, & .p-skeleton"

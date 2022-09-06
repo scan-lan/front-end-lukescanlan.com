@@ -1,10 +1,10 @@
 export default interface NavPage {
-  id: number;
+  id: number
   attributes: {
-    name: string;
-    slug: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
+    name: string
+    slug: string
+    createdAt: string
+    updatedAt: string
+    publishedAt: string
+  }
 }

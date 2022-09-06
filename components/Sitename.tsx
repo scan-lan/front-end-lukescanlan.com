@@ -5,7 +5,7 @@ import Link from "next/link"
 import { css } from "@emotion/react"
 
 interface SitenameProps {
-  textWidth: number;
+  textWidth: number
 }
 
 const backgroundColor = "#5c7b65"

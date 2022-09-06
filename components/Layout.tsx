@@ -8,9 +8,9 @@ import { ReactNode } from "react"
 import { css } from "@emotion/react"
 
 interface LayoutProps {
-  children: ReactNode;
-  navPages: NavPage[] | null;
-  seo?: ApiSeo;
+  children: ReactNode
+  navPages: NavPage[] | null
+  seo?: ApiSeo
 }
 
 const layoutStyles = () =>

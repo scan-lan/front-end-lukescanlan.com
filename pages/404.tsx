@@ -11,7 +11,7 @@ import { getFromAPI } from "../lib/api"
 import iSeo from "../types/Seo"
 
 interface Custom404Props {
-  navPages: NavPage[] | null;
+  navPages: NavPage[] | null
 }
 
 export const getStaticProps: GetStaticProps = async () => {

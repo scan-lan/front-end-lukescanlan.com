@@ -9,10 +9,10 @@ import Typography from "@mui/material/Typography"
 
 interface ArticleImageProps {
   cover: {
-    image: MediaFormat;
-    altText: string;
-  } | null;
-  title: string | null;
+    image: MediaFormat
+    altText: string
+  } | null
+  title: string | null
 }
 
 const titleStyles = (theme: Theme) =>
