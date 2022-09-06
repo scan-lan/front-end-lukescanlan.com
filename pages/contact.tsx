@@ -41,7 +41,7 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
     return (
       <Layout navPages={navPages}>
         <Seo seo={null} />
-        <ContactContainer additionalCss={containerStyles}>
+        <ContactContainer css={containerStyles}>
           <div className="blurb text-one">
             <Typography>
               I&apos;m payin 5 quid a month for this email, so make it worth my
@@ -89,7 +89,7 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
   return (
     <Layout navPages={navPages}>
       <Seo seo={contactSeo} />
-      <ContactContainer additionalCss={containerStyles}>
+      <ContactContainer css={containerStyles}>
         <div className="text-one">
           <Markdown>{contactPage.attributes.blurb}</Markdown>
         </div>

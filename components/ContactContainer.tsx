@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { SerializedStyles, css as emotionCss } from "@emotion/react"
-
 import { ReactChild } from "react"
 import { Theme } from "@mui/material/styles"
+import { css } from "@emotion/react"
 
 const mainStyles = (theme: Theme) =>
-  emotionCss({
+  css({
     display: "grid",
     gridTemplateColumns: "3fr 2fr",
     gridTemplateRows: "3fr 2fr",
@@ -64,15 +63,14 @@ const mainStyles = (theme: Theme) =>
   })
 
 interface ContactContainerProps {
-  children: ReactChild | ReactChild[];
-  additionalCss?: (_: Theme) => SerializedStyles;
+  children: ReactChild | ReactChild[]
+  className?: string
 }
 
-const ContactContainer = ({
-  children,
-  additionalCss,
-}: ContactContainerProps) => (
-  <main css={[mainStyles, additionalCss || null]}>{children}</main>
+const ContactContainer = ({ children, className }: ContactContainerProps) => (
+  <main className={className || ""} css={[mainStyles]}>
+    {children}
+  </main>
 )
 
 export default ContactContainer
