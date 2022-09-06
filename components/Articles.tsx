@@ -6,23 +6,27 @@ import ApiArticle from "../types/Article"
 import Card from "./Card"
 import Masonry from "@mui/lab/Masonry"
 import SkeletonCard from "./Card/SkeletonCard"
+import { useCallback } from "react"
 
 interface ArticlesProps {
-  articles: ApiArticle[] | null;
-  spacing?: number;
+  articles: ApiArticle[] | null
+  spacing?: number
 }
 
 const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
-  const mainStyles = (theme: Theme) =>
-    css({
-      width: "100%",
-      paddingTop: theme.spacing(spacing),
+  const mainStyles = useCallback(
+    (theme: Theme) =>
+      css({
+        width: "100%",
+        paddingTop: theme.spacing(spacing),
 
-      "& .masonry": {
-        gridColumn: "2 / span 10",
-        width: `calc(100% + ${theme.spacing(spacing)})`,
-      },
-    })
+        "& .masonry": {
+          gridColumn: "2 / span 10",
+          width: `calc(100% + ${theme.spacing(spacing)})`,
+        },
+      }),
+    [spacing]
+  )
 
   const articleCards = articles
     ? articles.map((article) => (
