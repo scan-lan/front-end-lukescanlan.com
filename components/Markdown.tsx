@@ -9,49 +9,49 @@ const componentMapping: Components = {
   h1: ({ className, ...props }) => (
     <Typography
       variant="h2"
-      className={`no-break-out ${className}`}
+      className={`no-break-out ${className || ""}`}
       {...props}
     />
   ),
   h2: ({ className, ...props }) => (
     <Typography
       variant="h3"
-      className={`no-break-out ${className}`}
+      className={`no-break-out ${className || ""}`}
       {...props}
     />
   ),
   h3: ({ className, ...props }) => (
     <Typography
       variant="h4"
-      className={`no-break-out ${className}`}
+      className={`no-break-out ${className || ""}`}
       {...props}
     />
   ),
   h4: ({ className, ...props }) => (
     <Typography
       variant="h5"
-      className={`no-break-out ${className}`}
+      className={`no-break-out ${className || ""}`}
       {...props}
     />
   ),
   h5: ({ className, ...props }) => (
     <Typography
       variant="h6"
-      className={`no-break-out ${className}`}
+      className={`no-break-out ${className || ""}`}
       {...props}
     />
   ),
   h6: ({ className, ...props }) => (
     <Typography
       variant="h6"
-      className={`no-break-out ${className}`}
+      className={`no-break-out ${className || ""}`}
       {...props}
     />
   ),
   p: ({ className, ...props }) => (
     <Typography
       variant="body1"
-      className={`${className} no-break-out`}
+      className={`${className || ""} no-break-out`}
       {...props}
     />
   ),
@@ -59,7 +59,7 @@ const componentMapping: Components = {
     <Link
       color="primary.main"
       href={href}
-      className={`${className} no-break-out`}
+      className={`${className || ""} no-break-out`}
       {...props}
     />
   ),
@@ -70,7 +70,7 @@ const componentMapping: Components = {
         {String(children).replace(/\n$/, "")}
       </SyntaxHighlighter>
     ) : (
-      <code className={`${className} no-break-out`} {...props}>
+      <code className={`${className || ""} no-break-out`} {...props}>
         {children}
       </code>
     )

@@ -18,6 +18,12 @@ module.exports = {
         tsconfigRootDir: __dirname,
         project: ["./tsconfig.json"],
       },
+      rules: {
+        "@typescript-eslint/no-empty-interface": [
+          "error",
+          { allowSingleExtends: true },
+        ],
+      },
     },
   ],
 }

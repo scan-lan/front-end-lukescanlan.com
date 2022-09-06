@@ -1,9 +1,9 @@
 import "../styles/globals.css"
 
+import App, { AppContext } from "next/app"
 import { CacheProvider, EmotionCache } from "@emotion/react"
 import { ThemeProvider, responsiveFontSizes } from "@mui/material/styles"
 
-import App from "next/app"
 import type { AppProps } from "next/app"
 import CssBaseline from "@mui/material/CssBaseline"
 import Global from "../types/Global"
@@ -61,13 +61,13 @@ const MyApp = ({
 // have getStaticProps. So article, category and home pages still get SSG.
 // Hopefully we can replace this with getStaticProps once this issue is fixed:
 // https://github.com/vercel/next.js/discussions/10949
-MyApp.getInitialProps = async (ctx: any) => {
+MyApp.getInitialProps = async (context: AppContext) => {
   const globalQueryString = stringify({
     populate: ["favicon", "defaultSeo.shareImage"],
   })
 
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(ctx)
+  const appProps = await App.getInitialProps(context)
 
   // Fetch global site settings from Strapi
   const global = await getFromAPI<{ data: Global }>(
