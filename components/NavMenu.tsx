@@ -33,6 +33,11 @@ const NavMenu = ({ navPages, spacing }: NavMenuProps) => {
       },
     })
 
+  if (!navPages)
+    return Array.from<number>({ length: 4 }).map((_, i) => (
+      <NavButton key={i.toString()} />
+    ))
+
   return (
     <div className="nav-menu">
       {/* Menu button */}
@@ -66,23 +71,19 @@ const NavMenu = ({ navPages, spacing }: NavMenuProps) => {
         className="buttons"
         css={spacingStyles}
       >
-        {navPages
-          ? navPages.map((navPage, i) => {
-              const href =
-                navPage.attributes.slug === "about"
-                  ? "/about"
-                  : `/category/${navPage.attributes.slug}`
-              return (
-                <NavButton
-                  text={navPage.attributes.name}
-                  href={href}
-                  key={i.toString()}
-                />
-              )
-            })
-          : Array.from<number>({ length: 4 }).map((_, i) => (
-              <NavButton key={i.toString()} />
-            ))}
+        {navPages.map((navPage, i) => {
+          const href =
+            navPage.attributes.slug === "about"
+              ? "/about"
+              : `/category/${navPage.attributes.slug}`
+          return (
+            <NavButton
+              text={navPage.attributes.name}
+              href={href}
+              key={i.toString()}
+            />
+          )
+        })}
       </Collapse>
     </div>
   )
