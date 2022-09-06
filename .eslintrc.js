@@ -2,6 +2,7 @@ module.exports = {
   plugins: ["unused-imports", "@typescript-eslint"],
   parser: "@typescript-eslint/parser",
   extends: ["react-app", "next/core-web-vitals"],
+  ignorePatterns: ["package.json", ".husky", "package-lock.json"],
   rules: {
     "@next/next/no-sync-scripts": "off",
     "sort-imports": 1,
