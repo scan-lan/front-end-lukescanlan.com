@@ -1,12 +1,12 @@
-import ApiArticle from "../types/Article";
-import Articles from "../components/Articles";
-import Homepage from "../types/Homepage";
-import Layout from "../components/Layout";
-import NavPage from "../types/NavPage";
-import React from "react";
-import Seo from "../components/Seo";
-import { getFromAPI } from "../lib/api";
-import { stringify } from "qs";
+import ApiArticle from "../types/Article"
+import Articles from "../components/Articles"
+import Homepage from "../types/Homepage"
+import Layout from "../components/Layout"
+import NavPage from "../types/NavPage"
+import React from "react"
+import Seo from "../components/Seo"
+import { getFromAPI } from "../lib/api"
+import { stringify } from "qs"
 
 interface HomeProps {
   articles: {
@@ -23,20 +23,20 @@ const Home = ({ articles, navPages, homepage }: HomeProps) => (
     <Seo seo={homepage?.data.attributes.seo || null} />
     <Articles articles={articles?.data || null} spacing={1} />
   </Layout>
-);
+)
 
 export const getStaticProps = async () => {
   const articlesQueryString = stringify({
     populate: ["category", "writer", "cover", "topics"],
     sort: ["written:desc", "updatedAt:desc"],
-  });
+  })
 
   // Run API calls in parallel
   const [articles, navPages, homepage] = await Promise.all([
     getFromAPI<{ data: ApiArticle[] }>("/articles", articlesQueryString),
     getFromAPI<{ data: NavPage[] }>("/nav-pages"),
     getFromAPI<{ data: Homepage }>("/homepage"),
-  ]);
+  ])
 
   return {
     props: {
@@ -45,7 +45,7 @@ export const getStaticProps = async () => {
       homepage: homepage || null,
     },
     revalidate: 1,
-  };
-};
+  }
+}
 
-export default Home;
+export default Home

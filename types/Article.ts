@@ -1,7 +1,7 @@
-import ApiCategory from "./Category";
-import ApiTopic from "./Topic";
-import ApiWriter from "./Writer";
-import StrapiMedia from "./StrapiMedia";
+import ApiCategory from "./Category"
+import ApiTopic from "./Topic"
+import ApiWriter from "./Writer"
+import StrapiMedia from "./StrapiMedia"
 
 export default interface ApiArticle {
   id: number;

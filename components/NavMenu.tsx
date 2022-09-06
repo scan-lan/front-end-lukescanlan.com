@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, useTheme } from "@mui/material/styles";
+import { Theme, useTheme } from "@mui/material/styles"
 
-import Collapse from "@mui/material/Collapse";
-import { Sling as Hamburger } from "hamburger-react";
-import NavButton from "./NavButton";
-import NavPage from "../types/NavPage";
-import { css } from "@emotion/react";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useState } from "react";
-import { useTimeout } from "usehooks-ts";
+import Collapse from "@mui/material/Collapse"
+import { Sling as Hamburger } from "hamburger-react"
+import NavButton from "./NavButton"
+import NavPage from "../types/NavPage"
+import { css } from "@emotion/react"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { useState } from "react"
+import { useTimeout } from "usehooks-ts"
 
 interface NavMenuProps {
   navPages: NavPage[] | null;
@@ -17,11 +17,11 @@ interface NavMenuProps {
 }
 
 const NavMenu = ({ navPages, spacing }: NavMenuProps) => {
-  const theme = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const [transitionsEnabled, setTransitionsEnabled] = useState(false);
-  const showMenuButton = useMediaQuery(theme.breakpoints.down("sm"));
-  useTimeout(() => setTransitionsEnabled(true), 100);
+  const theme = useTheme()
+  const [isOpen, setIsOpen] = useState(false)
+  const [transitionsEnabled, setTransitionsEnabled] = useState(false)
+  const showMenuButton = useMediaQuery(theme.breakpoints.down("sm"))
+  useTimeout(() => setTransitionsEnabled(true), 100)
 
   const spacingStyles = (theme: Theme) =>
     css({
@@ -31,7 +31,7 @@ const NavMenu = ({ navPages, spacing }: NavMenuProps) => {
           ? theme.spacing(0, 0, spacing)
           : theme.spacing(spacing, 0, 0),
       },
-    });
+    })
 
   return (
     <div className="nav-menu">
@@ -71,21 +71,21 @@ const NavMenu = ({ navPages, spacing }: NavMenuProps) => {
               const href =
                 navPage.attributes.slug === "about"
                   ? "/about"
-                  : `/category/${navPage.attributes.slug}`;
+                  : `/category/${navPage.attributes.slug}`
               return (
                 <NavButton
                   text={navPage.attributes.name}
                   href={href}
                   key={i.toString()}
                 />
-              );
+              )
             })
           : Array.from<number>({ length: 4 }).map((_, i) => (
               <NavButton key={i.toString()} />
             ))}
       </Collapse>
     </div>
-  );
-};
+  )
+}
 
-export default NavMenu;
+export default NavMenu

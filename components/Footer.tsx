@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, css } from "@emotion/react";
+import { Theme, css } from "@emotion/react"
 
-import { Button } from "@mui/material";
-import Link from "next/link";
-import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material"
+import Link from "next/link"
+import Typography from "@mui/material/Typography"
 
 const footerStyles = (theme: Theme) =>
   css({
@@ -26,7 +26,7 @@ const footerStyles = (theme: Theme) =>
         },
       },
     },
-  });
+  })
 
 const Footer = () => (
   <footer css={footerStyles}>
@@ -39,6 +39,6 @@ const Footer = () => (
       </Typography>
     </div>
   </footer>
-);
+)
 
-export default Footer;
+export default Footer

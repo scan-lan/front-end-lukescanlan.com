@@ -1,4 +1,4 @@
-import { ThemeOptions } from "@mui/material/styles";
+import { ThemeOptions } from "@mui/material/styles"
 import { css } from "@emotion/react"
 
 export const lightThemeOptions: ThemeOptions = {
@@ -112,4 +112,4 @@ export const lightThemeOptions: ThemeOptions = {
   shape: {
     borderRadius: 10,
   },
-};
+}

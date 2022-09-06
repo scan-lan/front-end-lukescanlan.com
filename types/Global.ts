@@ -1,5 +1,5 @@
-import ApiSeo from "./ApiSeo";
-import StrapiMedia from "./StrapiMedia";
+import ApiSeo from "./ApiSeo"
+import StrapiMedia from "./StrapiMedia"
 
 export default interface Global {
   id: number;

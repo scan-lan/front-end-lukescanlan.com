@@ -1,25 +1,25 @@
 /** @jsxImportSource @emotion/react */
 
-import { GetStaticPaths, GetStaticProps } from "next/types";
+import { GetStaticPaths, GetStaticProps } from "next/types"
 
-import ApiArticle from "../../types/Article";
-import type ApiCategory from "../../types/Category";
-import Articles from "../../components/Articles";
-import Custom404 from "../404";
-import Head from "next/head";
-import Layout from "../../components/Layout";
-import NavPage from "../../types/NavPage";
-import Seo from "../../components/Seo";
-import Skeleton from "@mui/material/Skeleton";
-import type StrapiMeta from "../../types/StrapiMeta";
-import Typography from "@mui/material/Typography";
-import { css } from "@emotion/react";
-import { getFromAPI } from "../../lib/api";
-import { stringify } from "qs";
-import { useRouter } from "next/router";
+import ApiArticle from "../../types/Article"
+import type ApiCategory from "../../types/Category"
+import Articles from "../../components/Articles"
+import Custom404 from "../404"
+import Head from "next/head"
+import Layout from "../../components/Layout"
+import NavPage from "../../types/NavPage"
+import Seo from "../../components/Seo"
+import Skeleton from "@mui/material/Skeleton"
+import type StrapiMeta from "../../types/StrapiMeta"
+import Typography from "@mui/material/Typography"
+import { css } from "@emotion/react"
+import { getFromAPI } from "../../lib/api"
+import { stringify } from "qs"
+import { useRouter } from "next/router"
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categories = await getFromAPI<{ data: ApiCategory[] }>("/categories");
+  const categories = await getFromAPI<{ data: ApiCategory[] }>("/categories")
 
   return {
     paths: categories
@@ -30,8 +30,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         }))
       : [],
     fallback: true,
-  };
-};
+  }
+}
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const categoryQueryString = stringify({
@@ -40,15 +40,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         $eq: params?.slug,
       },
     },
-  });
+  })
 
   const category = await getFromAPI<{ data: ApiCategory[]; meta: StrapiMeta }>(
     "/categories",
     categoryQueryString
-  );
+  )
   const navPages = await getFromAPI<{ data: NavPage[]; meta: StrapiMeta }>(
     "/nav-pages"
-  );
+  )
 
   const articlesQueryString = stringify({
     filters: {
@@ -60,12 +60,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
     populate: "*",
     sort: ["written:desc", "updatedAt:desc"],
-  });
+  })
 
   const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
     "/articles",
     articlesQueryString
-  );
+  )
 
   return {
     props: {
@@ -74,8 +74,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       navPages: navPages?.data || null,
     },
     revalidate: 1,
-  };
-};
+  }
+}
 
 interface CategoryProps {
   articles: ApiArticle[] | null;
@@ -94,10 +94,10 @@ const titleContainerStyles = css({
     padding: "10rem 1rem",
     color: "#5c7b65",
   },
-});
+})
 
 const Category = ({ articles, category, navPages }: CategoryProps) => {
-  const router = useRouter();
+  const router = useRouter()
 
   if (router.isFallback) {
     return (
@@ -110,7 +110,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
         </div>
         <Articles articles={null} spacing={1} />
       </Layout>
-    );
+    )
   }
 
   if (category === null || articles === null) {
@@ -121,13 +121,13 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
         </Head>
         <Custom404 navPages={navPages} />
       </>
-    );
+    )
   }
 
   const seo = {
     metaTitle: category.attributes.name,
     metaDescription: `All ${category.attributes.name} articles`,
-  };
+  }
 
   return (
     <Layout navPages={navPages}>
@@ -143,7 +143,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
       </div>
       <Articles articles={articles} spacing={1} />
     </Layout>
-  );
-};
+  )
+}
 
-export default Category;
+export default Category

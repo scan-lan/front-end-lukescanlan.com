@@ -1,4 +1,4 @@
-import ApiArticle from "./Article";
+import ApiArticle from "./Article"
 
 export default interface ApiCategory {
   id: number;

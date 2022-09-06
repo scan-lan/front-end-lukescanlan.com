@@ -7,6 +7,6 @@ const nextConfig = {
       "prod-lukescanlan.s3.eu-west-2.amazonaws.com",
     ],
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

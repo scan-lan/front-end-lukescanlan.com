@@ -1,4 +1,4 @@
-import ApiSeo from "./ApiSeo";
+import ApiSeo from "./ApiSeo"
 
 export default interface Homepage {
   data: {

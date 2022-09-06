@@ -1,4 +1,4 @@
-import StrapiMedia from "./StrapiMedia";
+import StrapiMedia from "./StrapiMedia"
 
 export default interface ApiSeo {
   id: number;

@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
-import Button from "@mui/material/Button";
-import Link from "next/link";
-import Skeleton from "@mui/material/Skeleton";
-import { css } from "@emotion/react";
+import Button from "@mui/material/Button"
+import Link from "next/link"
+import Skeleton from "@mui/material/Skeleton"
+import { css } from "@emotion/react"
 
 interface NavButtonProps {
   href?: string;
@@ -25,7 +25,7 @@ const navButtonStyles = () =>
     ".MuiTouchRipple-child": {
       backgroundColor: "white",
     },
-  });
+  })
 
 const NavButton = ({ href, text }: NavButtonProps) =>
   href && text ? (
@@ -38,6 +38,6 @@ const NavButton = ({ href, text }: NavButtonProps) =>
     <Button variant="contained" css={navButtonStyles} focusRipple={true}>
       <Skeleton variant="text" width="100%" sx={{ bgcolor: "grey.800" }} />
     </Button>
-  );
+  )
 
-export default NavButton;
+export default NavButton

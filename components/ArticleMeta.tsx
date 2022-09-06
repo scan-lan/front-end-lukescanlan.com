@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, css } from "@emotion/react";
+import { Theme, css } from "@emotion/react"
 
-import ApiCategory from "../types/Category";
-import ApiTopic from "../types/Topic";
-import ApiWriter from "../types/Writer";
-import Link from "next/link";
-import Moment from "react-moment";
-import MuiLink from "@mui/material/Link";
-import Typography from "@mui/material/Typography";
+import ApiCategory from "../types/Category"
+import ApiTopic from "../types/Topic"
+import ApiWriter from "../types/Writer"
+import Link from "next/link"
+import Moment from "react-moment"
+import MuiLink from "@mui/material/Link"
+import Typography from "@mui/material/Typography"
 
 const articleMetaStyles = (theme: Theme) =>
   css({
@@ -79,7 +79,7 @@ const articleMetaStyles = (theme: Theme) =>
         "topics"
       `,
     },
-  });
+  })
 
 interface ArticleMetaProps {
   written: string;
@@ -131,6 +131,6 @@ ArticleMetaProps) => (
       )} */}
     </div>
   </div>
-);
+)
 
-export default ArticleMeta;
+export default ArticleMeta
