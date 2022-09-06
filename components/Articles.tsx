@@ -13,6 +13,13 @@ interface ArticlesProps {
   spacing?: number
 }
 
+const columnBreakpoints = [
+  ["xl", 4],
+  ["lg", 3],
+  ["sm", 2],
+  ["xs", 1],
+] as const
+
 const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
   const mainStyles = useCallback(
     (theme: Theme) =>
@@ -51,26 +58,13 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
         <SkeletonCard key={i.toString()} />
       ))
 
-  const columns: { xl?: number; lg?: number; sm?: number; xs?: number } = {
-    xl: 4,
-    lg: 3,
-    sm: 2,
-    xs: 1,
-  }
-
-  if (articleCards.length < 4) {
-    delete columns.xl
-    if (articleCards.length < 3) {
-      delete columns.lg
-      if (articleCards.length < 2) {
-        delete columns.sm
-      }
-    }
-  }
+  const possibleColumns = Object.fromEntries(
+    columnBreakpoints.filter(([_, value]) => value <= articleCards.length)
+  )
 
   return (
     <main css={mainStyles} className="twelve-column">
-      <Masonry columns={columns} spacing={spacing} className="masonry">
+      <Masonry columns={possibleColumns} spacing={spacing} className="masonry">
         {articleCards}
       </Masonry>
     </main>

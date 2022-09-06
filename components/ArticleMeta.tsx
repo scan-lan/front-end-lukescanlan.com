@@ -90,12 +90,7 @@ interface ArticleMetaProps {
   writer: ApiWriter | null;
 }
 
-const ArticleMeta = ({
-  written,
-  updated,
-  category,
-}: // topics,
-ArticleMetaProps) => (
+const ArticleMeta = ({ written, updated, category }: ArticleMetaProps) => (
   <div className="twelve-column">
     <div css={articleMetaStyles}>
       {/* {writer && (
