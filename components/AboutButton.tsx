@@ -7,10 +7,10 @@ import Typography from "@mui/material/Typography"
 import { css } from "@emotion/react"
 
 interface AboutButtonProps {
-  name: "what" | "where" | "why" | "who";
-  className: string;
-  active: boolean;
-  setState: (_: AboutState) => void;
+  name: "what" | "where" | "why" | "who"
+  className: string
+  active: boolean
+  setState: (state: AboutState) => void
 }
 
 const buttonStyles = (_: Theme) =>
@@ -31,19 +31,11 @@ const buttonStyles = (_: Theme) =>
     },
   })
 
-const switchActive = (
-  name: "what" | "where" | "why" | "who" | null,
-  setState: (_: AboutState) => void
-) => {
-  const newState = {
-    what: false,
-    where: false,
-    why: false,
-    who: false,
-  }
-  if (name) newState[name] = true
-
-  setState(newState)
+const baseState = {
+  what: false,
+  where: false,
+  why: false,
+  who: false,
 }
 
 const AboutButton = ({
@@ -58,10 +50,8 @@ const AboutButton = ({
     color="secondary"
     variant="contained"
     css={buttonStyles}
-    onClick={
-      active
-        ? () => switchActive(null, setState)
-        : () => switchActive(name, setState)
+    onClick={() =>
+      setState(active ? baseState : { ...baseState, [name]: true })
     }
   >
     <Typography variant="h3" sx={{ padding: 0 }}>
