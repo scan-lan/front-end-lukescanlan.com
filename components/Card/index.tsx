@@ -1,18 +1,18 @@
-import React, { useRef } from "react";
-import { getMediaURL, mediaSize } from "../../lib/getMedia";
+import React, { useRef } from "react"
+import { getMediaURL, mediaSize } from "../../lib/getMedia"
 
-import CardActionArea from "@mui/material/CardActionArea";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Image from "next/image";
-import Link from "next/link";
-import MUICard from "@mui/material/Card";
-import Moment from "react-moment";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
-import StrapiMedia from "../../types/StrapiMedia";
-import Typography from "@mui/material/Typography";
-import { useContainerDimensions } from "../../lib/useContainerDimensions";
+import CardActionArea from "@mui/material/CardActionArea"
+import CardContent from "@mui/material/CardContent"
+import CardMedia from "@mui/material/CardMedia"
+import Image from "next/image"
+import Link from "next/link"
+import MUICard from "@mui/material/Card"
+import Moment from "react-moment"
+import Skeleton from "@mui/material/Skeleton"
+import Stack from "@mui/material/Stack"
+import StrapiMedia from "../../types/StrapiMedia"
+import Typography from "@mui/material/Typography"
+import { useContainerDimensions } from "../../lib/useContainerDimensions"
 
 interface CardProps {
   cover: StrapiMedia | null;
@@ -37,7 +37,7 @@ const Card = ({
   dummyCard = false,
   coverSize,
 }: CardProps) => {
-  const ref = useRef(null);
+  const ref = useRef(null)
 
   const linkProps = dummyCard
     ? { href: "#", passHred: true }
@@ -45,9 +45,9 @@ const Card = ({
         as: `/article/${slug}`,
         href: "/article/[slug]",
         passHref: true,
-      };
-  const cardDimensions = useContainerDimensions(ref);
-  const imageHeight = cardDimensions.width * (5 / 7);
+      }
+  const cardDimensions = useContainerDimensions(ref)
+  const imageHeight = cardDimensions.width * (5 / 7)
 
   // Other card media size options
   // const imageScale = cardDimensions.width / cardCover.width;
@@ -189,7 +189,7 @@ const Card = ({
         </MUICard>
       </Link>
     </>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card

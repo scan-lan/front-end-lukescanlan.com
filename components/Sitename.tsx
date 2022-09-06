@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import Button from "@mui/material/Button";
-import Link from "next/link";
-import { css } from "@emotion/react";
+import Button from "@mui/material/Button"
+import Link from "next/link"
+import { css } from "@emotion/react"
 
 interface SitenameProps {
   textWidth: number;
 }
 
-const backgroundColor = "#5c7b65";
-const strokeColor = "#ffffff";
+const backgroundColor = "#5c7b65"
+const strokeColor = "#ffffff"
 
 const sitenameStyles = css({
   gridArea: "sitename",
@@ -43,10 +43,10 @@ const sitenameStyles = css({
       backgroundColor: backgroundColor,
     },
   },
-});
+})
 
 const Sitename = ({ textWidth }: SitenameProps) => {
-  const svgWidth = textWidth < 10 ? textWidth : textWidth - 10;
+  const svgWidth = textWidth < 10 ? textWidth : textWidth - 10
 
   return (
     <div className="sitename" css={sitenameStyles}>
@@ -69,7 +69,7 @@ const Sitename = ({ textWidth }: SitenameProps) => {
         </Button>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default Sitename;
+export default Sitename

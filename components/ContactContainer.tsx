@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
-import { SerializedStyles, css as emotionCss } from "@emotion/react";
+import { SerializedStyles, css as emotionCss } from "@emotion/react"
 
-import { ReactChild } from "react";
-import { Theme } from "@mui/material/styles";
+import { ReactChild } from "react"
+import { Theme } from "@mui/material/styles"
 
 const mainStyles = (theme: Theme) =>
   emotionCss({
@@ -61,7 +61,7 @@ const mainStyles = (theme: Theme) =>
         margin: 0,
       },
     },
-  });
+  })
 
 interface ContactContainerProps {
   children: ReactChild | ReactChild[];
@@ -73,6 +73,6 @@ const ContactContainer = ({
   additionalCss,
 }: ContactContainerProps) => (
   <main css={[mainStyles, additionalCss || null]}>{children}</main>
-);
+)
 
-export default ContactContainer;
+export default ContactContainer

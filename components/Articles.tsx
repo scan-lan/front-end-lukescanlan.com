@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, css } from "@emotion/react";
+import { Theme, css } from "@emotion/react"
 
-import ApiArticle from "../types/Article";
-import Card from "./Card";
-import Masonry from "@mui/lab/Masonry";
-import SkeletonCard from "./Card/SkeletonCard";
+import ApiArticle from "../types/Article"
+import Card from "./Card"
+import Masonry from "@mui/lab/Masonry"
+import SkeletonCard from "./Card/SkeletonCard"
 
 interface ArticlesProps {
   articles: ApiArticle[] | null;
@@ -22,7 +22,7 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
         gridColumn: "2 / span 10",
         width: `calc(100% + ${theme.spacing(spacing)})`,
       },
-    });
+    })
 
   const articleCards = articles
     ? articles.map((article) => (
@@ -45,21 +45,21 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
       ))
     : Array.from<number>({ length: 8 }).map((_, i) => (
         <SkeletonCard key={i.toString()} />
-      ));
+      ))
 
   const columns: { xl?: number; lg?: number; sm?: number; xs?: number } = {
     xl: 4,
     lg: 3,
     sm: 2,
     xs: 1,
-  };
+  }
 
   if (articleCards.length < 4) {
-    delete columns.xl;
+    delete columns.xl
     if (articleCards.length < 3) {
-      delete columns.lg;
+      delete columns.lg
       if (articleCards.length < 2) {
-        delete columns.sm;
+        delete columns.sm
       }
     }
   }
@@ -70,7 +70,7 @@ const Articles = ({ articles, spacing = 3 }: ArticlesProps) => {
         {articleCards}
       </Masonry>
     </main>
-  );
-};
+  )
+}
 
-export default Articles;
+export default Articles

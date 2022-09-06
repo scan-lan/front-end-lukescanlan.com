@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
 
-import AboutButton from "../components/AboutButton";
-import AboutPage from "../types/AboutPage";
-import AboutTitle from "../components/AboutTitle";
-import { GetStaticProps } from "next/types";
-import Layout from "../components/Layout";
-import Markdown from "../components/Markdown";
-import NavPage from "../types/NavPage";
-import Seo from "../components/Seo";
-import { Theme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { css } from "@emotion/react";
-import { getFromAPI } from "../lib/api";
-import { stringify } from "qs";
-import { useState } from "react";
-import useWindowDimensions from "../lib/useWindowDimensions";
+import AboutButton from "../components/AboutButton"
+import AboutPage from "../types/AboutPage"
+import AboutTitle from "../components/AboutTitle"
+import { GetStaticProps } from "next/types"
+import Layout from "../components/Layout"
+import Markdown from "../components/Markdown"
+import NavPage from "../types/NavPage"
+import Seo from "../components/Seo"
+import { Theme } from "@mui/material/styles"
+import Typography from "@mui/material/Typography"
+import { css } from "@emotion/react"
+import { getFromAPI } from "../lib/api"
+import { stringify } from "qs"
+import { useState } from "react"
+import useWindowDimensions from "../lib/useWindowDimensions"
 
 interface AboutProps {
   navPages: NavPage[] | null;
@@ -92,7 +92,7 @@ const mainStyles = (theme: Theme) =>
         backgroundColor: theme.palette.secondary.contrastText,
       },
     },
-  });
+  })
 
 export interface AboutState {
   what: boolean;
@@ -102,12 +102,12 @@ export interface AboutState {
 }
 
 const getBlurb = (state: AboutState, about: AboutPage) => {
-  if (state.what) return about.attributes.what;
-  if (state.where) return about.attributes.where;
-  if (state.who) return about.attributes.who;
-  if (state.why) return about.attributes.why;
-  return "";
-};
+  if (state.what) return about.attributes.what
+  if (state.where) return about.attributes.where
+  if (state.who) return about.attributes.who
+  if (state.why) return about.attributes.why
+  return ""
+}
 
 const About = ({ navPages, about }: AboutProps) => {
   const [state, setState] = useState<AboutState>({
@@ -115,8 +115,8 @@ const About = ({ navPages, about }: AboutProps) => {
     where: false,
     why: false,
     who: false,
-  });
-  const windowDimensions = useWindowDimensions();
+  })
+  const windowDimensions = useWindowDimensions()
 
   return (
     <Layout navPages={navPages}>
@@ -158,20 +158,20 @@ const About = ({ navPages, about }: AboutProps) => {
         </main>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   const aboutQuery = stringify({
     populate: "seo.shareImage",
-  });
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
-  const about = await getFromAPI<{ data: AboutPage }>("/about", aboutQuery);
+  })
+  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages")
+  const about = await getFromAPI<{ data: AboutPage }>("/about", aboutQuery)
 
   return {
     props: { navPages: navPages?.data || null, about: about?.data || null },
     revalidate: 1,
-  };
-};
+  }
+}
 
-export default About;
+export default About

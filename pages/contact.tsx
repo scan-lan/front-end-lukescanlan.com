@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
 
-import ContactContainer from "../components/ContactContainer";
-import ContactPage from "../types/ContactPage";
-import { Email } from "react-obfuscate-email";
-import { GetStaticProps } from "next/types";
-import Image from "next/image";
-import Layout from "../components/Layout";
-import Markdown from "../components/Markdown";
-import NavPage from "../types/NavPage";
-import Seo from "../components/Seo";
-import { Theme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { css } from "@emotion/react";
-import { getFromAPI } from "../lib/api";
-import { getMediaURL } from "../lib/getMedia";
-import iSeo from "../types/Seo";
-import { useRouter } from "next/router";
+import ContactContainer from "../components/ContactContainer"
+import ContactPage from "../types/ContactPage"
+import { Email } from "react-obfuscate-email"
+import { GetStaticProps } from "next/types"
+import Image from "next/image"
+import Layout from "../components/Layout"
+import Markdown from "../components/Markdown"
+import NavPage from "../types/NavPage"
+import Seo from "../components/Seo"
+import { Theme } from "@mui/material/styles"
+import Typography from "@mui/material/Typography"
+import { css } from "@emotion/react"
+import { getFromAPI } from "../lib/api"
+import { getMediaURL } from "../lib/getMedia"
+import iSeo from "../types/Seo"
+import { useRouter } from "next/router"
 
 interface ContactProps {
   navPages: NavPage[] | null;
@@ -32,10 +32,10 @@ const containerStyles = (theme: Theme) =>
         textDecorationColor: theme.palette.primary.dark,
       },
     },
-  });
+  })
 
 const Contact = ({ navPages, contactPage }: ContactProps) => {
-  const router = useRouter();
+  const router = useRouter()
 
   if (router.isFallback || contactPage === null) {
     return (
@@ -73,10 +73,10 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
           </div>
         </ContactContainer>
       </Layout>
-    );
+    )
   }
 
-  const image = contactPage?.attributes.contactImage.data || null;
+  const image = contactPage?.attributes.contactImage.data || null
   const contactSeo =
     contactPage.attributes.seo !== null
       ? ({
@@ -84,7 +84,7 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
           metaDescription: contactPage.attributes.seo.metaDescription,
           shareImage: getMediaURL(image, "m"),
         } as iSeo)
-      : null;
+      : null
 
   return (
     <Layout navPages={navPages}>
@@ -118,12 +118,12 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
         </div>
       </ContactContainer>
     </Layout>
-  );
-};
+  )
+}
 
 export const getStaticProps: GetStaticProps = async () => {
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
-  const contactPage = await getFromAPI<{ data: ContactPage }>("/contact");
+  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages")
+  const contactPage = await getFromAPI<{ data: ContactPage }>("/contact")
 
   return {
     props: {
@@ -131,7 +131,7 @@ export const getStaticProps: GetStaticProps = async () => {
       contactPage: contactPage?.data || null,
     },
     revalidate: 1,
-  };
-};
+  }
+}
 
-export default Contact;
+export default Contact

@@ -1,29 +1,29 @@
-import ApiSeo from "../types/ApiSeo";
-import { GlobalContext } from "../pages/_app";
-import Head from "next/head";
-import React from "react";
-import Seo from "../types/Seo";
-import { getMediaURL } from "../lib/getMedia";
-import { useContext } from "react";
+import ApiSeo from "../types/ApiSeo"
+import { GlobalContext } from "../pages/_app"
+import Head from "next/head"
+import React from "react"
+import Seo from "../types/Seo"
+import { getMediaURL } from "../lib/getMedia"
+import { useContext } from "react"
 
 interface SeoProps {
-  seo: ApiSeo | Seo | null;
-  article?: boolean;
+  seo: ApiSeo | Seo | null
+  article?: boolean
 }
 
 const Seo = ({ seo, article = false }: SeoProps) => {
-  const global = useContext(GlobalContext);
+  const global = useContext(GlobalContext)
 
   const seoWithDefaults = {
     ...global?.attributes.defaultSeo,
     ...seo,
-  };
+  }
   const sitename = global?.attributes.siteName
     ? global.attributes.siteName
-    : "lukescanlan.com";
+    : "lukescanlan.com"
   const title = article
     ? `${seoWithDefaults.metaTitle} | ${sitename}`
-    : seoWithDefaults.metaTitle;
+    : seoWithDefaults.metaTitle
 
   const fullSeo = {
     ...seoWithDefaults,
@@ -35,7 +35,7 @@ const Seo = ({ seo, article = false }: SeoProps) => {
         ? seoWithDefaults.shareImage
         : getMediaURL(seoWithDefaults.shareImage.data, "m")
       : null,
-  };
+  }
 
   return (
     <Head>
@@ -63,7 +63,7 @@ const Seo = ({ seo, article = false }: SeoProps) => {
       {article && <meta property="og:type" content="article" />}
       <meta name="twitter:card" content="summary_large_image" />
     </Head>
-  );
-};
+  )
+}
 
-export default Seo;
+export default Seo

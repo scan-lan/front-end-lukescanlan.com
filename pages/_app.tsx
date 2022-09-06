@@ -1,42 +1,42 @@
-import "../styles/globals.css";
+import "../styles/globals.css"
 
-import { CacheProvider, EmotionCache } from "@emotion/react";
-import { ThemeProvider, responsiveFontSizes } from "@mui/material/styles";
+import { CacheProvider, EmotionCache } from "@emotion/react"
+import { ThemeProvider, responsiveFontSizes } from "@mui/material/styles"
 
-import App from "next/app";
-import type { AppProps } from "next/app";
-import CssBaseline from "@mui/material/CssBaseline";
-import Global from "../types/Global";
-import Head from "next/head";
-import React from "react";
-import { createContext } from "react";
-import createEmotionCache from "../lib/createEmotionCache";
-import { createTheme } from "@mui/material/styles";
-import { getFromAPI } from "../lib/api";
-import { getMediaURL } from "../lib/getMedia";
-import { lightThemeOptions } from "../styles/theme/lightThemeOptions";
-import { stringify } from "qs";
+import App from "next/app"
+import type { AppProps } from "next/app"
+import CssBaseline from "@mui/material/CssBaseline"
+import Global from "../types/Global"
+import Head from "next/head"
+import React from "react"
+import { createContext } from "react"
+import createEmotionCache from "../lib/createEmotionCache"
+import { createTheme } from "@mui/material/styles"
+import { getFromAPI } from "../lib/api"
+import { getMediaURL } from "../lib/getMedia"
+import { lightThemeOptions } from "../styles/theme/lightThemeOptions"
+import { stringify } from "qs"
 
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache;
+  emotionCache?: EmotionCache
 }
 
 // Store Strapi Global object in context
-export const GlobalContext = createContext<Global | null>(null);
+export const GlobalContext = createContext<Global | null>(null)
 
-const clientSideEmotionCache = createEmotionCache();
-const lightTheme = responsiveFontSizes(createTheme(lightThemeOptions));
+const clientSideEmotionCache = createEmotionCache()
+const lightTheme = responsiveFontSizes(createTheme(lightThemeOptions))
 
 const MyApp = ({
   Component,
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) => {
-  const { global } = pageProps as { global: Global | null };
+  const { global } = pageProps as { global: Global | null }
 
   const favicon = global?.attributes.favicon.data
     ? getMediaURL(global.attributes.favicon.data)
-    : null;
+    : null
 
   return (
     <>
@@ -54,8 +54,8 @@ const MyApp = ({
         </ThemeProvider>
       </CacheProvider>
     </>
-  );
-};
+  )
+}
 
 // getInitialProps disables automatic static optimization for pages that don't
 // have getStaticProps. So article, category and home pages still get SSG.
@@ -64,19 +64,19 @@ const MyApp = ({
 MyApp.getInitialProps = async (ctx: any) => {
   const globalQueryString = stringify({
     populate: ["favicon", "defaultSeo.shareImage"],
-  });
+  })
 
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(ctx);
+  const appProps = await App.getInitialProps(ctx)
 
   // Fetch global site settings from Strapi
   const global = await getFromAPI<{ data: Global }>(
     "/global",
     globalQueryString
-  );
+  )
 
   // Pass the data to our page via props
-  return { ...appProps, pageProps: { global: global?.data || null } };
-};
+  return { ...appProps, pageProps: { global: global?.data || null } }
+}
 
-export default MyApp;
+export default MyApp

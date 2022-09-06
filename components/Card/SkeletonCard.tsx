@@ -1,5 +1,5 @@
-import Card from ".";
-import React from "react";
+import Card from "."
+import React from "react"
 
 const SkeletonCard = () => (
   <Card
@@ -12,6 +12,6 @@ const SkeletonCard = () => (
     slug=""
     dummyCard={true}
   />
-);
+)
 
-export default SkeletonCard;
+export default SkeletonCard

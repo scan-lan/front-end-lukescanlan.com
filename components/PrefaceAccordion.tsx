@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, css } from "@emotion/react";
+import { Theme, css } from "@emotion/react"
 
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion"
+import AccordionDetails from "@mui/material/AccordionDetails"
+import AccordionSummary from "@mui/material/AccordionSummary"
+import Typography from "@mui/material/Typography"
 
 interface AccordionProps {
   contentWarning?: string;
   authorsNote?: string;
 }
-const borderStyle = "2px black dashed";
+const borderStyle = "2px black dashed"
 const accordionStyles = (theme: Theme) =>
   css({
     paddingBottom: theme.spacing(3),
@@ -54,7 +54,7 @@ const accordionStyles = (theme: Theme) =>
       backgroundColor: theme.palette.warning.light,
       color: "black",
     },
-  });
+  })
 
 const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
   <div css={accordionStyles} className="twelve-column">
@@ -101,6 +101,6 @@ const PrefaceAccordion = ({ contentWarning, authorsNote }: AccordionProps) => (
       </Accordion>
     )}
   </div>
-);
+)
 
-export default PrefaceAccordion;
+export default PrefaceAccordion

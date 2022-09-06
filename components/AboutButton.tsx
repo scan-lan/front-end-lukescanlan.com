@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import { AboutState } from "../pages/about";
-import Button from "@mui/material/Button";
-import { Theme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { css } from "@emotion/react";
+import { AboutState } from "../pages/about"
+import Button from "@mui/material/Button"
+import { Theme } from "@mui/material/styles"
+import Typography from "@mui/material/Typography"
+import { css } from "@emotion/react"
 
 interface AboutButtonProps {
   name: "what" | "where" | "why" | "who";
@@ -29,7 +29,7 @@ const buttonStyles = (_: Theme) =>
     ":hover": {
       textDecoration: "4px underline",
     },
-  });
+  })
 
 const switchActive = (
   name: "what" | "where" | "why" | "who" | null,
@@ -40,11 +40,11 @@ const switchActive = (
     where: false,
     why: false,
     who: false,
-  };
-  if (name) newState[name] = true;
+  }
+  if (name) newState[name] = true
 
-  setState(newState);
-};
+  setState(newState)
+}
 
 const AboutButton = ({
   name,
@@ -68,6 +68,6 @@ const AboutButton = ({
       {`${name}?`}
     </Typography>
   </Button>
-);
+)
 
-export default AboutButton;
+export default AboutButton

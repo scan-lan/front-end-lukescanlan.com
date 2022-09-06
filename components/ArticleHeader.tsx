@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme, css } from "@emotion/react";
+import { Theme, css } from "@emotion/react"
 
-import Image from "next/image";
-import { MediaFormat } from "../types/StrapiMedia";
-import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
+import Image from "next/image"
+import { MediaFormat } from "../types/StrapiMedia"
+import Skeleton from "@mui/material/Skeleton"
+import Typography from "@mui/material/Typography"
 
 interface ArticleImageProps {
   cover: {
@@ -32,7 +32,7 @@ const articleTitleStyles = (theme: Theme) =>
         gridColumn: "span 12",
       },
     },
-  });
+  })
 
 const articleImageStyles = (theme: Theme) =>
   css({
@@ -67,7 +67,7 @@ const articleImageStyles = (theme: Theme) =>
         maxWidth: "98vw",
       },
     },
-  });
+  })
 
 const ArticleHeader = ({ cover, title }: ArticleImageProps) => (
   <div
@@ -108,6 +108,6 @@ const ArticleHeader = ({ cover, title }: ArticleImageProps) => (
       </Skeleton>
     )}
   </div>
-);
+)
 
-export default ArticleHeader;
+export default ArticleHeader

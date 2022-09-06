@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import { Theme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { css } from "@emotion/react";
-import { useContainerDimensions } from "../lib/useContainerDimensions";
-import { useRef } from "react";
+import { Theme } from "@mui/material/styles"
+import Typography from "@mui/material/Typography"
+import { css } from "@emotion/react"
+import { useContainerDimensions } from "../lib/useContainerDimensions"
+import { useRef } from "react"
 
 const titleStyles = (theme: Theme) =>
   css({
@@ -12,12 +12,12 @@ const titleStyles = (theme: Theme) =>
     stroke: theme.palette.secondary.contrastText,
     fill: theme.palette.secondary.contrastText,
     overflow: "clip",
-  });
+  })
 
 const AboutTitle = ({ textLength }: { textLength: number }) => {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const headingDimensions = useContainerDimensions(ref);
-  const svgHeight = headingDimensions.height - 10;
+  const ref = useRef<HTMLHeadingElement>(null)
+  const headingDimensions = useContainerDimensions(ref)
+  const svgHeight = headingDimensions.height - 10
 
   return (
     <Typography
@@ -45,7 +45,7 @@ const AboutTitle = ({ textLength }: { textLength: number }) => {
         </text>
       </svg>
     </Typography>
-  );
-};
+  )
+}
 
-export default AboutTitle;
+export default AboutTitle

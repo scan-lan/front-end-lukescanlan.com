@@ -1,29 +1,29 @@
 /** @jsxImportSource @emotion/react */
 
-import { GetStaticPaths, GetStaticProps } from "next";
-import { Theme, css } from "@emotion/react";
+import { GetStaticPaths, GetStaticProps } from "next"
+import { Theme, css } from "@emotion/react"
 
-import ApiArticle from "../../types/Article";
-import ArticleHeader from "../../components/ArticleHeader";
-import ArticleMeta from "../../components/ArticleMeta";
-import Custom404 from "../404";
-import Head from "next/head";
-import Layout from "../../components/Layout";
-import Markdown from "../../components/Markdown";
-import NavPage from "../../types/NavPage";
-import PrefaceAccordion from "../../components/PrefaceAccordion";
-import Seo from "../../components/Seo";
-import Skeleton from "@mui/material/Skeleton";
-import StrapiMeta from "../../types/StrapiMeta";
-import Typography from "@mui/material/Typography";
-import { getFromAPI } from "../../lib/api";
-import { getMedia } from "../../lib/getMedia";
-import iSeo from "../../types/Seo";
-import { stringify } from "qs";
-import { useRouter } from "next/router";
+import ApiArticle from "../../types/Article"
+import ArticleHeader from "../../components/ArticleHeader"
+import ArticleMeta from "../../components/ArticleMeta"
+import Custom404 from "../404"
+import Head from "next/head"
+import Layout from "../../components/Layout"
+import Markdown from "../../components/Markdown"
+import NavPage from "../../types/NavPage"
+import PrefaceAccordion from "../../components/PrefaceAccordion"
+import Seo from "../../components/Seo"
+import Skeleton from "@mui/material/Skeleton"
+import StrapiMeta from "../../types/StrapiMeta"
+import Typography from "@mui/material/Typography"
+import { getFromAPI } from "../../lib/api"
+import { getMedia } from "../../lib/getMedia"
+import iSeo from "../../types/Seo"
+import { stringify } from "qs"
+import { useRouter } from "next/router"
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await getFromAPI<{ data: ApiArticle[] }>("/articles");
+  const articles = await getFromAPI<{ data: ApiArticle[] }>("/articles")
 
   return {
     paths: articles
@@ -34,8 +34,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         }))
       : [],
     fallback: true,
-  };
-};
+  }
+}
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const articleQueryParams = stringify({
@@ -45,14 +45,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     },
     populate: ["writer", "writer.picture", "cover", "category", "topics"],
-  });
+  })
 
   const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
     "/articles",
     articleQueryParams
-  );
+  )
 
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages");
+  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages")
 
   return {
     props: {
@@ -60,15 +60,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       navPages: navPages?.data || null,
     },
     revalidate: 1,
-  };
-};
+  }
+}
 
 interface ArticleProps {
   article: ApiArticle | null;
   navPages: NavPage[];
 }
 
-const mainContent = "& p, & ul, & ol, & img, & .p-skeleton";
+const mainContent = "& p, & ul, & ol, & img, & .p-skeleton"
 
 const contentStyles = (theme: Theme) =>
   css({
@@ -126,10 +126,10 @@ const contentStyles = (theme: Theme) =>
         },
       },
     },
-  });
+  })
 
 const Article = ({ article, navPages }: ArticleProps) => {
-  const router = useRouter();
+  const router = useRouter()
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -153,7 +153,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
           </div>
         </main>
       </Layout>
-    );
+    )
   }
 
   if (article === null) {
@@ -164,16 +164,16 @@ const Article = ({ article, navPages }: ArticleProps) => {
         </Head>
         <Custom404 navPages={navPages} />
       </>
-    );
+    )
   }
 
   const articleSeo: iSeo = {
     metaTitle: article.attributes.title,
     metaDescription: article.attributes.description,
-  };
+  }
 
   if (article.attributes.cover.data !== null) {
-    articleSeo.shareImage = { data: article.attributes.cover.data };
+    articleSeo.shareImage = { data: article.attributes.cover.data }
   }
 
   return (
@@ -210,7 +210,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
         />
       </main>
     </Layout>
-  );
-};
+  )
+}
 
-export default Article;
+export default Article
