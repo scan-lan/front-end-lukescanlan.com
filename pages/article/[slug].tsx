@@ -47,12 +47,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     populate: ["writer", "writer.picture", "cover", "category", "topics"],
   })
 
-  const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
-    "/articles",
-    articleQueryParams
-  )
-
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages")
+  const [articles, navPages] = await Promise.all([
+    getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
+      "/articles",
+      articleQueryParams
+    ),
+    getFromAPI<{ data: NavPage[] }>("/nav-pages"),
+  ])
 
   return {
     props: {
@@ -156,7 +157,7 @@ const Article = ({ article, navPages }: ArticleProps) => {
     )
   }
 
-  if (article === null) {
+  if (!article) {
     return (
       <>
         <Head>

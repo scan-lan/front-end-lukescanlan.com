@@ -153,8 +153,10 @@ export const getStaticProps: GetStaticProps = async () => {
   const aboutQuery = stringify({
     populate: "seo.shareImage",
   })
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages")
-  const about = await getFromAPI<{ data: AboutPage }>("/about", aboutQuery)
+  const [navPages, about] = await Promise.all([
+    getFromAPI<{ data: NavPage[] }>("/nav-pages"),
+    getFromAPI<{ data: AboutPage }>("/about", aboutQuery),
+  ])
 
   return {
     props: { navPages: navPages?.data || null, about: about?.data || null },

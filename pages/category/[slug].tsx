@@ -34,22 +34,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const categoryQueryString = stringify({
-    filters: {
-      slug: {
-        $eq: params?.slug,
-      },
-    },
-  })
-
-  const category = await getFromAPI<{ data: ApiCategory[]; meta: StrapiMeta }>(
-    "/categories",
-    categoryQueryString
-  )
-  const navPages = await getFromAPI<{ data: NavPage[]; meta: StrapiMeta }>(
-    "/nav-pages"
-  )
-
   const articlesQueryString = stringify({
     filters: {
       category: {
@@ -62,10 +46,25 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     sort: ["written:desc", "updatedAt:desc"],
   })
 
-  const articles = await getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
-    "/articles",
-    articlesQueryString
-  )
+  const categoryQueryString = stringify({
+    filters: {
+      slug: {
+        $eq: params?.slug,
+      },
+    },
+  })
+
+  const [category, navPages, articles] = await Promise.all([
+    getFromAPI<{ data: ApiArticle[]; meta: StrapiMeta }>(
+      "/articles",
+      articlesQueryString
+    ),
+    getFromAPI<{ data: ApiCategory[]; meta: StrapiMeta }>(
+      "/categories",
+      categoryQueryString
+    ),
+    getFromAPI<{ data: NavPage[]; meta: StrapiMeta }>("/nav-pages"),
+  ])
 
   return {
     props: {
@@ -78,9 +77,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 }
 
 interface CategoryProps {
-  articles: ApiArticle[] | null;
-  category: ApiCategory | null;
-  navPages: NavPage[] | null;
+  articles: ApiArticle[] | null
+  category: ApiCategory | null
+  navPages: NavPage[] | null
 }
 
 const titleContainerStyles = css({
@@ -113,7 +112,7 @@ const Category = ({ articles, category, navPages }: CategoryProps) => {
     )
   }
 
-  if (category === null || articles === null) {
+  if (!category || !articles) {
     return (
       <>
         <Head>

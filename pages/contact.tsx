@@ -122,8 +122,10 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages")
-  const contactPage = await getFromAPI<{ data: ContactPage }>("/contact")
+  const [navPages, contactPage] = await Promise.all([
+    getFromAPI<{ data: NavPage[] }>("/nav-pages"),
+    getFromAPI<{ data: ContactPage }>("/contact"),
+  ])
 
   return {
     props: {
