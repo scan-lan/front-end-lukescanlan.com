@@ -6,8 +6,8 @@ import Skeleton from "@mui/material/Skeleton"
 import { css } from "@emotion/react"
 
 interface NavButtonProps {
-  href?: string;
-  text?: string;
+  href?: string
+  text?: string
 }
 
 const navButtonStyles = () =>

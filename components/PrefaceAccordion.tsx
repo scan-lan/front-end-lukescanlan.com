@@ -8,9 +8,10 @@ import AccordionSummary from "@mui/material/AccordionSummary"
 import Typography from "@mui/material/Typography"
 
 interface AccordionProps {
-  contentWarning?: string;
-  authorsNote?: string;
+  contentWarning?: string
+  authorsNote?: string
 }
+
 const borderStyle = "2px black dashed"
 const accordionStyles = (theme: Theme) =>
   css({

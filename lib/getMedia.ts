@@ -1,13 +1,6 @@
 import StrapiMedia, { MediaFormat } from "../types/StrapiMedia"
 
-export type mediaSize =
-  | "xs"
-  | "s"
-  | "m"
-  | "l"
-  | "xl"
-  | "original"
-  | "thumbnail";
+export type mediaSize = "xs" | "s" | "m" | "l" | "xl" | "original" | "thumbnail"
 
 export const getMedia = (
   media: StrapiMedia,

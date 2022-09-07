@@ -4,29 +4,29 @@ import ApiWriter from "./Writer"
 import StrapiMedia from "./StrapiMedia"
 
 export default interface ApiArticle {
-  id: number;
+  id: number
   attributes: {
-    title: string;
-    content: string;
-    written: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    slug: string;
-    description: string;
-    authorsNote?: string;
-    contentWarning?: string;
+    title: string
+    content: string
+    written: string
+    createdAt: string
+    updatedAt: string
+    publishedAt: string
+    slug: string
+    description: string
+    authorsNote?: string
+    contentWarning?: string
     writer: {
-      data: ApiWriter | null;
-    };
+      data: ApiWriter | null
+    }
     cover: {
-      data: StrapiMedia | null;
-    };
+      data: StrapiMedia | null
+    }
     category: {
-      data: ApiCategory | null;
-    };
+      data: ApiCategory | null
+    }
     topics: {
-      data: ApiTopic[] | null;
-    };
-  };
+      data: ApiTopic[] | null
+    }
+  }
 }

@@ -35,6 +35,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&display=swap"
             rel="stylesheet"
           ></link>
+          <meta name="theme-color" content="#5c7b65" />
         </Head>
         <body>
           <Main />

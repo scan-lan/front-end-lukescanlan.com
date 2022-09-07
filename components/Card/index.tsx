@@ -15,15 +15,15 @@ import Typography from "@mui/material/Typography"
 import { useContainerDimensions } from "../../lib/useContainerDimensions"
 
 interface CardProps {
-  cover: StrapiMedia | null;
-  title: string;
-  description: string;
-  category: string | null;
-  date: string;
-  topics: string[];
-  slug: string;
-  dummyCard?: boolean;
-  coverSize?: mediaSize;
+  cover: StrapiMedia | null
+  title: string
+  description: string
+  category: string | null
+  date: string
+  topics: string[]
+  slug: string
+  dummyCard?: boolean
+  coverSize?: mediaSize
 }
 
 const Card = ({

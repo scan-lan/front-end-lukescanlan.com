@@ -18,8 +18,8 @@ import iSeo from "../types/Seo"
 import { useRouter } from "next/router"
 
 interface ContactProps {
-  navPages: NavPage[] | null;
-  contactPage: ContactPage | null;
+  navPages: NavPage[] | null
+  contactPage: ContactPage | null
 }
 
 const containerStyles = (theme: Theme) =>
@@ -41,7 +41,7 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
     return (
       <Layout navPages={navPages}>
         <Seo seo={null} />
-        <ContactContainer additionalCss={containerStyles}>
+        <ContactContainer css={containerStyles}>
           <div className="blurb text-one">
             <Typography>
               I&apos;m payin 5 quid a month for this email, so make it worth my
@@ -89,7 +89,7 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
   return (
     <Layout navPages={navPages}>
       <Seo seo={contactSeo} />
-      <ContactContainer additionalCss={containerStyles}>
+      <ContactContainer css={containerStyles}>
         <div className="text-one">
           <Markdown>{contactPage.attributes.blurb}</Markdown>
         </div>
@@ -122,8 +122,10 @@ const Contact = ({ navPages, contactPage }: ContactProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const navPages = await getFromAPI<{ data: NavPage[] }>("/nav-pages")
-  const contactPage = await getFromAPI<{ data: ContactPage }>("/contact")
+  const [navPages, contactPage] = await Promise.all([
+    getFromAPI<{ data: NavPage[] }>("/nav-pages"),
+    getFromAPI<{ data: ContactPage }>("/contact"),
+  ])
 
   return {
     props: {

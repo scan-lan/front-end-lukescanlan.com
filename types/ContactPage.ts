@@ -2,15 +2,15 @@ import ApiSeo from "./ApiSeo"
 import StrapiMedia from "./StrapiMedia"
 
 export default interface ContactPage {
-  id: number;
+  id: number
   attributes: {
-    createdAt: Date;
-    updatedAt: Date;
-    publishedAt: Date;
-    blurb: string;
+    createdAt: Date
+    updatedAt: Date
+    publishedAt: Date
+    blurb: string
     contactImage: {
-      data: StrapiMedia;
-    };
-    seo: ApiSeo | null;
-  };
+      data: StrapiMedia
+    }
+    seo: ApiSeo | null
+  }
 }

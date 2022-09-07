@@ -82,20 +82,15 @@ const articleMetaStyles = (theme: Theme) =>
   })
 
 interface ArticleMetaProps {
-  written: string;
-  updated: string;
-  category: ApiCategory | null;
-  topics: ApiTopic[] | null;
-  published: string;
-  writer: ApiWriter | null;
+  written: string
+  updated: string
+  category: ApiCategory | null
+  topics: ApiTopic[] | null
+  published: string
+  writer: ApiWriter | null
 }
 
-const ArticleMeta = ({
-  written,
-  updated,
-  category,
-}: // topics,
-ArticleMetaProps) => (
+const ArticleMeta = ({ written, updated, category }: ArticleMetaProps) => (
   <div className="twelve-column">
     <div css={articleMetaStyles}>
       {/* {writer && (

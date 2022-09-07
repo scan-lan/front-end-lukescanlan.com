@@ -94,11 +94,11 @@ export const lightThemeOptions: ThemeOptions = {
             fontFamily: "inherit",
             ":hover": {
               backgroundColor: "inherit",
-              textDecoration: "underline"
-            }
-          })
-        }
-      ]
+              textDecoration: "underline",
+            },
+          }),
+        },
+      ],
     },
     MuiAccordion: {
       defaultProps: {

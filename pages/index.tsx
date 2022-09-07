@@ -10,12 +10,12 @@ import { stringify } from "qs"
 
 interface HomeProps {
   articles: {
-    data: ApiArticle[] | null;
-  };
+    data: ApiArticle[] | null
+  }
   navPages: {
-    data: NavPage[] | null;
-  };
-  homepage: Homepage | null;
+    data: NavPage[] | null
+  }
+  homepage: Homepage | null
 }
 
 const Home = ({ articles, navPages, homepage }: HomeProps) => (

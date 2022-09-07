@@ -8,8 +8,8 @@ import Sitename from "./Sitename"
 import useWindowDimensions from "../lib/useWindowDimensions"
 
 interface NavProps {
-  navPages: NavPage[] | null;
-  spacing?: number;
+  navPages: NavPage[] | null
+  spacing?: number
 }
 
 const navStyles = (theme: Theme) =>

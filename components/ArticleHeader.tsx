@@ -9,13 +9,13 @@ import Typography from "@mui/material/Typography"
 
 interface ArticleImageProps {
   cover: {
-    image: MediaFormat;
-    altText: string;
-  } | null;
-  title: string | null;
+    image: MediaFormat
+    altText: string
+  } | null
+  title: string | null
 }
 
-const articleTitleStyles = (theme: Theme) =>
+const titleStyles = (theme: Theme) =>
   css({
     padding: theme.spacing(1, 0),
 
@@ -34,7 +34,7 @@ const articleTitleStyles = (theme: Theme) =>
     },
   })
 
-const articleImageStyles = (theme: Theme) =>
+const imageStyles = (theme: Theme) =>
   css({
     padding: theme.spacing(1, 0),
     display: "grid",
@@ -71,7 +71,7 @@ const articleImageStyles = (theme: Theme) =>
 
 const ArticleHeader = ({ cover, title }: ArticleImageProps) => (
   <div
-    css={cover ? articleImageStyles : articleTitleStyles}
+    css={cover ? imageStyles : titleStyles}
     className={cover ? "" : "twelve-column"}
   >
     {cover ? (

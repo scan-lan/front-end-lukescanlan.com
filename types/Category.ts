@@ -1,15 +1,15 @@
 import ApiArticle from "./Article"
 
 export default interface ApiCategory {
-  id: number;
+  id: number
   attributes: {
-    name: string;
-    slug: string;
-    createdAt: Date;
-    updatedAt: Date;
-    publishedAt: Date;
+    name: string
+    slug: string
+    createdAt: Date
+    updatedAt: Date
+    publishedAt: Date
     articles: {
-      data: ApiArticle[];
-    };
-  };
+      data: ApiArticle[]
+    }
+  }
 }
